@@ -4,13 +4,16 @@ import Table from '@material-ui/core/Table'
 import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
+import { Tag } from 'antd'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 type ProfileReceivedProps = {
   data: []
 }
 
 export default function ProfileReceived({ data }: ProfileReceivedProps) {
+  const match = useRouteMatch()
+
   return (
     <>
       <TableContainer className='table-content' component={Paper}>
@@ -30,18 +33,26 @@ export default function ProfileReceived({ data }: ProfileReceivedProps) {
               <TableCell className='table-col' align='right'>
                 Ngày Gửi
               </TableCell>
+              <TableCell className='table-col' align='right'>
+                Trạng Thái
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((row: any, index: number) => (
               <TableRow key={index}>
                 <TableCell component='th' scope='row'>
-                  <Link to={row.slug}>{row.name}</Link>
+                  <Link to={`${match.path}/${row.slug}`}>{row.code}</Link>
                 </TableCell>
-                <TableCell align='right'>{row.code}</TableCell>
+                <TableCell align='right'>
+                  <Link to={`${match.path}/${row.slug}`}> {row.name}</Link>
+                </TableCell>
                 <TableCell align='right'>{row.slug}</TableCell>
                 <TableCell align='right'>{row.slug}</TableCell>
                 <TableCell align='right'>{row.slug}</TableCell>
+                <TableCell align='right'>
+                  {row.check ? <Tag color='success'>Đã Duyệt</Tag> : <Tag color='error'>Chưa Duyệt</Tag>}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
