@@ -1,21 +1,23 @@
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
-import HomePage from '../../pages/home'
-import ManagementDepartment from '../../ui/organisms/department/management'
+import { Redirect, Route, Switch } from 'react-router-dom'
+import AdminRouting from './admin'
+import FrontRouting from './front'
 
-export default function AppRouting() {
+export const AppRouting = (): JSX.Element => {
   const routeList = [
     {
-      component: <Route path='/' component={HomePage} exact />
+      component: <Route key='1' path='/' component={FrontRouting} exact />
     },
     {
-      component: <Route path='/department' component={ManagementDepartment} exact />
+      component: <Route key='2' path='/admin' component={AdminRouting} />
     }
   ]
   return (
-    <Switch>
-      {routeList.map((item) => item.component)}
-      {/* <Route path='*' component={NotFound}/> */}
-    </Switch>
+    <>
+      <Switch>
+        <Redirect path='/home' to='/' exact />
+        {routeList.map((item) => item.component)}
+      </Switch>
+    </>
   )
 }
