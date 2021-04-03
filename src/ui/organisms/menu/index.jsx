@@ -1,83 +1,64 @@
-import React from 'react'
+import { AppstoreOutlined, MailOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
+import { Button, Menu, Switch } from 'antd'
+import 'antd/dist/antd.css'
+import React, { useState } from 'react'
 
+const { SubMenu } = Menu
 export default function MenuAdmin() {
-    return (
-        <aside className="main-sidebar col-12 col-md-3 col-lg-2 px-0">
-  <div className="main-navbar">
-    <nav className="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
-      <a className="navbar-brand w-100 mr-0" href="#" style={{lineHeight: '25px'}}>
-        <div className="d-table m-auto">
-          <img id="main-logo" className="d-inline-block align-top mr-1" style={{maxWidth: '25px'}} src="img/shards-dashboards-logo.svg" alt="Shards Dashboard" />
-          <span className="d-none d-md-inline ml-1">QLDVC</span>
-        </div>
-      </a>
-      <a className="toggle-sidebar d-sm-inline d-md-none d-lg-none">
-        <i className="material-icons"></i>
-      </a>
-    </nav>
-  </div>
-  <form action="#" className="main-sidebar__search w-100 border-right d-sm-flex d-md-none d-lg-none">
-    <div className="input-group input-group-seamless ml-3">
-      <div className="input-group-prepend">
-        <div className="input-group-text">
-          <i className="fas fa-search" />
-        </div>
-      </div>
-      <input className="navbar-search form-control" type="text" placeholder="Search for something..." aria-label="Search" /> </div>
-  </form>
-  <div className="nav-wrapper">
-    <ul className="nav flex-column">
-      <li className="nav-item">
-        <a className="nav-link active" href="index.html">
-          <i className="material-icons">edit</i>
-          <span>Phòng Ban</span>
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="thanhvien.html">
-          <i className="material-icons">vertical_split</i>
-          <span>Thành Viên</span>
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="hopthu.html">
-          <i className="material-icons">note_add</i>
-          <span>Hộp Thư</span>
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="phancong.html">
-          <i className="material-icons">view_module</i>
-          <span>Phân Công</span>
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="quanlycongvan.html">
-          <i className="material-icons">table_chart</i>
-          <span>Quản lý công văn</span>
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="nhanhoso.html">
-          <i className="material-icons">person</i>
-          <span>Nhận hồ sơ</span>
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="quanlyhoso.html">
-          <i className="material-icons">error</i>
-          <span>Quản lý hồ sơ</span>
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link " href="baocao.html">
-          <i className="material-icons">vertical_split</i>
-          <span>Báo cáo</span>
-        </a>
-      </li>
-    </ul>
-  </div>
-</aside>
+  const [collapsed, setCollapsed] = useState(false)
+  const [theme, setTheme] = useState('light')
 
-    )
+  const changeTheme = (value) => {
+    setTheme((theme) => (value ? 'dark' : 'light'))
+  }
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed)
+  }
+  return (
+    <div style={{ width: 256 }}>
+      <Button type='primary' onClick={toggleCollapsed} style={{ marginBottom: 16 }}>
+        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+      </Button>
+      <Switch
+        style={{ marginLeft: '10px' }}
+        checked={theme === 'dark'}
+        onChange={changeTheme}
+        checkedChildren='Dark'
+        unCheckedChildren='Light'
+      />
+      <Menu
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode='inline'
+        theme={theme}
+        inlineCollapsed={collapsed}>
+        <SubMenu key='sub1' icon={<MailOutlined />} title='Navigation One'>
+          <Menu.Item key='5'>Option 5</Menu.Item>
+          <Menu.Item key='6'>Option 6</Menu.Item>
+          <Menu.Item key='7'>Option 7</Menu.Item>
+          <Menu.Item key='8'>Option 8</Menu.Item>
+        </SubMenu>
+        <SubMenu key='sub2' icon={<AppstoreOutlined />} title='Navigation Two'>
+          <Menu.Item key='9'>Option 9</Menu.Item>
+          <Menu.Item key='10'>Option 10</Menu.Item>
+          <SubMenu key='sub3' title='Submenu'>
+            <Menu.Item key='11'>Option 11</Menu.Item>
+            <Menu.Item key='12'>Option 12</Menu.Item>
+          </SubMenu>
+        </SubMenu>
+        <SubMenu key='sub3' icon={<MailOutlined />} title='Navigation One'>
+          <Menu.Item key='13'>Option 5</Menu.Item>
+          <Menu.Item key='14'>Option 6</Menu.Item>
+          <Menu.Item key='15'>Option 7</Menu.Item>
+          <Menu.Item key='16'>Option 8</Menu.Item>
+        </SubMenu>
+        <SubMenu key='sub4' icon={<MailOutlined />} title='Navigation One'>
+          <Menu.Item key='17'>Option 5</Menu.Item>
+          <Menu.Item key='18'>Option 6</Menu.Item>
+          <Menu.Item key='19'>Option 7</Menu.Item>
+          <Menu.Item key='20'>Option 8</Menu.Item>
+        </SubMenu>
+      </Menu>
+    </div>
+  )
 }

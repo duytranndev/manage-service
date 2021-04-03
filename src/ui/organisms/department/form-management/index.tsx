@@ -6,6 +6,8 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
+import { useRouteMatch } from 'react-router-dom'
+import './management.scss'
 
 const data = [
   {
@@ -30,19 +32,27 @@ const data = [
   }
 ]
 export default function ManagementDepartment() {
+  console.log(' :>> ')
+  const match = useRouteMatch()
+
+  console.log('math` :>> ', match)
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className='table-content' component={Paper}>
       <Table className='table' aria-label='simple table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>Name</TableCell>
-            <TableCell align='right'>Code</TableCell>
-            <TableCell align='right'>Duong dan</TableCell>
+        <TableHead className='table-header'>
+          <TableRow className='table-row'>
+            <TableCell className='table-col'>Name</TableCell>
+            <TableCell className='table-col' align='right'>
+              Code
+            </TableCell>
+            <TableCell className='table-col' align='right'>
+              Duong dan
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.name}>
+          {data.map((row, index) => (
+            <TableRow key={index}>
               <TableCell component='th' scope='row'>
                 {row.name}
               </TableCell>
