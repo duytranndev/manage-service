@@ -1,4 +1,5 @@
 export interface BaseInterface {
-  name: string
+  name?: string
   _id: string
+  slug?: string
 }
