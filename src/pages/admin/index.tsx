@@ -8,8 +8,8 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import ProgressChart from '../../ui/organisms/process'
 import ProfileReceived from '../../ui/organisms/profile/form-management'
+import ProgressChart from '../../ui/organisms/progress'
 import './index.scss'
 export default function AdminPage() {
   const data: any = [
@@ -84,7 +84,7 @@ export default function AdminPage() {
       </div>
       <div className='row row-document'>
         <div className='col-lg-12 document-received'>
-          <h1 style={{ color: 'white' }}>Hồ sơ đến</h1>
+          <h1 style={{ color: 'red' }}>Hồ sơ đến</h1>
           <div className='row title'>
             <ProfileReceived data={data} />
           </div>
@@ -92,7 +92,7 @@ export default function AdminPage() {
       </div>
       <div className='row row-message'>
         <div className='col-lg-12 message-received'>
-          <h1 style={{ color: 'white' }}>Tin Nhắn Đến</h1>
+          <h1 style={{ color: 'red' }}>Tin Nhắn Đến</h1>
 
           <div className='row title' style={{ display: 'flex' }}>
             <div className='col-lg-9'>
