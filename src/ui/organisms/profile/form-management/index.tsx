@@ -44,9 +44,7 @@ export default function ProfileReceived({ data }: ProfileReceivedProps) {
                 <TableCell component='th' scope='row'>
                   <Link to={`${match.path}/${row.slug}`}>{row.code}</Link>
                 </TableCell>
-                <TableCell align='right'>
-                  <Link to={`${match.path}/${row.slug}`}> {row.name}</Link>
-                </TableCell>
+                <TableCell align='right'>{row.name}</TableCell>
                 <TableCell align='right'>{row.slug}</TableCell>
                 <TableCell align='right'>{row.slug}</TableCell>
                 <TableCell align='right'>{row.slug}</TableCell>

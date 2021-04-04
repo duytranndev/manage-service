@@ -9,7 +9,7 @@ import {
 import { Button } from 'antd'
 import React from 'react'
 import './header.scss'
-export default function Header() {
+export default function HeaderAdmin() {
   return (
     <div id='header'>
       <ul>
