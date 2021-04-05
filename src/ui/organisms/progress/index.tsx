@@ -1,6 +1,5 @@
 import { Progress } from 'antd'
 import React from 'react'
-import './process.scss'
 
 type ProgressChartProps = {
   value?: number

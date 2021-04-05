@@ -1,6 +1,6 @@
 import React from 'react'
 import { Redirect, Route, Switch } from 'react-router-dom'
-import AdminRouting from './admin'
+import AdminLayout from '../../ui/templates/admin-layout'
 import FrontRouting from './front'
 
 export const AppRouting = (): JSX.Element => {
@@ -9,7 +9,7 @@ export const AppRouting = (): JSX.Element => {
       component: <Route key='1' path='/' component={FrontRouting} exact />
     },
     {
-      component: <Route key='2' path='/admin' component={AdminRouting} />
+      component: <Route key='2' path='/admin' component={AdminLayout} />
     }
   ]
   return (

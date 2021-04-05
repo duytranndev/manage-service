@@ -20,35 +20,51 @@ export default function ProfileReceived({ data }: ProfileReceivedProps) {
         <Table className='table' aria-label='simple table'>
           <TableHead className='table-header'>
             <TableRow className='table-row'>
-              <TableCell className='table-col'>Mã Hồ Sơ</TableCell>
-              <TableCell className='table-col' align='right'>
-                Người Gửi
+              <TableCell style={{ textAlign: 'center' }} className='table-col'>
+                Mã hồ sơ
               </TableCell>
-              <TableCell className='table-col' align='right'>
-                Lĩnh Vực
+              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
+                Người gửi
               </TableCell>
-              <TableCell className='table-col' align='right'>
-                Tên Văn Bản
+              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
+                Lĩnh vực
               </TableCell>
-              <TableCell className='table-col' align='right'>
-                Ngày Gửi
+              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
+                Tên văn bản
               </TableCell>
-              <TableCell className='table-col' align='right'>
-                Trạng Thái
+              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
+                Ngày gửi
+              </TableCell>
+              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
+                Trạng thái
+              </TableCell>
+              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
+                Trạng thái
+              </TableCell>
+              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
+                Trạng thái
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((row: any, index: number) => (
-              <TableRow key={index}>
-                <TableCell component='th' scope='row'>
+              <TableRow key={index} style={{ textAlign: 'center' }}>
+                <TableCell style={{ textAlign: 'center' }} component='th' scope='row'>
                   <Link to={`${match.path}/${row.slug}`}>{row.code}</Link>
                 </TableCell>
-                <TableCell align='right'>{row.name}</TableCell>
-                <TableCell align='right'>{row.slug}</TableCell>
-                <TableCell align='right'>{row.slug}</TableCell>
-                <TableCell align='right'>{row.slug}</TableCell>
-                <TableCell align='right'>
+                <TableCell style={{ textAlign: 'center' }} align='right'>
+                  {row.name}
+                </TableCell>
+                <TableCell style={{ textAlign: 'center' }} align='right'>
+                  {row.slug}
+                </TableCell>
+                <TableCell style={{ textAlign: 'center' }} align='right'>
+                  {row.slug}
+                </TableCell>
+                <TableCell style={{ textAlign: 'center' }} align='right'>
+                  {row.slug}
+                </TableCell>
+                <TableCell style={{ textAlign: 'center' }} align='right'>
                   {row.check ? <Tag color='success'>Đã Duyệt</Tag> : <Tag color='error'>Chưa Duyệt</Tag>}
                 </TableCell>
               </TableRow>

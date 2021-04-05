@@ -6,7 +6,6 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
 import React from 'react'
-import { useRouteMatch } from 'react-router-dom'
 import './management.scss'
 
 const data = [
@@ -32,10 +31,6 @@ const data = [
   }
 ]
 export default function ManagementDepartment() {
-  console.log(' :>> ')
-  const match = useRouteMatch()
-
-  console.log('math` :>> ', match)
   return (
     <TableContainer className='table-content' component={Paper}>
       <Table className='table' aria-label='simple table'>
