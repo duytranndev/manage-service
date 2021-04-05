@@ -1,7 +1,7 @@
 import { StarTwoTone } from '@ant-design/icons'
 import React from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
-import ProfileReceived from '../../ui/organisms/profile/form-management'
+import ProfileReceived from '../../ui/organisms/profile/list-profile'
 import ProgressChart from '../../ui/organisms/progress'
 import './admin.scss'
 export default function AdminPage() {
@@ -95,8 +95,16 @@ export default function AdminPage() {
       <div className='row row-document'>
         <div className='col-lg-12 document-received'>
           <h4 style={{ color: 'red' }}>Hồ sơ đến</h4>
-          <div className='row title'>
-            <ProfileReceived data={data} />
+          <div className='row title' style={{ display: 'flex' }}>
+            <div className='col-lg-9'>
+              <ProfileReceived data={data} />
+            </div>
+            <div className='col-lg-3' style={{ textAlign: 'center' }}>
+              <div className='sum' style={{ textAlign: 'center' }}>
+                <h6>Tổng hồ sơ đã duyệt</h6>
+              </div>
+              <ProgressChart value={value} />
+            </div>
           </div>
         </div>
       </div>
@@ -109,14 +117,21 @@ export default function AdminPage() {
               <ProfileReceived data={data} />
             </div>
             <div className='col-lg-3'>
+              <div className='sum'>
+                <h1>Tin nhắn đã xem</h1>
+              </div>
               <ProgressChart value={value} />
             </div>
           </div>
         </div>
       </div>
-      <div className='row row-progress'>
-        <div className='row title'>
-          <h1 style={{ color: 'white' }}>Tin Nhắn Đến</h1>
+      <div className='row row-message'>
+        <div className='col-lg-12 message-received'>
+          <h4 style={{ color: 'red' }}>Danh sách phòng ban</h4>
+
+          <div className='row title' style={{ display: 'flex' }}>
+            <ProfileReceived data={data} />
+          </div>
         </div>
       </div>
     </>

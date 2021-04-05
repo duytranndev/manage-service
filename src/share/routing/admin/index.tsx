@@ -2,7 +2,7 @@ import 'antd/dist/antd.css'
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import AdminPage from '../../../pages/admin/AdminPage'
-import ManagementDepartment from '../../../ui/organisms/department/form-management'
+import ManagementDepartment from '../../../ui/organisms/department/list-department'
 // import './index.scss'
 
 export default function AdminRouting() {
