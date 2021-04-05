@@ -23,9 +23,7 @@ export default function ProfileReceived({ data }: ProfileReceivedProps) {
               <TableCell style={{ textAlign: 'center' }} className='table-col'>
                 Mã hồ sơ
               </TableCell>
-              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
-                Người gửi
-              </TableCell>
+
               <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
                 Lĩnh vực
               </TableCell>
@@ -36,10 +34,7 @@ export default function ProfileReceived({ data }: ProfileReceivedProps) {
                 Ngày gửi
               </TableCell>
               <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
-                Trạng thái
-              </TableCell>
-              <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
-                Trạng thái
+                Người duyệt
               </TableCell>
               <TableCell style={{ textAlign: 'center' }} className='table-col' align='right'>
                 Trạng thái
@@ -55,6 +50,7 @@ export default function ProfileReceived({ data }: ProfileReceivedProps) {
                 <TableCell style={{ textAlign: 'center' }} align='right'>
                   {row.name}
                 </TableCell>
+
                 <TableCell style={{ textAlign: 'center' }} align='right'>
                   {row.slug}
                 </TableCell>
