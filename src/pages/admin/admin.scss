@@ -1,0 +1,79 @@
+.row-toolbar {
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid white;
+  .toolbar {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    .box-icon {
+      float: left;
+      margin: 0px 12px;
+      transition: 0.3s;
+      text-align: center;
+
+      .icon {
+        font-size: 33px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 50%;
+        box-sizing: border-box;
+        text-align: center;
+      }
+      .title {
+        text-align: center;
+        color: rgb(85, 79, 79);
+        font-size: 16px;
+        font-weight: 500;
+      }
+      &:hover .title {
+        color: black;
+        transition: 0.3s;
+      }
+      &:hover .icon {
+        background-color: rgb(202, 201, 201);
+        transition: 0.3s;
+      }
+    }
+  }
+}
+.row-document {
+  margin-top: 10px;
+  width: 100%;
+  border: 1px solid white;
+}
+.trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+.ant-menu {
+  .ant-menu-submenu {
+    .ant-menu-submenu-title {
+      .anticon {
+        font-size: 20px;
+      }
+      span {
+        font-size: 14px;
+        font-weight: 400;
+        transition: 0.3s;
+      }
+    }
+  }
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+}

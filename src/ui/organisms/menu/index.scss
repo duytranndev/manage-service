@@ -1,0 +1,12 @@
+.ant-menu-light {
+  .ant-menu-submenu {
+    .ant-menu-submenu-title {
+      &:hover a {
+        color: #1b9cfc;
+      }
+      a {
+        color: black;
+      }
+    }
+  }
+}
