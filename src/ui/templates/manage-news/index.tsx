@@ -2,9 +2,8 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import React, { useState } from 'react'
 import DrawerComponent from '../../molecules/drawer'
-import FormAddStaff from '../../organisms/staff/add-staff'
-
-export default function Staff() {
+import FormAddNews from '../../organisms/news/add-news/index'
+export default function ManageNews() {
   const [visible, setVisible] = useState<boolean>(false)
 
   const handleShowDrawer = () => {
@@ -16,10 +15,10 @@ export default function Staff() {
   return (
     <>
       <Button type='primary' onClick={handleShowDrawer}>
-        <PlusOutlined /> Thêm nhân viên
+        <PlusOutlined /> Thêm bài viết
       </Button>
-      <DrawerComponent title='Thêm nhân viên' visible={visible} onClose={handleCloseDrawer} width={680}>
-        <FormAddStaff />
+      <DrawerComponent title='Thêm bài viết' visible={visible} onClose={handleCloseDrawer} width={720}>
+        <FormAddNews />
       </DrawerComponent>
     </>
   )
