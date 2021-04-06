@@ -1,3 +1,4 @@
+import { DeleteTwoTone, ToolTwoTone } from '@ant-design/icons'
 import { TableHead } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
@@ -5,6 +6,7 @@ import TableBody from '@material-ui/core/TableBody'
 import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableRow from '@material-ui/core/TableRow'
+import 'antd/dist/antd.css'
 import React from 'react'
 import './management.scss'
 
@@ -43,6 +45,7 @@ export default function ManagementDepartment() {
             <TableCell className='table-col' align='right'>
               Duong dan
             </TableCell>
+            <TableCell className='table-col' align='right'></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -53,6 +56,10 @@ export default function ManagementDepartment() {
               </TableCell>
               <TableCell align='right'>{row.code}</TableCell>
               <TableCell align='right'>{row.slug}</TableCell>
+              <TableCell align='right'>
+                <DeleteTwoTone />
+                <ToolTwoTone />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
