@@ -1,5 +1,4 @@
-import { UploadOutlined } from '@ant-design/icons'
-import { Button, DatePicker, Form, Input, message, Upload } from 'antd'
+import { Button, DatePicker, Form, Input, message } from 'antd'
 import React from 'react'
 
 const layout = {
@@ -98,9 +97,11 @@ export default function FormAddStaff() {
         <Input placeholder='Basic usage' name='password' />
       </Form.Item>
       <Form.Item label='Hình ảnh'>
-        <Upload {...props}>
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Upload>
+        <div className='file-field input-field'>
+          <div className='btn'>
+            <input type='file' name='image' />
+          </div>
+        </div>
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
