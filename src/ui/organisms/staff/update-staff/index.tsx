@@ -1,5 +1,5 @@
-import { UploadOutlined } from '@ant-design/icons'
-import { Button, DatePicker, Form, Input, message, Upload } from 'antd'
+import { InboxOutlined } from '@ant-design/icons'
+import { Button, DatePicker, Form, Input, Upload } from 'antd'
 import React from 'react'
 
 const layout = {
@@ -8,7 +8,8 @@ const layout = {
   }
 }
 
-export default function FormAddStaff() {
+export default function FormUpdateStaff(props: any) {
+  const { name, age } = props //tuỳ vào prop của state
   // const [user, setUser] = useState()
   const handleOnSubmit = (e: any) => {
     console.log('e :>> ', e)
@@ -30,24 +31,6 @@ export default function FormAddStaff() {
     return e && e.fileList
   }
 
-  const props = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text'
-    },
-    onChange(info: any) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList)
-      }
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`)
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`)
-      }
-    }
-  }
-
   function onChange(date: any, dateString: any) {
     console.log(date, dateString)
   }
@@ -59,52 +42,58 @@ export default function FormAddStaff() {
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Email'>
-        <Input placeholder='Basic usage' name='email' />
+        <Input placeholder='Basic usage' name='email' value={name} />
       </Form.Item>
       <Form.Item label='Tên đăng nhập'>
-        <Input placeholder='Basic usage' name='username' />
+        <Input placeholder='Basic usage' name='username' value={name} />
       </Form.Item>
       <Form.Item label='Mật khẩu'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Nhập lại mật khẩu'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Họ và tên'>
-        <Input placeholder='Basic usage' name='name' />
+        <Input placeholder='Basic usage' name='name' value={name} />
       </Form.Item>
       <Form.Item label='Ngày sinh'>
         <DatePicker onChange={onChange} />
       </Form.Item>
       <Form.Item label='Địa chỉ'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Quê quán'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Số CMND/CCCD'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Số điện thoại'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Phòng ban'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Chức vụ'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
       <Form.Item label='Quyền hạn'>
-        <Input placeholder='Basic usage' name='password' />
+        <Input placeholder='Basic usage' name='password' value={name} />
       </Form.Item>
-      <Form.Item label='Hình ảnh'>
-        <Upload {...props}>
-          <Button icon={<UploadOutlined />}>Click to Upload</Button>
-        </Upload>
+      <Form.Item label='Dragger'>
+        <Form.Item name='dragger' valuePropName='fileList' getValueFromEvent={normFile} noStyle>
+          <Upload.Dragger name='files' action='/upload.do'>
+            <p className='ant-upload-drag-icon'>
+              <InboxOutlined />
+            </p>
+            <p className='ant-upload-text'>Click or drag file to this area to upload</p>
+            <p className='ant-upload-hint'>Support for a single or bulk upload.</p>
+          </Upload.Dragger>
+        </Form.Item>
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
-          Submit
+          Cập nhật
         </Button>
       </Form.Item>
     </Form>
