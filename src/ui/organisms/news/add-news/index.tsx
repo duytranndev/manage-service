@@ -1,6 +1,8 @@
 import { InboxOutlined } from '@ant-design/icons'
-import { Button, DatePicker, Form, Input, Upload } from 'antd'
+import { Button, Form, Input, Upload } from 'antd'
 import React from 'react'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 
 const layout = {
   wrapperCol: {
@@ -8,7 +10,38 @@ const layout = {
   }
 }
 
-export default function index() {
+const modules = {
+  toolbar: [
+    [{ header: '1' }, { header: '2' }, { font: [] }],
+    [{ size: [] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+    ['link', 'image', 'video'],
+    ['clean']
+  ],
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false
+  }
+}
+
+const formats = [
+  'header',
+  'font',
+  'size',
+  'bold',
+  'italic',
+  'underline',
+  'strike',
+  'blockquote',
+  'list',
+  'bullet',
+  'indent',
+  'link',
+  'image',
+  'video'
+]
+export default function FormAddNews() {
   const handleOnSubmit = (e: any) => {
     console.log('e :>> ', e)
     e.preventDefault()
@@ -29,54 +62,21 @@ export default function index() {
     return e && e.fileList
   }
 
-  function onChange(date: any, dateString: any) {
-    console.log(date, dateString)
+  function onChange(e: any) {
+    console.log(e)
   }
   return (
     <Form
-      labelCol={{ span: 6 }}
-      wrapperCol={{ span: 14 }}
+      labelCol={{ span: 3 }}
+      wrapperCol={{ span: 20 }}
       layout='horizontal'
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
-      <Form.Item label='Email'>
-        <Input placeholder='Basic usage' name='email' />
+      <Form.Item label='Tiêu đề'>
+        <Input placeholder='Basic usage' name='title' />
       </Form.Item>
-      <Form.Item label='Tên đăng nhập'>
-        <Input placeholder='Basic usage' name='username' />
-      </Form.Item>
-      <Form.Item label='Mật khẩu'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Nhập lại mật khẩu'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Họ và tên'>
-        <Input placeholder='Basic usage' name='name' />
-      </Form.Item>
-      <Form.Item label='Ngày sinh'>
-        <DatePicker onChange={onChange} />
-      </Form.Item>
-      <Form.Item label='Địa chỉ'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Quê quán'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Số CMND/CCCD'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Số điện thoại'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Phòng ban'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Chức vụ'>
-        <Input placeholder='Basic usage' name='password' />
-      </Form.Item>
-      <Form.Item label='Quyền hạn'>
-        <Input placeholder='Basic usage' name='password' />
+      <Form.Item label='Nội dung'>
+        <ReactQuill modules={modules} formats={formats} onChange={onChange} />
       </Form.Item>
       <Form.Item label='Dragger'>
         <Form.Item name='dragger' valuePropName='fileList' getValueFromEvent={normFile} noStyle>

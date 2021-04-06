@@ -1,5 +1,7 @@
-import { Button, DatePicker, Form, Input, message } from 'antd'
-import React from 'react'
+import { Button, DatePicker, Form, Input } from 'antd'
+import React, { useState } from 'react'
+import { CLOUD_URI, PRESENT } from '../../../../share/common/api/api.constants'
+import { uploadSingle } from '../../../../share/handle/upload'
 
 const layout = {
   wrapperCol: {
@@ -9,51 +11,38 @@ const layout = {
 
 export default function FormAddStaff() {
   // const [user, setUser] = useState()
+  const [image, setImage] = useState()
+
+  const handleOnChangeImage = (e: any) => {
+    console.log(' :>> ', e.target.files)
+    setImage(e.target.files[0])
+  }
+  console.log('image :>> ', image)
+
   const handleOnSubmit = (e: any) => {
     console.log('e :>> ', e)
     e.preventDefault()
-    // const newUser = {
-    //   name: user?.name
-    // }
-    // console.log('newUser :>> ', newUser)
+    try {
+      const uploader = uploadSingle(image, CLOUD_URI, PRESENT)
+      console.log(
+        'uploaders :>> ',
+        uploader.then((res) => res)
+      )
+    } catch (err) {
+      console.error(err)
+    }
   }
-
   // const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
   //   setUser({ ...user, [e.currentTarget.name]: e.currentTarget.value })
   // }
-  const normFile = (e: any) => {
-    console.log('Upload event:', e)
-    if (Array.isArray(e)) {
-      return e
-    }
-    return e && e.fileList
-  }
-
-  const props = {
-    name: 'file',
-    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-    headers: {
-      authorization: 'authorization-text'
-    },
-    onChange(info: any) {
-      if (info.file.status !== 'uploading') {
-        console.log(info.file, info.fileList)
-      }
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`)
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`)
-      }
-    }
-  }
 
   function onChange(date: any, dateString: any) {
     console.log(date, dateString)
   }
   return (
     <Form
-      labelCol={{ span: 6 }}
-      wrapperCol={{ span: 14 }}
+      labelCol={{ span: 7 }}
+      wrapperCol={{ span: 15 }}
       layout='horizontal'
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
@@ -99,7 +88,7 @@ export default function FormAddStaff() {
       <Form.Item label='Hình ảnh'>
         <div className='file-field input-field'>
           <div className='btn'>
-            <input type='file' name='image' />
+            <input type='file' name='image' onChange={handleOnChangeImage} />
           </div>
         </div>
       </Form.Item>
