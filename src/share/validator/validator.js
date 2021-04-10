@@ -152,5 +152,10 @@ export const validate = (values: any, key?: any) => {
   } else if (values['department'].length < 8) {
     errors['department'] = 'Mật khẩu phải chứa ít nhất 8 ký tự!'
   }
+  if (!values['name']) {
+    errors['name'] = 'Vui lòng nhập name!'
+  } else if (values['name'].length < 8) {
+    errors['name'] = 'name khẩu phải chứa ít nhất 8 ký tự!'
+  }
   return errors
 }

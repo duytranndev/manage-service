@@ -13,7 +13,7 @@ const layout = {
   }
 }
 
-export default function FormUpdateField() {
+export default function FormAddService() {
   const {
     formData,
     handleInputChange,
@@ -58,11 +58,11 @@ export default function FormUpdateField() {
       layout='horizontal'
       hideRequiredMark
       onSubmitCapture={handleSubmit}>
-      <Form.Item label='Tên lĩnh vực'>
+      <Form.Item label='Đăng ký hộ khẩu'>
         <Input
-          placeholder='Nhập tên lĩnh vực...'
+          placeholder='Nhập hộ khẩu...'
           onInput={(e) => setErrors({ ...errors, [e.target.name]: '' })}
-          name='name'
+          name='hokhau'
           onChange={handleInputChange}
         />
         {errors.name && (
@@ -72,18 +72,18 @@ export default function FormUpdateField() {
         )}
       </Form.Item>
       <Form.Item label='Mô tả'>
-        <Input placeholder='Nhập mô tả...' name='description' onChange={handleInputChange} />
-        {errors.description && (
+        <Input placeholder='Nhập mô tả...' name='mota' onChange={handleInputChange} />
+        {errors.decription && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.description}
+            *{errors.decription}
           </p>
         )}
       </Form.Item>
-      <Form.Item label='Mã lĩnh vực'>
-        <Input placeholder='Nhập mã lĩnh vực...' name='fieldCode' onChange={handleInputChange} />
-        {errors.fieldCode && (
+      <Form.Item label='Mã đơn vị'>
+        <Input placeholder='Nhập mã đơn vị...' name='unitCode' onChange={handleInputChange} />
+        {errors.unitCode && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.fieldCode}
+            *{errors.unitCode}
           </p>
         )}
       </Form.Item>

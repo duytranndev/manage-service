@@ -13,7 +13,7 @@ const layout = {
   }
 }
 
-export default function FormUpdateField() {
+export default function FormAddField() {
   const {
     formData,
     handleInputChange,

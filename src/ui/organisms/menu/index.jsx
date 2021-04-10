@@ -37,13 +37,13 @@ export default function MenuAdmin() {
           <Link to={`${match.path}/staff`}>Nhân Viên</Link>
         </Menu.Item>
         <Menu.Item key='3' icon={<GlobalOutlined />}>
-          <Link to={`${match.path}`}>Lĩnh Vực</Link>
+          <Link to={`${match.path}/field`}>Lĩnh Vực</Link>
         </Menu.Item>
         <Menu.Item key='4' icon={<ReadOutlined />}>
           <Link to={`${match.path}`}>Đơn Vị</Link>
         </Menu.Item>
         <Menu.Item key='5' icon={<ReadOutlined />}>
-          <Link to={`${match.path}`}>Dịch Vụ</Link>
+          <Link to={`${match.path}/service`}>Dịch Vụ</Link>
         </Menu.Item>
 
         <SubMenu key='sub1' icon={<ReadOutlined />} title={<Link to={`${match.path}/profile`}>Quản Lý Hồ Sơ</Link>}>
