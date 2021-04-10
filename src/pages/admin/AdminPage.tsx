@@ -58,7 +58,7 @@ export default function AdminPage() {
             <StarTwoTone className='icon' />
             <p className='title'>Nhân Viên</p>
           </Link>
-          <Link to={`${match.path}`} className='box-icon'>
+          <Link to={`${match.path}/field`} className='box-icon'>
             <StarTwoTone className='icon' />
             <p className='title'>Lĩnh Vực</p>
           </Link>
