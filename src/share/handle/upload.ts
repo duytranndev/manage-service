@@ -9,8 +9,7 @@ export const uploadSingle = async (file: any, url: string, preset: string) => {
   const result = await axios.post(url, formData, {
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
   })
-  console.log('result :>> ', result.data.url)
-  return result.data.url
+  return result
 }
 
 export function uploadMulti(files: never[], url: string, tag: string, preset: string) {
