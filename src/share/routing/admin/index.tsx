@@ -25,5 +25,9 @@ export default function AdminRouting() {
     }
   ]
 
-  return <Switch>{routeList.map((item) => item.component)}</Switch>
+  return (
+    <>
+      <Switch>{routeList.map((item) => item.component)}</Switch>
+    </>
+  )
 }

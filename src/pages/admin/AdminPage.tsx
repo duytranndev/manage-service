@@ -1,40 +1,58 @@
 import { StarTwoTone } from '@ant-design/icons'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
+import { DEPARTMENT_URL } from '../../share/common/api/api.constants'
+import { moduleApi } from '../../share/handle/fetchData'
+import { Department } from '../../share/interface/department.interface'
+import TransferPaper from '../../ui/organisms/household/transfer-paper'
 import ProfileReceived from '../../ui/organisms/profile/list-profile'
 import ProgressChart from '../../ui/organisms/progress'
 import './admin.scss'
 export default function AdminPage() {
   const match = useRouteMatch()
+  const [department, setDepartment] = useState<Department[]>([])
+
+  useEffect(() => {
+    const params = {
+      departmentCode: 'TC'
+    }
+    moduleApi
+      .get(DEPARTMENT_URL, params)
+      .then((res) => setDepartment(res.data.data))
+      .catch((error) => console.log('error :>> ', error))
+  }, [])
+
+  console.log('department :>> ', department)
+
   const data: any = [
     {
-      name: 'dan su',
-      code: 123123123123123123123,
-      slug: 'awdawdawd',
+      name: 'dan su 1',
+      code: 12131123,
+      slug: 'awdawdaawd',
       check: true
     },
     {
-      name: 'dan su',
-      code: 123123123123123123123,
-      slug: 'awdawdawd',
+      name: 'dan su 2',
+      code: 1223123,
+      slug: 'awdawdsawd',
       check: true
     },
     {
-      name: 'dan su',
-      code: 123123123123123123123,
-      slug: 'awdawdawd',
+      name: 'dan su 3',
+      code: 1231323,
+      slug: 'awdadwdawd',
       check: true
     },
     {
-      name: 'dan su',
-      code: 123123123123123123123,
-      slug: 'awdawdawd',
+      name: 'dan su 4',
+      code: 1231232,
+      slug: 'awdawdgawd',
       check: false
     },
     {
-      name: 'dan su',
-      code: 123123123123123123123,
-      slug: 'awdawdawd',
+      name: 'dan su 5',
+      code: 1231231,
+      slug: 'awdawdddawd',
       check: false
     }
   ]
@@ -125,15 +143,7 @@ export default function AdminPage() {
           </div>
         </div>
       </div>
-      <div className='row row-message'>
-        <div className='col-lg-12 message-received'>
-          <h4 style={{ color: 'red' }}>Danh sách phòng ban</h4>
-
-          <div className='row title' style={{ display: 'flex' }}>
-            <ProfileReceived data={data} />
-          </div>
-        </div>
-      </div>
+      <TransferPaper />
     </>
   )
 }
