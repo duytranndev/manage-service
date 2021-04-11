@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
 import React from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import './management.scss'
 
 const data = [
@@ -36,10 +36,6 @@ const data = [
 ]
 
 export default function ManagementDepartment() {
-  const match = useRouteMatch()
-  if (match.path === '/admin/department') {
-    match.path = '/admin'
-  }
   return (
     <TableContainer component={Paper}>
       <Table size='medium' aria-label='a dense table'>
@@ -67,17 +63,17 @@ export default function ManagementDepartment() {
               </TableCell>
               <TableCell align='left'>
                 <Space align='center' size='small'>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/admin/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
                       <SearchOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/admin/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
                       <ToolOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/admin/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='error'>
                       <DeleteOutlined />
                     </Tag>

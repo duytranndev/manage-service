@@ -17,7 +17,7 @@ export default function AdminPage() {
       departmentCode: 'TC'
     }
     moduleApi
-      .get(DEPARTMENT_URL, params)
+      .get(DEPARTMENT_URL)
       .then((res) => setDepartment(res.data.data))
       .catch((error) => console.log('error :>> ', error))
   }, [])

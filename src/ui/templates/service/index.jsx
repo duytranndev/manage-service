@@ -20,7 +20,7 @@ export default function Service() {
       <Button type='primary' onClick={handleShowDrawer}>
         <PlusOutlined /> Thêm dịch vụ
       </Button>
-      <DrawerComponent title='Thêm nhân viên' visible={visible} onClose={handleCloseDrawer} width={680}>
+      <DrawerComponent title='Thêm dịch vụ' visible={visible} onClose={handleCloseDrawer} width={680}>
         <FormAddService />
       </DrawerComponent>
     </>
