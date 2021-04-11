@@ -1,10 +1,9 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd'
+import { Button, Form, Input, Select } from 'antd'
 import React, { useState } from 'react'
 import { CLOUD_URI, PRESENT, STAFF_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { uploadSingle } from '../../../../share/handle/upload'
 import { useForm } from '../../../../share/hooks/useForm'
-import { Filed } from '../../../../share/interface/field.interface'
 const { Option } = Select
 
 const layout = {
@@ -14,15 +13,10 @@ const layout = {
 }
 
 export default function FormAddService() {
-  const {
-    formData,
-    handleInputChange,
-    setErrors,
-    handleInputValidation,
-    errors,
-    isSubmitting,
-    handleSubmit
-  } = useForm ({}, handleOnSubmit)
+  const { formData, handleInputChange, setErrors, handleInputValidation, errors, isSubmitting, handleSubmit } = useForm(
+    {},
+    handleOnSubmit
+  )
   const [image, setImage] = useState()
   const [department, setDepartment] = useState()
 
@@ -42,7 +36,7 @@ export default function FormAddService() {
   console.log('errors :>> ', errors)
   console.log('formData :>> ', formData)
 
-  async function handleOnSubmit(){
+  async function handleOnSubmit() {
     let uploader = await uploadSingle(image, CLOUD_URI, PRESENT)
     const imageUrl = uploader.data.url
     const newStaff = {
@@ -58,11 +52,11 @@ export default function FormAddService() {
       layout='horizontal'
       hideRequiredMark
       onSubmitCapture={handleSubmit}>
-      <Form.Item label='Đăng ký hộ khẩu'>
+      <Form.Item label='Tên dịch vụ'>
         <Input
-          placeholder='Nhập hộ khẩu...'
+          placeholder='Nhập tên dịch vụ...'
           onInput={(e) => setErrors({ ...errors, [e.target.name]: '' })}
-          name='hokhau'
+          name='name'
           onChange={handleInputChange}
         />
         {errors.name && (
@@ -73,9 +67,9 @@ export default function FormAddService() {
       </Form.Item>
       <Form.Item label='Mô tả'>
         <Input placeholder='Nhập mô tả...' name='mota' onChange={handleInputChange} />
-        {errors.decription && (
+        {errors.description && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.decription}
+            *{errors.description}
           </p>
         )}
       </Form.Item>
