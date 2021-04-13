@@ -14,15 +14,7 @@ const layout = {
 }
 
 export default function FormAddStaff() {
-  const {
-    formData,
-    handleInputChange,
-    setErrors,
-    handleInputValidation,
-    errors,
-    isSubmitting,
-    handleSubmit
-  } = useForm<Staff>({}, handleOnSubmit)
+  const { formData, handleInputChange, setErrors, errors, handleSubmit } = useForm<Staff>({}, handleOnSubmit)
   const [image, setImage] = useState()
   const [department, setDepartment] = useState()
 

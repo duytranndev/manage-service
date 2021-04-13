@@ -39,6 +39,13 @@ const data = [
   }
 ]
 
+
+// nó có sự thay đổi của của nhánh
+// nội dung nhánh không đồng nhất
+// code cũ và code mới bị xung đột conflic với nhau
+// CONFLICT (content): Merge conflict in src/ui/organisms/department/list-department/index.tsx
+// nên m phải vào cái Merge changes này để xem và chấp thuận cái code nào
+// như bên dưới là t chấp thuận cái code hiện giờ của m => accept current change
 export default function ManagementDepartment() {
   const [visible, setVisible] = useState<boolean>(false)
   const match = useRouteMatch()
@@ -75,17 +82,17 @@ export default function ManagementDepartment() {
               </TableCell>
               <TableCell align='left'>
                 <Space align='center' size='small'>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/admin/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
                       <SearchOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/admin/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
                       <ToolOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/admin/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='error'>
                       <DeleteOutlined />
                     </Tag>
