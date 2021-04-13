@@ -1,4 +1,6 @@
 import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
+import { Button, DatePicker, Form, Input, Select } from 'antd'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -7,9 +9,11 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
 import './management.scss'
+import DrawerComponent from '../../../molecules/drawer'
+import FormAddDepartment from '../add-department'
 
 const data = [
   {
@@ -36,9 +40,13 @@ const data = [
 ]
 
 export default function ManagementDepartment() {
+  const [visible, setVisible] = useState<boolean>(false)
   const match = useRouteMatch()
-  if (match.path === '/admin/department') {
-    match.path = '/admin'
+  const handleShowDrawer = () => {
+    setVisible(true)
+  }
+  const handleCloseDrawer = () => {
+    setVisible(false)
   }
   return (
     <TableContainer component={Paper}>
@@ -88,6 +96,8 @@ export default function ManagementDepartment() {
           ))}
         </TableBody>
       </Table>
+
     </TableContainer>
+
   )
 }
