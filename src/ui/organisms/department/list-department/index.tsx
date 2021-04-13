@@ -1,4 +1,6 @@
 import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
+import { Button, DatePicker, Form, Input, Select } from 'antd'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -7,9 +9,11 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useRouteMatch } from 'react-router-dom'
 import './management.scss'
+import DrawerComponent from '../../../molecules/drawer'
+import FormAddDepartment from '../add-department'
 
 const data = [
   {
@@ -35,7 +39,22 @@ const data = [
   }
 ]
 
+
+// nó có sự thay đổi của của nhánh
+// nội dung nhánh không đồng nhất
+// code cũ và code mới bị xung đột conflic với nhau
+// CONFLICT (content): Merge conflict in src/ui/organisms/department/list-department/index.tsx
+// nên m phải vào cái Merge changes này để xem và chấp thuận cái code nào
+// như bên dưới là t chấp thuận cái code hiện giờ của m => accept current change
 export default function ManagementDepartment() {
+  const [visible, setVisible] = useState<boolean>(false)
+  const match = useRouteMatch()
+  const handleShowDrawer = () => {
+    setVisible(true)
+  }
+  const handleCloseDrawer = () => {
+    setVisible(false)
+  }
   return (
     <TableContainer component={Paper}>
       <Table size='medium' aria-label='a dense table'>
@@ -84,6 +103,8 @@ export default function ManagementDepartment() {
           ))}
         </TableBody>
       </Table>
+
     </TableContainer>
+
   )
 }

@@ -2,6 +2,7 @@ import { PlusOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import React, { useState } from 'react'
 import DrawerComponent from '../../molecules/drawer'
+import ManagementDepartment from '../../organisms/department/list-department'
 import SearchComponent from '../../organisms/search'
 import FormAddStaff from '../../organisms/staff/add-staff'
 
