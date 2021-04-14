@@ -1,6 +1,4 @@
 import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
-import { PlusOutlined } from '@ant-design/icons'
-import { Button, DatePicker, Form, Input, Select } from 'antd'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,102 +7,107 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
+import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
+import { moduleApi } from '../../../../share/handle/fetchData'
+import { DepartmentInterface } from '../../../../share/interface/department.interface'
+import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
+import { AppState } from '../../../../store/types'
 import './management.scss'
-import DrawerComponent from '../../../molecules/drawer'
-import FormAddDepartment from '../add-department'
 
-const data = [
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd',
-    check: true
-  },
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd'
-  },
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd'
-  },
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd'
-  }
-]
-
-
-// nó có sự thay đổi của của nhánh
-// nội dung nhánh không đồng nhất
-// code cũ và code mới bị xung đột conflic với nhau
-// CONFLICT (content): Merge conflict in src/ui/organisms/department/list-department/index.tsx
-// nên m phải vào cái Merge changes này để xem và chấp thuận cái code nào
-// như bên dưới là t chấp thuận cái code hiện giờ của m => accept current change
 export default function ManagementDepartment() {
-  const [visible, setVisible] = useState<boolean>(false)
-  const match = useRouteMatch()
-  const handleShowDrawer = () => {
-    setVisible(true)
+  const department = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
+  const dispatch = useDispatch()
+
+  const handleOnDelete = async (id: any) => {
+    const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
+    await toast.promise(myPromise, {
+      loading: 'Loading',
+      success: 'Xoá phòng ban thành công',
+      error: 'Xoá phòng ban thất bại'
+    })
+    const status = await myPromise.then((response) => response.status)
+    if (status === 204) {
+      dispatch({ type: DELETE_DEPARTMENT, id: id })
+    }
   }
-  const handleCloseDrawer = () => {
-    setVisible(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
+  const showModal = () => {
+    setIsModalVisible(true)
+  }
+
+  const handleOk = (id: any) => {
+    handleOnDelete(id)
+    setIsModalVisible(false)
+  }
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
   }
   return (
-    <TableContainer component={Paper}>
-      <Table size='medium' aria-label='a dense table'>
-        <TableHead>
-          <TableRow>
-            <TableCell>Mã hồ sơ</TableCell>
-            <TableCell align='right'>Lĩnh vực</TableCell>
-            <TableCell align='right'>Tên văn bản</TableCell>
-            <TableCell align='right'>Ngày gửi</TableCell>
-            <TableCell align='right'>Trạng thái</TableCell>
-            <TableCell align='center'>Action</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.map((row: any) => (
-            <TableRow key={row.name}>
-              <TableCell component='th' scope='row'>
-                {row.code}
-              </TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>
-                {row.check ? <Tag color='success'>Đã Duyệt</Tag> : <Tag color='error'>Chưa Duyệt</Tag>}
-              </TableCell>
-              <TableCell align='left'>
-                <Space align='center' size='small'>
-                  <Link to={`/admin/department/${row.slug}`}>
-                    <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
-                      <SearchOutlined />
-                    </Tag>
-                  </Link>
-                  <Link to={`/admin/department/${row.slug}`}>
-                    <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
-                      <ToolOutlined />
-                    </Tag>
-                  </Link>
-                  <Link to={`/admin/department/${row.slug}`}>
-                    <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='error'>
+    <>
+      <TableContainer component={Paper}>
+        <Table size='medium' aria-label='a dense table'>
+          <TableHead>
+            <TableRow>
+              <TableCell>Mã phòng</TableCell>
+              <TableCell align='center'>Tên phòng</TableCell>
+              <TableCell align='center'>Số lượng nhân viên</TableCell>
+              <TableCell align='center'>Ngày tạo</TableCell>
+              <TableCell align='center'>Liên kết tĩnh</TableCell>
+              <TableCell align='center'>Action</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {department.map((row: DepartmentInterface) => (
+              <TableRow key={row._id}>
+                <TableCell component='th' scope='row'>
+                  {row.departmentCode}
+                </TableCell>
+                <TableCell align='center'>{row.name}</TableCell>
+                <TableCell align='center'>{row.totalStaff}</TableCell>
+                <TableCell align='center'>{row.insertTime}</TableCell>
+                <TableCell align='center'>{row.slug}</TableCell>
+
+                <TableCell align='center'>
+                  <Space align='center' size='small'>
+                    <Link to={`/admin/department/${row.slug}`}>
+                      <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
+                        <SearchOutlined />
+                      </Tag>
+                    </Link>
+                    <Link to={`/admin/department/${row.slug}`}>
+                      <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
+                        <ToolOutlined />
+                      </Tag>
+                    </Link>
+                    <Tag
+                      onClick={showModal}
+                      // onClick={() => handleOnDelete(row._id)}
+                      style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                      color='error'>
                       <DeleteOutlined />
                     </Tag>
-                  </Link>
-                </Space>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-    </TableContainer>
-
+                    <Modal
+                      title='Basic Modal'
+                      visible={isModalVisible}
+                      onOk={() => handleOk(row._id)}
+                      onCancel={handleCancel}>
+                      <p>Bạn có chắc chắn muốn xoá {row?.name}</p>
+                    </Modal>
+                  </Space>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Toaster />
+    </>
   )
 }

@@ -10,7 +10,6 @@ import { Space, Tag } from 'antd'
 import React from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
 
-
 const data = [
   {
     name: 'dan su',
@@ -46,10 +45,10 @@ export default function ManagementSender() {
         <TableHead>
           <TableRow>
             <TableCell>Họ Tên</TableCell>
-            <TableCell align='right'>Email</TableCell>
-            <TableCell align='right'>Số điện thoại</TableCell>
-            <TableCell align='right'>Địa chỉ</TableCell>
-            <TableCell align='right'>ID hồ sơ</TableCell>
+            <TableCell align='center'>Email</TableCell>
+            <TableCell align='center'>Số điện thoại</TableCell>
+            <TableCell align='center'>Địa chỉ</TableCell>
+            <TableCell align='center'>ID hồ sơ</TableCell>
             <TableCell align='center'>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -59,11 +58,11 @@ export default function ManagementSender() {
               <TableCell component='th' scope='row'>
                 {row.code}
               </TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='left'>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>
                 <Space align='center' size='small'>
                   <Link to={`${match.path}/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>

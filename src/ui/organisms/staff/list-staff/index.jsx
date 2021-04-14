@@ -10,7 +10,6 @@ import { Space, Tag } from 'antd'
 import React from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
 
-
 const data = [
   {
     name: 'dan su',
@@ -46,17 +45,12 @@ export default function ManagementStaff() {
         <TableHead>
           <TableRow>
             <TableCell>Họ tên</TableCell>
-            <TableCell align='right'>Phòng ban</TableCell>
-            <TableCell align='right'>Chức vụ</TableCell>
-            <TableCell align='right'>Số điện thoại</TableCell>
-            <TableCell align='right'>Quyền hạn</TableCell>
-            <TableCell align='right'>Ngày sinh</TableCell>
-            <TableCell align='right'>Địa chỉ</TableCell>
-            <TableCell align='right'>Quê quán</TableCell>
-            <TableCell align='right'>Email</TableCell>
-            <TableCell align='right'>tên đăng nhập</TableCell>
-            <TableCell align='right'>mật khẩu</TableCell>
-            <TableCell align='right'>Hình ảnh</TableCell>
+            <TableCell align='center'>Phòng ban</TableCell>
+            <TableCell align='center'>Chức vụ</TableCell>
+            <TableCell align='center'>Số điện thoại</TableCell>
+            <TableCell align='center'>Quyền hạn</TableCell>
+            <TableCell align='center'>Ngày sinh</TableCell>
+            <TableCell align='center'>Địa chỉ</TableCell>
             <TableCell align='center'>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -66,18 +60,13 @@ export default function ManagementStaff() {
               <TableCell component='th' scope='row'>
                 {row.code}
               </TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='left'>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>{row.name}</TableCell>
+              <TableCell align='center'>
                 <Space align='center' size='small'>
                   <Link to={`${match.path}/department/${row.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>

@@ -13,10 +13,10 @@ export const moduleApi = {
   },
   update(url: string, body: any) {
     const path = `${url}/${body.id}`
-    return axios.post(path, body)
+    return axios.patch(path, body)
   },
   delete(url: string, id: string) {
     const path = `${url}/${id}`
-    return axios.post(path)
+    return axios.delete(path)
   }
 }
