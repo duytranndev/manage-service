@@ -1,9 +1,10 @@
-import { Button, Form, Input, Select } from 'antd'
+import { Button, DatePicker, Form, Input, Select } from 'antd'
 import React, { useState } from 'react'
 import { CLOUD_URI, PRESENT, STAFF_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { uploadSingle } from '../../../../share/handle/upload'
 import { useForm } from '../../../../share/hooks/useForm'
+import { Staff } from '../../../../share/interface/staff.interface'
 const { Option } = Select
 
 const layout = {
@@ -12,11 +13,16 @@ const layout = {
   }
 }
 
-export default function FormAddService() {
-  const { formData, handleInputChange, setErrors, handleInputValidation, errors, isSubmitting, handleSubmit } = useForm(
-    {},
-    handleOnSubmit
-  )
+export default function FormAddDepartment() {
+  const {
+    formData,
+    handleInputChange,
+    setErrors,
+    handleInputValidation,
+    errors,
+    isSubmitting,
+    handleSubmit
+  } = useForm({}, handleOnSubmit)
   const [image, setImage] = useState()
   const [department, setDepartment] = useState()
 
@@ -52,35 +58,34 @@ export default function FormAddService() {
       layout='horizontal'
       hideRequiredMark
       onSubmitCapture={handleSubmit}>
-      <Form.Item label='Tên dịch vụ'>
-        <Input
-          placeholder='Nhập tên dịch vụ...'
-          onInput={(e) => setErrors({ ...errors, [e.target.name]: '' })}
-          name='name'
-          onChange={handleInputChange}
-        />
-        {errors.name && (
+      
+      <Form.Item label='Tên Phòng Ban'>
+        <Input placeholder='Nhập tên phòng ban...' name='name-department' onChange={handleInputChange} />
+        {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.name}
+            *{errors.password}
           </p>
         )}
       </Form.Item>
-      <Form.Item label='Mô tả'>
-        <Input placeholder='Nhập mô tả...' name='mota' onChange={handleInputChange} />
-        {errors.description && (
+  
+      <Form.Item label='Mã Phòng Ban'>
+        <Input placeholder='Nhập mã phòng ban' name='id-department' onChange={handleInputChange} />
+        {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.description}
+            *{errors.password}
           </p>
         )}
       </Form.Item>
-      <Form.Item label='Mã đơn vị'>
-        <Input placeholder='Nhập mã đơn vị...' name='unitCode' onChange={handleInputChange} />
-        {errors.unitCode && (
+      
+      <Form.Item label='Miêu tả'>
+        <Input placeholder='Nhập nội dung miêu tả' name='describe' onChange={handleInputChange} />
+        {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.unitCode}
+            *{errors.password}
           </p>
         )}
       </Form.Item>
+
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
           Submit

@@ -19,8 +19,7 @@ export default function Filed() {
       <Button type='primary' onClick={handleShowDrawer}>
         <PlusOutlined /> Thêm lĩnh vực
       </Button>
-      <ManagementField/>
-      <DrawerComponent title='Thêm nhân viên' visible={visible} onClose={handleCloseDrawer} width={680}>
+      <DrawerComponent title='Thêm lĩnh vực' visible={visible} onClose={handleCloseDrawer} width={680}>
         <FormAddField />
       </DrawerComponent>
     </>

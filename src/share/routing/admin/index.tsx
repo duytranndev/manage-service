@@ -3,6 +3,7 @@ import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import AdminPage from '../../../pages/admin/AdminPage'
 import ManagementDepartment from '../../../ui/organisms/department/list-department'
+import Department from '../../../ui/templates/department'
 import Filed from '../../../ui/templates/filed'
 import ManageNews from '../../../ui/templates/manage-news'
 import Profile from '../../../ui/templates/profile'
@@ -18,7 +19,7 @@ export default function AdminRouting() {
 
   const routeList = [
     {
-      component: <Route key='1' path={`${match.path}/department`} component={ManagementDepartment} exact />
+      component: <Route key='1' path={`${match.path}/department`} component={Department} exact />
     },
     {
       component: <Route key='2' path={`/admin`} component={AdminPage} exact />
