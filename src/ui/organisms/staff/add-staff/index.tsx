@@ -5,6 +5,7 @@ import { moduleApi } from '../../../../share/handle/fetchData'
 import { uploadSingle } from '../../../../share/handle/upload'
 import { useForm } from '../../../../share/hooks/useForm'
 import { Staff } from '../../../../share/interface/staff.interface'
+import { validate } from '../../../../share/validator/validator'
 const { Option } = Select
 
 const layout = {
@@ -14,7 +15,10 @@ const layout = {
 }
 
 export default function FormAddStaff() {
-  const { formData, handleInputChange, setErrors, errors, handleSubmit } = useForm<Staff>({}, handleOnSubmit)
+  const { formData, handleInputChange, isReady, setIsSubmitting, setErrors, errors } = useForm<Staff>(
+    {},
+    handleOnSubmit
+  )
   const [image, setImage] = useState()
   const [department, setDepartment] = useState()
 
@@ -31,17 +35,19 @@ export default function FormAddStaff() {
     setErrors({ ...errors, department: '' })
   }
 
-  console.log('errors :>> ', errors)
-  console.log('formData :>> ', formData)
-
-  async function handleOnSubmit(): Promise<void> {
-    let uploader = await uploadSingle(image, CLOUD_URI, PRESENT)
-    const imageUrl = uploader.data.url
-    const newStaff = {
-      name: formData.name,
-      image: imageUrl
+  async function handleOnSubmit(e: any): Promise<void> {
+    e.preventDefault()
+    setErrors(validate(formData))
+    setIsSubmitting(true)
+    if (isReady) {
+      let uploader = await uploadSingle(image, CLOUD_URI, PRESENT)
+      const imageUrl = uploader.data.url
+      const newStaff = {
+        name: formData.name,
+        image: imageUrl
+      }
+      moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
     }
-    moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
   }
   return (
     <Form
@@ -49,7 +55,7 @@ export default function FormAddStaff() {
       wrapperCol={{ span: 15 }}
       layout='horizontal'
       hideRequiredMark
-      onSubmitCapture={handleSubmit}>
+      onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Email'>
         <Input
           placeholder='Nhập email...'

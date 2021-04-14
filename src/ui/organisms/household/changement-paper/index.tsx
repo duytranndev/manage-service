@@ -1,9 +1,10 @@
 import { createStyles, Grid, makeStyles, TextField, Theme } from '@material-ui/core'
-import { Collapse, Form, Radio } from 'antd'
-import { ChangeEvent, default as React, useState } from 'react'
+import { Collapse, Form, Radio, Select } from 'antd'
+import React, { ChangeEvent, useState } from 'react'
 import { useForm } from '../../../../share/hooks/useForm'
 import { validate } from '../../../../share/validator/validator'
 const { Panel } = Collapse
+const { Option } = Select
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -23,6 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 )
+
 type TransferPaperProps = {
   onSubmit: Function
 }
@@ -37,12 +39,7 @@ type PeopleProps = {
   relative: string
 }
 
-export default function TransferPaper({ onSubmit }: TransferPaperProps) {
-  const [selectedDate, setSelectedDate] = React.useState<Date | null>(new Date('2014-08-18T21:11:54'))
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date)
-  }
+export default function ChangementPaper({ onSubmit }: TransferPaperProps) {
   const classes = useStyles()
   const [value, setValue] = useState('')
   const { formData, handleInputChange, setErrors, errors, isReady, setFormData, setIsSubmitting } = useForm<any>({})
@@ -111,11 +108,104 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
     }
     return null
   }
-
   return (
-    <Form layout='horizontal' wrapperCol={{ span: 20 }} hideRequiredMark onSubmitCapture={handleOnSubmit}>
+    <Form layout='horizontal' wrapperCol={{ span: 16 }} hideRequiredMark>
       <Collapse>
-        <Panel header='Khai báo thông tin người chuyển hộ khẩu' key='1'>
+        <Panel header='Thông tin về người viết phiếu báo' key='1'>
+          <div className={classes.root}>
+            <Grid container spacing={3}>
+              <Grid item xs={9}>
+                <TextField
+                  id='standard-full-width'
+                  label='Họ và tên'
+                  style={{ margin: 8 }}
+                  placeholder='Họ và tên'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Radio.Group className={classes.paper} onChange={onChangeGender} value={value}>
+                  <Radio value='Nam'>Nam</Radio>
+                  <Radio value='Nữ'>Nữ</Radio>
+                  <Radio value='Khác'>Khác</Radio>
+                </Radio.Group>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id='standard-full-width'
+                  label='CMND số'
+                  style={{ margin: 8 }}
+                  placeholder='CMND số'
+                  fullWidth
+                  type='number'
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  id='standard-full-width'
+                  label='Hộ chiếu số'
+                  style={{ margin: 8 }}
+                  placeholder='Hộ chiếu số'
+                  type='number'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id='standard-full-width'
+                  label='Nơi thường trú'
+                  style={{ margin: 8 }}
+                  placeholder='Nơi thường trú'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  id='standard-full-width'
+                  label='Địa chỉ chỗ ở hiện nay'
+                  style={{ margin: 8 }}
+                  placeholder='Địa chỉ chỗ ở hiện nay'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <TextField
+                  id='standard-full-width'
+                  label='Số điện thoại liên hệ'
+                  style={{ margin: 8 }}
+                  type='number'
+                  placeholder='Số điện thoại liên hệ'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+            </Grid>
+          </div>
+        </Panel>
+        <Panel header='Thông tin về người có thay đổi hộ khẩu, nhân khẩu' key='2'>
           <div className={classes.root}>
             <Grid container spacing={4}>
               <Grid item xs={9}>
@@ -140,12 +230,13 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                 </Radio.Group>
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={2}>
                 <TextField
                   id='standard-full-width'
                   label='Ngày, tháng, năm sinh'
                   style={{ margin: 8 }}
                   placeholder='Ngày, tháng, năm sinh'
+                  type='date'
                   fullWidth
                   margin='normal'
                   InputLabelProps={{
@@ -154,7 +245,7 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                 <TextField
                   id='standard-full-width'
                   label='Nơi sinh'
@@ -167,8 +258,7 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                   }}
                 />
               </Grid>
-
-              <Grid item xs={4}>
+              <Grid item xs={5}>
                 <TextField
                   id='standard-full-width'
                   label='Nguyên quán'
@@ -181,8 +271,7 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                   }}
                 />
               </Grid>
-
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <TextField
                   id='standard-full-width'
                   label='Dân tộc'
@@ -196,12 +285,12 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <TextField
                   id='standard-full-width'
-                  label='Tôn giáo'
+                  label='Quốc tịch'
                   style={{ margin: 8 }}
-                  placeholder='Tôn giáo'
+                  placeholder='Quốc tịch'
                   fullWidth
                   margin='normal'
                   InputLabelProps={{
@@ -210,12 +299,42 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                 />
               </Grid>
 
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <TextField
                   id='standard-full-width'
-                  label='Quốc tịch'
+                  label='CMND số'
                   style={{ margin: 8 }}
-                  placeholder='Quốc tịch'
+                  type='number'
+                  placeholder='CMND số'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  id='standard-full-width'
+                  label='Hộ chiếu số'
+                  style={{ margin: 8 }}
+                  type='number'
+                  placeholder='Hộ chiếu số'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  id='standard-full-width'
+                  label='Nghề nghiệp, nơi làm việc'
+                  style={{ margin: 8 }}
+                  placeholder='Nghề nghiệp, nơi làm việc'
                   fullWidth
                   margin='normal'
                   InputLabelProps={{
@@ -238,12 +357,41 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                 />
               </Grid>
 
+              <Grid item xs={9}>
+                <TextField
+                  id='standard-full-width'
+                  label='Địa chỉ chỗ ở hiện nay'
+                  style={{ margin: 8 }}
+                  placeholder='Địa chỉ chỗ ở hiện nay'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={3}>
+                <TextField
+                  id='standard-full-width'
+                  label='Số điện thoại liên hệ'
+                  type='number'
+                  style={{ margin: 8 }}
+                  placeholder='Số điện thoại liên hệ'
+                  fullWidth
+                  margin='normal'
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
+
               <Grid item xs={6}>
                 <TextField
                   id='standard-full-width'
-                  label='Họ và tên chủ hộ nơi đi'
+                  label='Họ và tên chủ hộ'
                   style={{ margin: 8 }}
-                  placeholder='Họ và tên chủ hộ nơi đi'
+                  placeholder='Họ và tên chủ hộ'
                   fullWidth
                   margin='normal'
                   InputLabelProps={{
@@ -268,22 +416,9 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
               <Grid item xs={12}>
                 <TextField
                   id='standard-full-width'
-                  label='Lý do chuyển hộ khẩu'
+                  label='Nội dung thay đổi hộ khẩu, nhân khẩu'
                   style={{ margin: 8 }}
-                  placeholder='Lý do chuyển hộ khẩu'
-                  fullWidth
-                  margin='normal'
-                  InputLabelProps={{
-                    shrink: true
-                  }}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id='standard-full-width'
-                  label='Nơi chuyển đến'
-                  style={{ margin: 8 }}
-                  placeholder='Nơi chuyển đến'
+                  placeholder='Nội dung thay đổi hộ khẩu, nhân khẩu'
                   fullWidth
                   margin='normal'
                   InputLabelProps={{
@@ -294,7 +429,7 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
             </Grid>
           </div>
         </Panel>
-        <Panel header='Những người trong hộ cùng chuyển hộ khẩu' key='2'>
+        <Panel header='Những người trong hộ cùng chuyển hộ khẩu' key='3'>
           <div>
             <Grid container spacing={0} style={{ display: 'flex' }}>
               <Grid item xs={1}>
@@ -312,10 +447,10 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
               <Grid item xs={2}>
                 <TextField
                   id='standard-secondary'
-                  label='Ngày tháng năm sinh'
+                  label='Ngày, tháng, năm sinh'
                   size='small'
-                  color='secondary'
                   type='date'
+                  color='secondary'
                   fullWidth
                   InputLabelProps={{
                     shrink: true
@@ -337,7 +472,7 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
               <Grid item xs={1}>
                 <TextField
                   id='standard-secondary'
-                  label='Nguyên quán'
+                  label='Nơi sinh'
                   size='small'
                   color='secondary'
                   fullWidth
@@ -346,7 +481,18 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                   }}
                 />
               </Grid>
-
+              <Grid item xs={1}>
+                <TextField
+                  id='standard-secondary'
+                  label='Nghề nghiệp'
+                  size='small'
+                  color='secondary'
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true
+                  }}
+                />
+              </Grid>
               <Grid item xs={1}>
                 <TextField
                   id='standard-secondary'
@@ -377,7 +523,6 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                   label='CMND số (Hộ chiếu số)'
                   size='small'
                   color='secondary'
-                  type='number'
                   fullWidth
                   InputLabelProps={{
                     shrink: true
