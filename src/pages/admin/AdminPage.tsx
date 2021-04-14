@@ -13,11 +13,11 @@ export default function AdminPage() {
   const [department, setDepartment] = useState<Department[]>([])
 
   useEffect(() => {
-    const params = {
-      departmentCode: 'TC'
-    }
+    // const params = {
+    //   departmentCode: 'TC'
+    // }
     moduleApi
-      .get(DEPARTMENT_URL, params)
+      .get(DEPARTMENT_URL)
       .then((res) => setDepartment(res.data.data))
       .catch((error) => console.log('error :>> ', error))
   }, [])

@@ -5,8 +5,12 @@ import AdminPage from '../../../pages/admin/AdminPage'
 import ManagementDepartment from '../../../ui/organisms/department/list-department'
 import Filed from '../../../ui/templates/filed'
 import ManageNews from '../../../ui/templates/manage-news'
+import Profile from '../../../ui/templates/profile'
+import RecordsReceived from '../../../ui/templates/profile/records-received(hồ sơ nhận)'
+import Sender from '../../../ui/templates/sender(người gửi)'
 import Service from '../../../ui/templates/service'
 import Staff from '../../../ui/templates/staff'
+import Unit from '../../../ui/templates/unit'
 // import './index.scss'
 
 export default function AdminRouting() {
@@ -30,7 +34,20 @@ export default function AdminRouting() {
     },
     {
       component: <Route key='6' path={`${match.path}/service`} component={Service} exact />
-    }
+    },
+    {
+      component: <Route key='7' path={`${match.path}/sender`} component={Sender} exact />
+    },
+    {
+      component: <Route key='8' path={`${match.path}/profile`} component={Profile} exact />
+    },
+    {
+      component: <Route key='9' path={`${match.path}/unit`} component={Unit} exact />
+    },
+    {
+      component: <Route key='10' path={`${match.path}/profile/records_received`} component={RecordsReceived} exact />
+    },
+    // trùng key
   ]
 
   return (

@@ -3,11 +3,11 @@ import { Button } from 'antd'
 import React, { useState } from 'react'
 import DrawerComponent from '../../molecules/drawer'
 import SearchComponent from '../../organisms/search'
-import FormAddStaff from '../../organisms/staff/add-staff'
-import ManagementStaff from '../../organisms/staff/list-staff'
+import FormAddUnit from '../../organisms/Unit(đơn vị)/add-Unit'
+import ManagementUnit from '../../organisms/Unit(đơn vị)/list-Unit'
 
-export default function Staff() {
-  const [visible, setVisible] = useState<boolean>(false)
+export default function Unit() {
+  const [visible, setVisible] = useState(false)
 
   const handleShowDrawer = () => {
     setVisible(true)
@@ -19,12 +19,12 @@ export default function Staff() {
     <>
       <SearchComponent />
       <Button type='primary' onClick={handleShowDrawer}>
-        <PlusOutlined /> Thêm nhân viên
+        <PlusOutlined /> Thêm đơn vị
       </Button>
-      <ManagementStaff/>
-      <DrawerComponent title='Thêm nhân viên' visible={visible} onClose={handleCloseDrawer} width={800}>
-        <FormAddStaff />
-      </DrawerComponent>
+      <ManagementUnit/>
+      {/* <DrawerComponent title='Thêm đơn vị' visible={visible} onClose={handleCloseDrawer} width={680}>
+        <FormAddUnit/>
+      </DrawerComponent> */}
     </>
   )
 }
