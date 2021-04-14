@@ -8,7 +8,11 @@ import './admin.scss'
 export default function AdminPage() {
   const match = useRouteMatch()
   // const [department, setDepartment] = useState<Department[]>([])
-
+  // const [department, setDepartment] = useState<Department[]>([])
+  //nếu m click vào cái accept current change là lấy cái code cũ do m sửa
+  // accept incoming change là m lấy cái code mới ở trên git, nãy t quên. t phải lên git xem lại code hiện giờ ở đoạn đó là gì.
+  // nếu m không chọn cái nào thì nó tồn tại cục code đó, và nó bị xung đột với nhau nên nó sẽ ko cho m merge
+  // sau khi m kiểm tra hết, không thấy cái lỗi nào như vừa nãy nữa thì m click vào dấu + của file đó
   // useEffect(() => {
   //   const params = {
   //     departmentCode: 'TC'
