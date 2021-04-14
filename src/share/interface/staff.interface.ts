@@ -6,7 +6,7 @@ export interface Staff extends BaseInterface {
   position?: string
   phone?: number
   role?: string
-  department?: string
+  departmentId?: string
   dateOfBirth?: string
   address?: string
   cardId?: number

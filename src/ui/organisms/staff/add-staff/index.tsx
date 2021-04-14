@@ -1,6 +1,7 @@
 import { Button, DatePicker, Form, Input, Select } from 'antd'
 import React, { useState } from 'react'
 import { CLOUD_URI, PRESENT, STAFF_URL } from '../../../../share/common/api/api.constants'
+import { Actor } from '../../../../share/common/app-constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { uploadSingle } from '../../../../share/handle/upload'
 import { useForm } from '../../../../share/hooks/useForm'
@@ -15,20 +16,21 @@ const layout = {
 }
 
 export default function FormAddStaff() {
-  const { formData, handleInputChange, isReady, setIsSubmitting, setErrors, errors } = useForm<Staff>(
+  const { formData, handleInputChange, handleOnInput, isReady, setIsSubmitting, setErrors, errors } = useForm<Staff>(
     {},
     handleOnSubmit
   )
   const [image, setImage] = useState()
   const [department, setDepartment] = useState()
+  const [dateOfBirth, setDateOfBirth] = useState(null)
 
   const handleOnChangeImage = (e: any) => {
     console.log(' :>> ', e.target.files)
     setImage(e.target.files[0])
   }
 
-  function onChangeDate(date: any, dateString: any) {
-    console.log(date, dateString)
+  function onChangeDate(dateString: any) {
+    setDateOfBirth(dateString)
   }
   function onChangeDepartment(value: any) {
     setDepartment(value)
@@ -37,18 +39,23 @@ export default function FormAddStaff() {
 
   async function handleOnSubmit(e: any): Promise<void> {
     e.preventDefault()
-    setErrors(validate(formData))
+    setErrors(validate({ ...formData, departmentId: department }, Actor.staff))
     setIsSubmitting(true)
     if (isReady) {
+      console.log('is successfully')
+
       let uploader = await uploadSingle(image, CLOUD_URI, PRESENT)
       const imageUrl = uploader.data.url
       const newStaff = {
-        name: formData.name,
-        image: imageUrl
+        ...formData,
+        image: imageUrl,
+        departmentId: department,
+        dateOfBirth: dateOfBirth
       }
       moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
     }
   }
+  console.log('errors :>> ', errors)
   return (
     <Form
       labelCol={{ span: 7 }}
@@ -57,12 +64,7 @@ export default function FormAddStaff() {
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Email'>
-        <Input
-          placeholder='Nhập email...'
-          onInput={(e: any) => setErrors({ ...errors, [e.target.name]: '' })}
-          name='email'
-          onChange={handleInputChange}
-        />
+        <Input placeholder='Nhập email...' onInput={handleOnInput} name='email' onChange={handleInputChange} />
         {errors.email && (
           <p className='help is-danger' style={{ color: 'red' }}>
             *{errors.email}
@@ -70,15 +72,20 @@ export default function FormAddStaff() {
         )}
       </Form.Item>
       <Form.Item label='Tên đăng nhập'>
-        <Input placeholder='Nhập tên đăng nhập...' name='username' onChange={handleInputChange} />
-        {errors.password && (
+        <Input
+          placeholder='Nhập tên đăng nhập...'
+          onInput={handleOnInput}
+          name='username'
+          onChange={handleInputChange}
+        />
+        {errors.username && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.password}
+            *{errors.username}
           </p>
         )}
       </Form.Item>
       <Form.Item label='Mật khẩu'>
-        <Input placeholder='Nhập mật khẩu...' name='password' onChange={handleInputChange} />
+        <Input placeholder='Nhập mật khẩu...' name='password' onInput={handleOnInput} onChange={handleInputChange} />
         {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
             *{errors.password}
@@ -89,7 +96,7 @@ export default function FormAddStaff() {
         <Input placeholder='Nhập lại mật khẩu...' name='password' onChange={handleInputChange} />
       </Form.Item>
       <Form.Item label='Họ và tên'>
-        <Input placeholder='Nhập họ và tên...' name='name' onChange={handleInputChange} />
+        <Input placeholder='Nhập họ và tên...' name='name' onInput={handleOnInput} onChange={handleInputChange} />
         {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
             *{errors.password}
@@ -100,7 +107,7 @@ export default function FormAddStaff() {
         <DatePicker onChange={onChangeDate} />
       </Form.Item>
       <Form.Item label='Địa chỉ'>
-        <Input placeholder='Nhập địa chỉ...' name='address' onChange={handleInputChange} />
+        <Input placeholder='Nhập địa chỉ...' name='address' onInput={handleOnInput} onChange={handleInputChange} />
         {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
             *{errors.password}
@@ -108,7 +115,7 @@ export default function FormAddStaff() {
         )}
       </Form.Item>
       <Form.Item label='Quê quán'>
-        <Input placeholder='Nhập quê quán...' name='homeTown' onChange={handleInputChange} />
+        <Input placeholder='Nhập quê quán...' name='homeTown' onInput={handleOnInput} onChange={handleInputChange} />
         {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
             *{errors.password}
@@ -116,7 +123,7 @@ export default function FormAddStaff() {
         )}
       </Form.Item>
       <Form.Item label='Số CMND/CCCD'>
-        <Input placeholder='Nhập số CMND/CCCD...' name='cardId' onChange={handleInputChange} />
+        <Input placeholder='Nhập số CMND/CCCD...' name='cardId' onInput={handleOnInput} onChange={handleInputChange} />
         {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
             *{errors.password}
@@ -124,10 +131,16 @@ export default function FormAddStaff() {
         )}
       </Form.Item>
       <Form.Item label='Số điện thoại'>
-        <Input placeholder='Nhập số điện thoại' name='phone' onChange={handleInputChange} />
-        {errors.password && (
+        <Input
+          placeholder='Nhập số điện thoại'
+          type='number'
+          onInput={handleOnInput}
+          name='phone'
+          onChange={handleInputChange}
+        />
+        {errors.phone && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.password}
+            *{errors.phone}
           </p>
         )}
       </Form.Item>
@@ -137,14 +150,14 @@ export default function FormAddStaff() {
           <Option value='ADMIN'>ADMIN</Option>
           <Option value='MEMBER'>MEMBER</Option>
         </Select>
-        {errors.department && (
+        {errors.departmentId && (
           <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.department}
+            *{errors.departmentId}
           </p>
         )}
       </Form.Item>
       <Form.Item label='Chức vụ'>
-        <Input placeholder='Nhập chức vụ...' name='position' onChange={handleInputChange} />
+        <Input placeholder='Nhập chức vụ...' name='position' onInput={handleOnInput} onChange={handleInputChange} />
         {errors.password && (
           <p className='help is-danger' style={{ color: 'red' }}>
             *{errors.password}
