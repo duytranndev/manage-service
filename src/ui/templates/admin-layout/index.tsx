@@ -19,7 +19,7 @@ export default function AdminLayout() {
   return (
     <>
       <Layout>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
+        <Sider theme='light' trigger={null} collapsible collapsed={collapsed}>
           <Link to='/admin'>
             <div className='logo'>This is Logo</div>
           </Link>

@@ -1,28 +1,25 @@
 import { StarTwoTone } from '@ant-design/icons'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { DEPARTMENT_URL } from '../../share/common/api/api.constants'
-import { moduleApi } from '../../share/handle/fetchData'
-import { Department } from '../../share/interface/department.interface'
-import TransferPaper from '../../ui/organisms/household/transfer-paper'
+import HouseholdRegistration from '../../ui/organisms/household-registration'
 import ProfileReceived from '../../ui/organisms/profile/list-profile'
 import ProgressChart from '../../ui/organisms/progress'
 import './admin.scss'
 export default function AdminPage() {
   const match = useRouteMatch()
-  const [department, setDepartment] = useState<Department[]>([])
+  // const [department, setDepartment] = useState<Department[]>([])
 
-  useEffect(() => {
-    const params = {
-      departmentCode: 'TC'
-    }
-    moduleApi
-      .get(DEPARTMENT_URL)
-      .then((res) => setDepartment(res.data.data))
-      .catch((error) => console.log('error :>> ', error))
-  }, [])
+  // useEffect(() => {
+  //   const params = {
+  //     departmentCode: 'TC'
+  //   }
+  //   moduleApi
+  //     .get(DEPARTMENT_URL)
+  //     .then((res) => setDepartment(res.data.data))
+  //     .catch((error) => console.log('error :>> ', error))
+  // }, [])
 
-  console.log('department :>> ', department)
+  // console.log('department :>> ', department)
 
   const data: any = [
     {
@@ -126,24 +123,8 @@ export default function AdminPage() {
           </div>
         </div>
       </div>
-      <div className='row row-message'>
-        <div className='col-lg-12 message-received'>
-          <h4 style={{ color: 'red' }}>Tin Nhắn Đến</h4>
 
-          <div className='row title' style={{ display: 'flex' }}>
-            <div className='col-lg-9'>
-              <ProfileReceived data={data} />
-            </div>
-            <div className='col-lg-3'>
-              <div className='sum'>
-                <h1>Tin nhắn đã xem</h1>
-              </div>
-              <ProgressChart value={value} />
-            </div>
-          </div>
-        </div>
-      </div>
-      <TransferPaper />
+      <HouseholdRegistration />
     </>
   )
 }
