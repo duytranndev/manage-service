@@ -1,6 +1,6 @@
 import { BaseInterface } from './base.interface'
 
-export interface Staff extends BaseInterface {
+export interface StaffInterface extends BaseInterface {
   email?: string
   image?: string | undefined
   position?: string

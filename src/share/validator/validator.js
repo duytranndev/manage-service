@@ -146,29 +146,33 @@ export const validate = (values: any, key?: any) => {
     }
     if (!values['password']) {
       errors['password'] = 'Vui lòng nhập mật khẩu!'
-    } else if (values['password'].length < 8) {
-      errors['password'] = 'Mật khẩu phải chứa ít nhất 8 ký tự!'
     }
+    // else if (values['password'].length < 8) {
+    //   errors['password'] = 'Mật khẩu phải chứa ít nhất 8 ký tự!'
+    // }
 
     if (!values['name']) {
       errors['name'] = 'Vui lòng nhập họ và tên!'
-    } else if (values['name'].length < 8) {
-      errors['name'] = 'name khẩu phải chứa ít nhất 8 ký tự!'
     }
+    // else if (values['name'].length < 8) {
+    //   errors['name'] = 'name khẩu phải chứa ít nhất 8 ký tự!'
+    // }
 
     if (!values['phone']) {
       errors['phone'] = 'Vui lòng nhập số điện thoại!'
-    } else if (values['phone'].length < 10 || values['phone'].length > 11) {
-      errors['phone'] = 'Số điện thoại có độ dài từ 10 đến 11 ký tự!'
     }
-    if (!values['departmentId']) {
-      errors['department'] = 'Vui lòng chọn phòng ban!'
-    }
+    // else if (values['phone'].length < 10 || values['phone'].length > 11) {
+    //   errors['phone'] = 'Số điện thoại có độ dài từ 10 đến 11 ký tự!'
+    // }
+    // if (!values['departmentId']) {
+    //   errors['departmentId'] = 'Vui lòng chọn phòng ban!'
+    // }
     if (!values['username']) {
       errors['username'] = 'Vui lòng nhập tên đăng nhập!'
-    } else if (values['username'].length < 8) {
-      errors['username'] = 'Tên đăng nhập phải chứa ít nhất 8 ký tự!'
     }
+    // else if (values['username'].length < 8) {
+    //   errors['username'] = 'Tên đăng nhập phải chứa ít nhất 8 ký tự!'
+    // }
   }
   if (key === Actor.news) {
     if (!values['title']) {

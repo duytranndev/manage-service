@@ -25,11 +25,11 @@ export default function FormAddDepartment() {
 
   async function handleOnSubmit() {
     console.log('sub :>> ')
-    const newDepartment = {
-      ...formData,
-      departmentCode: genCode(formData.name)
-    }
     if (Object.keys(formData).length !== 0) {
+      const newDepartment = {
+        ...formData,
+        departmentCode: genCode(formData.name)
+      }
       console.log('newDepartment :>> ', newDepartment)
       const myPromise = moduleApi.create(DEPARTMENT_URL, newDepartment)
       await toast.promise(myPromise, {
@@ -45,6 +45,7 @@ export default function FormAddDepartment() {
       }
     }
   }
+  console.log('errors :>> ', errors)
 
   return (
     <>
