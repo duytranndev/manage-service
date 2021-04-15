@@ -6,10 +6,9 @@ export const uploadSingle = async (file: any, url: string, preset: string) => {
   formData.append('file', file)
   formData.append('upload_preset', preset)
 
-  const result = await axios.post(url, formData, {
+  return axios.post(url, formData, {
     headers: { 'X-Requested-With': 'XMLHttpRequest' }
   })
-  return result
 }
 
 export function uploadMulti(files: never[], url: string, tag: string, preset: string) {

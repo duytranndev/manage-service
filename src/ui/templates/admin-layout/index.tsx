@@ -17,10 +17,10 @@ export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const dispatch = useDispatch()
   useEffect(() => {
-    const loadMenu = async () => {
+    const loadDepartment = async () => {
       await dispatch(fetchDepartments())
     }
-    loadMenu()
+    loadDepartment()
   }, [])
   const toggle = () => {
     setCollapsed(!collapsed)
