@@ -2,14 +2,16 @@ import { PlusOutlined } from '@ant-design/icons'
 import { makeStyles } from '@material-ui/core'
 import { Button, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
-import { StaffInterface } from '../../../share/interface/staff.interface'
-import { fetchStaffs } from '../../../store/recuders/staff.reducer'
+import { NewsInterface } from '../../../share/interface/image.interface'
+import { fetchNewss } from '../../../store/recuders/news.reducer'
 import { AppState } from '../../../store/types'
 import DrawerComponent from '../../molecules/drawer'
+import FormAddNews from '../../organisms/news/add-news'
+import ManagementNews from '../../organisms/news/list-news'
 import SearchComponent from '../../organisms/search'
-import FormAddStaff from '../../organisms/staff/add-staff'
-import ManagementStaff from '../../organisms/staff/list-staff'
+// import '../../../assets/files/93-Mẫu HK02-Phiếu-báo-thay-đổi-hộ-khẩu-nhân-khẩu'
 
 const useStyles = makeStyles({
   root: {
@@ -22,18 +24,20 @@ const useStyles = makeStyles({
   }
 })
 
-export default function Staff() {
+export default function News() {
   const classes = useStyles()
+
   const [visible, setVisible] = useState<boolean>(false)
-  const staffs = useSelector<AppState, StaffInterface[]>((state) => state.staff.data)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    const loadStaff = async () => {
-      await dispatch(fetchStaffs())
+    const loadNews = async () => {
+      await dispatch(fetchNewss())
     }
-    loadStaff()
+    loadNews()
   }, [])
+  const listNews = useSelector<AppState, NewsInterface[]>((state) => state.news.data)
+  console.log('listNews :>> ', listNews)
 
   const handleShowDrawer = () => {
     setVisible(true)
@@ -45,21 +49,21 @@ export default function Staff() {
     <>
       <SearchComponent />
       <Button type='primary' onClick={handleShowDrawer}>
-        <PlusOutlined /> Thêm nhân viên
+        <PlusOutlined /> Thêm tin tức
       </Button>
-      <div>
-        {staffs.length > 0 ? (
-          <ManagementStaff data={staffs} />
+      <div className='content'>
+        {listNews.length > 0 ? (
+          <ManagementNews data={listNews} />
         ) : (
           <div className={classes.root}>
             <Spin size='large' />
           </div>
         )}
       </div>
-      {/* <ManagementStaff data={staffs} /> */}
-      <DrawerComponent title='Thêm nhân viên' visible={visible} onClose={handleCloseDrawer} width={800}>
-        <FormAddStaff />
+      <DrawerComponent title='Thêm tin tức' visible={visible} onClose={handleCloseDrawer} width={800}>
+        <FormAddNews />
       </DrawerComponent>
+      <Toaster />
     </>
   )
 }

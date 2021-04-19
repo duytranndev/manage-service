@@ -1,7 +1,8 @@
 import { BaseInterface } from './base.interface'
 
-export interface News extends BaseInterface {
-  title: string
-  content: string
+export interface NewsInterface extends BaseInterface {
+  title?: string
+  content?: string
+  description?: string
   image?: string
 }

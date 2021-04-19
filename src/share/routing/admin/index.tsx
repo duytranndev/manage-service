@@ -2,10 +2,9 @@ import 'antd/dist/antd.css'
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import AdminPage from '../../../pages/admin/AdminPage'
-import ManagementDepartment from '../../../ui/organisms/department/list-department'
 import Department from '../../../ui/templates/department'
 import Filed from '../../../ui/templates/filed'
-import ManageNews from '../../../ui/templates/manage-news'
+import News from '../../../ui/templates/news'
 import Profile from '../../../ui/templates/profile'
 import RecordsReceived from '../../../ui/templates/profile/records-received(hồ sơ nhận)'
 import Sender from '../../../ui/templates/sender(người gửi)'
@@ -28,7 +27,7 @@ export default function AdminRouting() {
       component: <Route key='3' path={`${match.path}/staff`} component={Staff} exact />
     },
     {
-      component: <Route key='4' path={`${match.path}/news`} component={ManageNews} exact />
+      component: <Route key='4' path={`${match.path}/news`} component={News} exact />
     },
     {
       component: <Route key='5' path={`${match.path}/field`} component={Filed} exact />
@@ -47,7 +46,8 @@ export default function AdminRouting() {
     },
     {
       component: <Route key='10' path={`${match.path}/profile/records_received`} component={RecordsReceived} exact />
-    },
+    }
+
     // trùng key
   ]
 
