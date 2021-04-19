@@ -10,17 +10,20 @@ import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { STAFF_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { DELETE_STAFF } from '../../../../store/actions/staff.action'
 
-export default function ManagementStaff() {
+type ManagementStaffProps = {
+  data: StaffInterface[]
+}
+
+export default function ManagementStaff({ data }: ManagementStaffProps) {
   const match = useRouteMatch()
-  const staffs = useSelector((state) => state.staff.data)
-  console.log('staffs :>> ', staffs)
+
   const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
   const showModal = () => {
@@ -64,7 +67,7 @@ export default function ManagementStaff() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {staffs.map((staff: StaffInterface) => (
+            {data.map((staff: StaffInterface) => (
               <TableRow key={staff._id}>
                 <TableCell component='th' scope='row'>
                   {staff.name}
