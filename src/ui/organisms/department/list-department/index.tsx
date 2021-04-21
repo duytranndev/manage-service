@@ -10,17 +10,19 @@ import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
-import { AppState } from '../../../../store/types'
 import './management.scss'
 
-export default function ManagementDepartment() {
-  const department = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
+type ManagementDepartmentProps = {
+  data: DepartmentInterface[]
+}
+
+export default function ManagementDepartment({ data }: ManagementDepartmentProps) {
   const dispatch = useDispatch()
 
   const handleOnDelete = async (id: any) => {
@@ -55,7 +57,7 @@ export default function ManagementDepartment() {
         <Table size='medium' aria-label='a dense table'>
           <TableHead>
             <TableRow>
-              <TableCell>Mã phòng</TableCell>
+              <TableCell align='center'>Mã phòng ban</TableCell>
               <TableCell align='center'>Tên phòng</TableCell>
               <TableCell align='center'>Số lượng nhân viên</TableCell>
               <TableCell align='center'>Ngày tạo</TableCell>
@@ -64,9 +66,9 @@ export default function ManagementDepartment() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {department.map((row: DepartmentInterface) => (
+            {data.map((row: DepartmentInterface) => (
               <TableRow key={row._id}>
-                <TableCell component='th' scope='row'>
+                <TableCell align='center' component='th' scope='row'>
                   {row.departmentCode}
                 </TableCell>
                 <TableCell align='center'>{row.name}</TableCell>

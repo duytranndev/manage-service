@@ -1,17 +1,33 @@
+// import Loadable from 'react-loadable'
 import 'antd/dist/antd.css'
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
-import AdminPage from '../../../pages/admin/AdminPage'
-import Department from '../../../ui/templates/department'
-import Filed from '../../../ui/templates/filed'
-import News from '../../../ui/templates/news'
-import Profile from '../../../ui/templates/profile'
 import RecordsReceived from '../../../ui/templates/profile/records-received(hồ sơ nhận)'
-import Sender from '../../../ui/templates/sender(người gửi)'
-import Service from '../../../ui/templates/service'
-import Staff from '../../../ui/templates/staff'
-import Unit from '../../../ui/templates/unit'
-// import './index.scss'
+
+export const lazyOptions = {
+  fallback: (
+    <div
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        display: 'flex',
+        height: '100vh',
+        width: '100%',
+        fontSize: '200px'
+      }}>
+      <div>xin cho mot ti...</div>
+    </div>
+  )
+}
+const Department = lazy(() => import('../../../ui/templates/department'))
+const News = lazy(() => import('../../../ui/templates/news'))
+const AdminPage = lazy(() => import('../../../pages/admin/AdminPage'))
+const Staff = lazy(() => import('../../../ui/templates/staff'))
+const Service = lazy(() => import('../../../ui/templates/service'))
+const Sender = lazy(() => import('../../../ui/templates/sender'))
+const Unit = lazy(() => import('../../../ui/templates/unit'))
+const Profile = lazy(() => import('../../../ui/templates/profile'))
+const Filed = lazy(() => import('../../../ui/templates/filed'))
 
 export default function AdminRouting() {
   const match = useRouteMatch()
@@ -53,7 +69,9 @@ export default function AdminRouting() {
 
   return (
     <>
-      <Switch>{routeList.map((item) => item.component)}</Switch>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Switch>{routeList.map((item) => item.component)}</Switch>
+      </Suspense>
     </>
   )
 }
