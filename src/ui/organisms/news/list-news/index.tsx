@@ -12,7 +12,7 @@ import Icon from '@material-ui/core/Icon'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Modal from 'antd/lib/modal/Modal'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
+import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { NEWS_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
@@ -99,6 +99,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
             </Card>
           )
         })}
+      <Toaster />
     </>
   )
 }

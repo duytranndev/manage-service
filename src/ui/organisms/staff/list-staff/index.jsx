@@ -100,7 +100,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                       visible={isModalVisible}
                       onOk={() => handleOk(staff._id)}
                       onCancel={handleCancel}>
-                      <p>Bạn có chắc chắn muốn xoá {staff?.name}</p>
+                      <p>Bạn có chắc chắn muốn xoá nhân viên {staff?.name}</p>
                     </Modal>
                   </Space>
                 </TableCell>
