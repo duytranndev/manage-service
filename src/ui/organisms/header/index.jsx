@@ -1,11 +1,4 @@
-import {
-  CaretDownOutlined,
-  HomeFilled,
-  MessageFilled,
-  NotificationFilled,
-  SendOutlined,
-  UserOutlined
-} from '@ant-design/icons'
+import { CaretDownOutlined, MessageFilled, NotificationFilled, SendOutlined, UserOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
 import React from 'react'
 import './header.scss'
@@ -13,11 +6,6 @@ export default function HeaderAdmin() {
   return (
     <div id='header'>
       <ul>
-        <li>
-          <a className='logo' href='#'>
-            <HomeFilled />
-          </a>
-        </li>
         <li>
           <a href='#'>
             <MessageFilled />

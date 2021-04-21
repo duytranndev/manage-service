@@ -48,7 +48,9 @@ export default function MenuAdmin() {
 
         <SubMenu key='sub1' icon={<ReadOutlined />} title={<Link to={`${match.path}/profile`}>Quản Lý Hồ Sơ</Link>}>
           <Menu.Item key='8'>Danh sách hồ sơ</Menu.Item>
-          <Menu.Item key='9'><Link to={`${match.path}/profile/records_received`}>Hồ sơ nhận</Link></Menu.Item>
+          <Menu.Item key='9'>
+            <Link to={`${match.path}/profile/records_received`}>Hồ sơ nhận</Link>
+          </Menu.Item>
           <Menu.Item key='10'>Hồ sơ duyệt</Menu.Item>
         </SubMenu>
         <SubMenu key='sub2' icon={<ReadOutlined />} title={<Link to={`${match.path}/profile`}>Phân Công</Link>}>

@@ -13,4 +13,5 @@ export interface StaffInterface extends BaseInterface {
   username?: string
   password?: string
   homeTown?: string
+  department?: string
 }

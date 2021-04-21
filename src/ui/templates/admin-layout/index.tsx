@@ -1,7 +1,5 @@
-import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons'
 import { Layout } from 'antd'
 import 'antd/dist/antd.css'
-import { Header } from 'antd/lib/layout/layout'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -12,7 +10,6 @@ import MenuAdmin from '../../../ui/organisms/menu'
 // import './index.scss'
 
 const { Sider, Content } = Layout
-
 export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false)
   const dispatch = useDispatch()
@@ -32,23 +29,22 @@ export default function AdminLayout() {
           <Link to='/admin'>
             <div className='logo'>This is Logo</div>
           </Link>
-
           <MenuAdmin />
         </Sider>
 
         <Layout className='site-layout'>
           <HeaderAdmin />
-          <Header className='site-layout-background' style={{ padding: 0 }}>
+          {/* <Header className='site-layout-background' style={{ padding: 0 }}>
             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
               className: 'trigger',
               onClick: toggle
             })}
-          </Header>
+          </Header> */}
           <Content
             className='site-layout-background'
             style={{
               margin: '24px 16px',
-              padding: 24,
+              padding: '10px 24px',
               minHeight: 280
             }}>
             <AdminRouting />

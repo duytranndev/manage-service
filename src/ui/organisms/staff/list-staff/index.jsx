@@ -56,12 +56,11 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
         <Table size='medium' aria-label='a dense table'>
           <TableHead>
             <TableRow>
-              <TableCell>Họ tên</TableCell>
+              <TableCell align='center'>Họ tên</TableCell>
               <TableCell align='center'>Phòng ban</TableCell>
               <TableCell align='center'>Chức vụ</TableCell>
               <TableCell align='center'>Số điện thoại</TableCell>
               <TableCell align='center'>Quyền hạn</TableCell>
-              <TableCell align='center'>Ngày sinh</TableCell>
               <TableCell align='center'>Địa chỉ</TableCell>
               <TableCell align='center'>Action</TableCell>
             </TableRow>
@@ -72,11 +71,10 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                 <TableCell component='th' scope='row'>
                   {staff.name}
                 </TableCell>
-                <TableCell align='center'>{staff.departmentId}</TableCell>
+                <TableCell align='center'>{staff.department}</TableCell>
                 <TableCell align='center'>{staff.position}</TableCell>
                 <TableCell align='center'>{staff.phone}</TableCell>
                 <TableCell align='center'>{staff.role}</TableCell>
-                <TableCell align='center'>{staff.dateOfBirth}</TableCell>
                 <TableCell align='center'>{staff.address}</TableCell>
                 <TableCell align='center'>
                   <Space align='center' size='small'>
