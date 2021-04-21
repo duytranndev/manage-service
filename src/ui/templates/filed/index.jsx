@@ -45,7 +45,6 @@ export default function Filed() {
     }
     loadField()
   }, [])
-  console.log('fields :>> ', fields)
 
   const handleShowDrawer = () => {
     setVisible(true)

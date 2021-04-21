@@ -1,10 +1,11 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd'
+import { Button, Form, Input, Select } from 'antd'
 import React, { useState } from 'react'
-import { CLOUD_URI, PRESENT, STAFF_URL } from '../../../../share/common/api/api.constants'
+import toast, { Toaster } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { FIELD_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
-import { uploadSingle } from '../../../../share/handle/upload'
-import { useForm } from '../../../../share/hooks/useForm'
-import { Filed } from '../../../../share/interface/field.interface'
+import { genCode } from '../../../../share/handle/getCode'
+import { CREATE_FIELD } from '../../../../store/actions/field.action'
 const { Option } = Select
 
 const layout = {
@@ -14,42 +15,32 @@ const layout = {
 }
 
 export default function FormAddField() {
-  const {
-    formData,
-    handleInputChange,
-    setErrors,
-    handleInputValidation,
-    errors,
-    isSubmitting,
-    handleSubmit
-  } = useForm ({}, handleOnSubmit)
-  const [image, setImage] = useState()
-  const [department, setDepartment] = useState()
+  const [formData, setFormData] = useState()
+  const dispatch = useDispatch()
 
-  const handleOnChangeImage = (e) => {
-    console.log(' :>> ', e.target.files)
-    setImage(e.target.files[0])
+  const handleOnChange = (e) => {
+    setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value })
   }
 
-  function onChangeDate(date, dateString) {
-    console.log(date, dateString)
-  }
-  function onChangeDepartment(value) {
-    setDepartment(value)
-    setErrors({ ...errors, department: '' })
-  }
-
-  console.log('errors :>> ', errors)
-  console.log('formData :>> ', formData)
-
-  async function handleOnSubmit(){
-    let uploader = await uploadSingle(image, CLOUD_URI, PRESENT)
-    const imageUrl = uploader.data.url
-    const newStaff = {
-      name: formData.name,
-      image: imageUrl
+  const handleOnSubmit = async (e) => {
+    e.preventDefault()
+    const field = {
+      ...formData,
+      fieldCode: genCode(formData.name)
     }
-    moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
+    const myPromise = moduleApi.create(FIELD_URL, field)
+    await toast.promise(myPromise, {
+      loading: 'Loading',
+      success: 'Thêm lĩnh vực thành công',
+      error: 'Thêm lĩnh vực thất bại'
+    })
+    const status = await myPromise.then((res) => res.data.message)
+    const data = await myPromise.then((res) => res.data.data)
+    if (status === 'success') {
+      console.log('data :>> ', data)
+      dispatch({ type: CREATE_FIELD, payload: data })
+      setFormData({})
+    }
   }
   return (
     <Form
@@ -57,41 +48,20 @@ export default function FormAddField() {
       wrapperCol={{ span: 15 }}
       layout='horizontal'
       hideRequiredMark
-      onSubmitCapture={handleSubmit}>
+      onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Tên lĩnh vực'>
-        <Input
-          placeholder='Nhập tên lĩnh vực...'
-          onInput={(e) => setErrors({ ...errors, [e.target.name]: '' })}
-          name='name'
-          onChange={handleInputChange}
-        />
-        {errors.name && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.name}
-          </p>
-        )}
+        <Input placeholder='Nhập tên lĩnh vực...' name='name' onChange={handleOnChange} />
       </Form.Item>
       <Form.Item label='Mô tả'>
-        <Input placeholder='Nhập mô tả...' name='description' onChange={handleInputChange} />
-        {errors.description && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.description}
-          </p>
-        )}
+        <Input placeholder='Nhập mô tả...' name='description' onChange={handleOnChange} />
       </Form.Item>
-      <Form.Item label='Mã lĩnh vực'>
-        <Input placeholder='Nhập mã lĩnh vực...' name='fieldCode' onChange={handleInputChange} />
-        {errors.fieldCode && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.fieldCode}
-          </p>
-        )}
-      </Form.Item>
+
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
           Submit
         </Button>
       </Form.Item>
+      <Toaster position='top-center' />
     </Form>
   )
 }

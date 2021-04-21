@@ -52,8 +52,8 @@ export default function ManagementField({ data }: any) {
           <TableRow>
             <TableCell align='center'>Mã lĩnh vực</TableCell>
             <TableCell align='center'>Tên lĩnh vực</TableCell>
-            <TableCell align='center'>Mô tả</TableCell>
             <TableCell align='center'>Ngày tạo</TableCell>
+            <TableCell align='center'>Liên kết tĩnh</TableCell>
             <TableCell align='center'>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -64,8 +64,8 @@ export default function ManagementField({ data }: any) {
                 {field.fieldCode}
               </TableCell>
               <TableCell align='center'>{field.name}</TableCell>
-              <TableCell align='center'>{field.description}</TableCell>
               <TableCell align='center'>{field.insertTime}</TableCell>
+              <TableCell align='center'>{field.slug}</TableCell>
               <TableCell align='center'>
                 <Space align='center' size='small'>
                   <Link to={`/${match.path}/${field.slug}`}>
@@ -90,7 +90,7 @@ export default function ManagementField({ data }: any) {
                     visible={isModalVisible}
                     onOk={() => handleOk(field._id)}
                     onCancel={handleCancel}>
-                    <p>Bạn có chắc chắn muốn xoá {field.name}</p>
+                    <p>Bạn có chắc chắn muốn xoá lĩnh vực {field.name}</p>
                   </Modal>
                 </Space>
               </TableCell>
