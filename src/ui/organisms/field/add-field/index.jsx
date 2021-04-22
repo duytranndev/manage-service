@@ -15,7 +15,7 @@ const layout = {
 }
 
 export default function FormAddField() {
-  const [formData, setFormData] = useState()
+  const [formData, setFormData] = useState({})
   const dispatch = useDispatch()
 
   const handleOnChange = (e) => {
@@ -37,9 +37,8 @@ export default function FormAddField() {
     const status = await myPromise.then((res) => res.data.message)
     const data = await myPromise.then((res) => res.data.data)
     if (status === 'success') {
-      console.log('data :>> ', data)
-      dispatch({ type: CREATE_FIELD, payload: data })
       setFormData({})
+      dispatch({ type: CREATE_FIELD, payload: data })
     }
   }
   return (
@@ -50,10 +49,10 @@ export default function FormAddField() {
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Tên lĩnh vực'>
-        <Input placeholder='Nhập tên lĩnh vực...' name='name' onChange={handleOnChange} />
+        <Input placeholder='Nhập tên lĩnh vực...' name='name' onChange={handleOnChange} value={formData.name} />
       </Form.Item>
       <Form.Item label='Mô tả'>
-        <Input placeholder='Nhập mô tả...' name='description' onChange={handleOnChange} />
+        <Input placeholder='Nhập mô tả...' name='description' onChange={handleOnChange} value={formData.description} />
       </Form.Item>
 
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>

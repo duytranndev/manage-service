@@ -18,13 +18,16 @@ import { DELETE_FIELD } from '../../../../store/actions/field.action'
 
 export default function ManagementField({ data }: any) {
   const match = useRouteMatch()
+  const [idField, setIdField] = useState('')
+
   const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
-  const showModal = () => {
+  const showModal = (id) => {
+    setIdField(id)
     setIsModalVisible(true)
   }
 
-  const handleOnDelete = async (id: any) => {
+  const handleOnDelete = async (id) => {
     const myPromise = moduleApi.delete(FIELD_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',
@@ -36,7 +39,7 @@ export default function ManagementField({ data }: any) {
       dispatch({ type: DELETE_FIELD, id: id })
     }
   }
-  const handleOk = (id: any) => {
+  const handleOk = (id) => {
     handleOnDelete(id)
     setIsModalVisible(false)
   }
@@ -58,7 +61,7 @@ export default function ManagementField({ data }: any) {
         </TableHead>
         <TableBody>
           {data.map((field) => (
-            <TableRow key={field.name}>
+            <TableRow key={field._id}>
               <TableCell component='th' scope='row' align='center'>
                 {field.fieldCode}
               </TableCell>
@@ -78,7 +81,7 @@ export default function ManagementField({ data }: any) {
                     </Tag>
                   </Link>
                   <Tag
-                    onClick={showModal}
+                    onClick={() => showModal(field._id)}
                     // onClick={() => handleOnDelete(row._id)}
                     style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                     color='error'>
@@ -87,9 +90,9 @@ export default function ManagementField({ data }: any) {
                   <Modal
                     title='Basic Modal'
                     visible={isModalVisible}
-                    onOk={() => handleOk(field._id)}
+                    onOk={() => handleOk(idField)}
                     onCancel={handleCancel}>
-                    <p>Bạn có chắc chắn muốn xoá lĩnh vực {field.name}</p>
+                    <p>Bạn có chắc chắn muốn xoá lĩnh vực này</p>
                   </Modal>
                 </Space>
               </TableCell>

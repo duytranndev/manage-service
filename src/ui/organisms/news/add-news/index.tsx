@@ -51,12 +51,10 @@ export default function FormAddNews() {
   const [file, setFile] = useState('')
   const [formData, setFormData] = useState<NewsInterface>()
   const [valueEditor, setValueEditor] = useState('')
-  const [files, setFiles] = useState([])
   const dispatch = useDispatch()
 
   const handleOnChangeImage = async (e: any) => {
     const img = URL.createObjectURL(e.target.files[0])
-
     setFile(img)
     setImage(e.target.files[0])
     // setImage(e.target.files[0])
@@ -86,7 +84,6 @@ export default function FormAddNews() {
     setValueEditor(e)
   }
   const handleOnSubmit = async (e: any) => {
-    console.log('e :>> ', e)
     e.preventDefault()
     const news = {
       title: formData?.title,
@@ -95,7 +92,6 @@ export default function FormAddNews() {
       image: image
     }
 
-    console.log('news :>> ', news)
     const myPromise = moduleApi.create(NEWS_URL, news)
     await toast.promise(myPromise, {
       loading: 'Loading',
@@ -103,7 +99,6 @@ export default function FormAddNews() {
       error: 'Thêm tin tức thất bại'
     })
     const status = await myPromise.then((res) => res.data.message)
-    console.log('status :>> ', status)
     const data = await myPromise.then((res) => res.data.data)
     if (status === 'success') {
       console.log('data :>> ', data)
@@ -112,7 +107,6 @@ export default function FormAddNews() {
       setImage('')
     }
   }
-  console.log('image :>> ', image)
   return (
     <Form
       labelCol={{ span: 3 }}

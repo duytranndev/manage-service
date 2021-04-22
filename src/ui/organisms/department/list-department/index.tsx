@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
@@ -17,7 +18,6 @@ import { moduleApi } from '../../../../share/handle/fetchData'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
 import './management.scss'
-
 type ManagementDepartmentProps = {
   data: DepartmentInterface[]
 }
@@ -25,7 +25,9 @@ type ManagementDepartmentProps = {
 export default function ManagementDepartment({ data }: ManagementDepartmentProps) {
   const dispatch = useDispatch()
 
-  const handleOnDelete = async (id: any) => {
+  const [idDepartment, setIdDepartment] = useState('')
+
+  const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',
@@ -39,11 +41,12 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
   }
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const showModal = () => {
+  const showModal = (id: string) => {
+    setIdDepartment(id)
     setIsModalVisible(true)
   }
 
-  const handleOk = (id: any) => {
+  const handleOk = (id: string) => {
     handleOnDelete(id)
     setIsModalVisible(false)
   }
@@ -75,7 +78,6 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
                 <TableCell align='center'>{row.totalStaff}</TableCell>
                 <TableCell align='center'>{row.insertTime}</TableCell>
                 <TableCell align='center'>{row.slug}</TableCell>
-
                 <TableCell align='center'>
                   <Space align='center' size='small'>
                     <Link to={`/admin/department/${row.slug}`}>
@@ -89,8 +91,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
                       </Tag>
                     </Link>
                     <Tag
-                      onClick={showModal}
-                      // onClick={() => handleOnDelete(row._id)}
+                      onClick={() => showModal(row._id as string)}
                       style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                       color='error'>
                       <DeleteOutlined />
@@ -98,9 +99,9 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
                     <Modal
                       title='Basic Modal'
                       visible={isModalVisible}
-                      onOk={() => handleOk(row._id)}
+                      onOk={() => handleOk(idDepartment)}
                       onCancel={handleCancel}>
-                      <p>Bạn có chắc chắn muốn xoá {row?.name}</p>
+                      <p>Bạn có chắc chắn muốn xoá phòng ban này?</p>
                     </Modal>
                   </Space>
                 </TableCell>
