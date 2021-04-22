@@ -1,9 +1,12 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd'
-import React, { useState } from 'react'
-import { CLOUD_URI, PRESENT, STAFF_URL } from '../../../../share/common/api/api.constants'
+import { Button, Form, Input, Select } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
+import React, { useEffect, useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { FIELD_URL, UNIT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
-import { uploadSingle } from '../../../../share/handle/upload'
-import { useForm } from '../../../../share/hooks/useForm'
+import { genCode } from '../../../../share/handle/getCode'
+import { CREATE_UNIT } from '../../../../store/actions/unit.action'
 const { Option } = Select
 
 const layout = {
@@ -13,100 +16,74 @@ const layout = {
 }
 
 export default function FormAddUnit() {
-  const {
-    formData,
-    handleInputChange,
-    setErrors,
-    handleInputValidation,
-    errors,
-    isSubmitting,
-    handleSubmit
-  } = useForm ({}, handleOnSubmit)
-  const [image, setImage] = useState()
-  const [department, setDepartment] = useState()
+  const [formData, setFormData] = useState()
+  const [field, setField] = useState('')
+  const [fields, setFields] = useState([])
+  const dispatch = useDispatch()
 
-  const handleOnChangeImage = (e) => {
-    console.log(' :>> ', e.target.files)
-    setImage(e.target.files[0])
+  useEffect(() => {
+    return moduleApi.get(FIELD_URL).then((res) => setFields(res.data.data))
+  }, [])
+
+  const handleOnChange = (e) => {
+    setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value })
   }
 
-  function onChangeDate(date, dateString) {
-    console.log(date, dateString)
-  }
-  function onChangeDepartment(value) {
-    setDepartment(value)
-    setErrors({ ...errors, department: '' })
+  function onChangeDepartment(value: string) {
+    setField(value)
   }
 
-  console.log('errors :>> ', errors)
-  console.log('formData :>> ', formData)
-
-  async function handleOnSubmit(){
-    let uploader = await uploadSingle(image, CLOUD_URI, PRESENT)
-    const imageUrl = uploader.data.url
-    const newStaff = {
-      name: formData.name,
-      image: imageUrl
+  const handleOnSubmit = async (e) => {
+    e.preventDefault()
+    const unit = {
+      ...formData,
+      unitCode: genCode(formData.name),
+      fieldId: field
     }
-    moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
+    const myPromise = moduleApi.create(UNIT_URL, unit)
+    await toast.promise(myPromise, {
+      loading: 'Loading',
+      success: 'Thêm đơn vị thành công',
+      error: 'Thêm đơn vị thất bại'
+    })
+    const status = await myPromise.then((res) => res.data.message)
+    const data = await myPromise.then((res) => res.data.data)
+    if (status === 'success') {
+      console.log('data :>> ', data)
+      dispatch({ type: CREATE_UNIT, payload: data })
+      setFormData({})
+    }
   }
+
   return (
     <Form
       labelCol={{ span: 7 }}
       wrapperCol={{ span: 15 }}
       layout='horizontal'
       hideRequiredMark
-      onSubmitCapture={handleSubmit}>
-      <Form.Item label='Cư trú và giấy tờ tuỳ thân'>
-        <Input
-          placeholder='Nhập cư trú và giấy tờ tuỳ thân...'
-          onInput={(e) => setErrors({ ...errors, [e.target.name]: '' })}
-          name='hokhau'
-          onChange={handleInputChange}
-        />
-        {errors.name && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.name}
-          </p>
-        )}
-      </Form.Item>
-      <Form.Item label='Hôn nhân và gia đình'>
-        <Input placeholder='Nhập hôn nhân và gia đình...' name='mota' onChange={handleInputChange} />
-        {errors.decription && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.decription}
-          </p>
-        )}
-      </Form.Item>
+      onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Tên đơn vị'>
-        <Input placeholder='Nhập tên đơn vị...' name='unitCode' onChange={handleInputChange} />
-        {errors.unitCode && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.unitCode}
-          </p>
-        )}
-      </Form.Item>
-      <Form.Item label='Mã đơn vị'>
-        <Input placeholder='Nhập mã đơn vị...' name='unitCode' onChange={handleInputChange} />
-        {errors.unitCode && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.unitCode}
-          </p>
-        )}
+        <Input placeholder='Nhập tên đơn vị...' name='name' onChange={handleOnChange} />
       </Form.Item>
       <Form.Item label='Tên lĩnh vực'>
-        <Input placeholder='Nhập tên lĩnh vực...' name='unitCode' onChange={handleInputChange} />
-        {errors.unitCode && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.unitCode}
-          </p>
-        )}
+        <Select showSearch placeholder='Chọn lĩnh vực...' optionFilterProp='children' onChange={onChangeDepartment}>
+          {fields.map((item) => (
+            <Option key={item._id} value={item._id}>
+              {item.name}
+            </Option>
+          ))}
+        </Select>
       </Form.Item>
+      <Form.Item label='Mô tả'>
+        <TextArea placeholder='Nhập mô tả...' rows={4} name='description' onChange={handleOnChange} />
+      </Form.Item>
+
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
           Submit
         </Button>
       </Form.Item>
+      <Toaster position='top-center' />
     </Form>
   )
 }

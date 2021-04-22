@@ -35,7 +35,6 @@ export const NewsReducer = (state = initialState, action: any): NewsState => {
         error: action.error
       }
     case CREATE_NEWS:
-      console.log(`action`, action)
       let list = [...state.data] as NewsInterface[]
       list.push(action.payload)
       return { ...state, data: list }

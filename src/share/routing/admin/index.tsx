@@ -25,9 +25,9 @@ const AdminPage = lazy(() => import('../../../pages/admin/AdminPage'))
 const Staff = lazy(() => import('../../../ui/templates/staff'))
 const Service = lazy(() => import('../../../ui/templates/service'))
 const Sender = lazy(() => import('../../../ui/templates/sender'))
-const Unit = lazy(() => import('../../../ui/templates/unit'))
+const Unit = lazy(() => import('../../../ui/templates/unit/index'))
 const Profile = lazy(() => import('../../../ui/templates/profile'))
-const Filed = lazy(() => import('../../../ui/templates/filed'))
+const Field = lazy(() => import('../../../ui/templates/field'))
 
 export default function AdminRouting() {
   const match = useRouteMatch()
@@ -46,7 +46,7 @@ export default function AdminRouting() {
       component: <Route key='4' path={`${match.path}/news`} component={News} exact />
     },
     {
-      component: <Route key='5' path={`${match.path}/field`} component={Filed} exact />
+      component: <Route key='5' path={`${match.path}/field`} component={Field} exact />
     },
     {
       component: <Route key='6' path={`${match.path}/service`} component={Service} exact />

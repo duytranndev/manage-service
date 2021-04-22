@@ -37,7 +37,6 @@ export const DepartmentReducer = (state = initialState, action: any): Department
       return { ...state, data: departments }
 
     case CREATE_DEPARTMENT:
-      console.log(`action`, action)
       let list = [...state.data] as DepartmentInterface[]
       list.push(action.payload)
       return { ...state, data: list }

@@ -25,7 +25,6 @@ export default function ManagementField({ data }: any) {
   }
 
   const handleOnDelete = async (id: any) => {
-    console.log('id :>> ', id)
     const myPromise = moduleApi.delete(FIELD_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',

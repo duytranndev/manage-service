@@ -35,7 +35,6 @@ export const StaffReducer = (state = initialState, action: any): StaffState => {
         error: action.error
       }
     case CREATE_STAFF:
-      console.log(`action`, action)
       let list = [...state.data] as StaffInterface[]
       list.push(action.payload)
       return { ...state, data: list }
