@@ -1,10 +1,8 @@
 import { Layout } from 'antd'
 import 'antd/dist/antd.css'
-import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import AdminRouting from '../../../share/routing/admin'
-import { fetchDepartments } from '../../../store/recuders/department.reducer'
 import HeaderAdmin from '../../../ui/organisms/header'
 import MenuAdmin from '../../../ui/organisms/menu'
 // import './index.scss'
@@ -12,16 +10,7 @@ import MenuAdmin from '../../../ui/organisms/menu'
 const { Sider, Content } = Layout
 export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false)
-  const dispatch = useDispatch()
-  useEffect(() => {
-    const loadDepartment = async () => {
-      await dispatch(fetchDepartments())
-    }
-    loadDepartment()
-  }, [])
-  const toggle = () => {
-    setCollapsed(!collapsed)
-  }
+
   return (
     <>
       <Layout>

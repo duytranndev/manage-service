@@ -7,85 +7,96 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
-import React from 'react'
+import Modal from 'antd/lib/modal/Modal'
+import React, { useState } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
+import { UNIT_URL } from '../../../../share/common/api/api.constants'
+import { moduleApi } from '../../../../share/handle/fetchData'
+import { DELETE_UNIT } from '../../../../store/actions/unit.action'
 
-
-const data = [
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd',
-    check: true
-  },
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd'
-  },
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd'
-  },
-  {
-    name: 'dan su',
-    code: 123,
-    slug: 'awdawdawd'
-  }
-]
-
-export default function ManagementUnit() {
+export default function ManagementUnit({ data }: props) {
   const match = useRouteMatch()
-  if (match.path === '/admin/department') {
-    match.path = '/admin'
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const dispatch = useDispatch()
+  const showModal = () => {
+    setIsModalVisible(true)
+  }
+
+  const handleOnDelete = async (id: any) => {
+    const myPromise = moduleApi.delete(UNIT_URL, id)
+    await toast.promise(myPromise, {
+      loading: 'Loading',
+      success: 'Xoá đơn vị thành công',
+      error: 'Xoá đơn vị thất bại'
+    })
+    const status = await myPromise.then((response) => response.status)
+    if (status === 204) {
+      dispatch({ type: DELETE_UNIT, id: id })
+    }
+  }
+  const handleOk = (id: any) => {
+    handleOnDelete(id)
+    setIsModalVisible(false)
+  }
+  const handleCancel = () => {
+    setIsModalVisible(false)
   }
   return (
     <TableContainer component={Paper}>
       <Table size='medium' aria-label='a dense table'>
         <TableHead>
           <TableRow>
-            <TableCell>Cư trú và giấy tờ tuỳ thân</TableCell>
-            <TableCell align='right'>Hôn nhân và gia đình</TableCell>
-            <TableCell align='right'>Tên</TableCell>
-            <TableCell align='right'>Mã đơn vị</TableCell>
-            <TableCell align='right'>Tên lĩnh vực</TableCell>
+            <TableCell align='center'>Tên đơn vị</TableCell>
+            <TableCell align='center'>Tên lĩnh vực</TableCell>
+            <TableCell align='center'>Mã đơn vị</TableCell>
+            <TableCell align='center'>Ngày tạo</TableCell>
             <TableCell align='center'>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component='th' scope='row'>
-                {row.code}
+          {data.map((unit) => (
+            <TableRow key={unit._id}>
+              <TableCell align='center' component='th' scope='row'>
+                {unit.name}
               </TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='left'>
+              <TableCell align='center'>{unit.fieldName}</TableCell>
+              <TableCell align='center'>{unit.unitCode}</TableCell>
+              <TableCell align='center'>{unit.insertTime}</TableCell>
+              <TableCell align='center'>
                 <Space align='center' size='small'>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/${match.path}/${unit.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
                       <SearchOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`${match.path}/department/${row.slug}`}>
+                  <Link to={`/${match.path}/${unit.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
                       <ToolOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`${match.path}/department/${row.slug}`}>
-                    <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='error'>
-                      <DeleteOutlined />
-                    </Tag>
-                  </Link>
+                  <Tag
+                    onClick={showModal}
+                    // onClick={() => handleOnDelete(row._id)}
+                    style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                    color='error'>
+                    <DeleteOutlined />
+                  </Tag>
+                  <Modal
+                    title='Basic Modal'
+                    visible={isModalVisible}
+                    onOk={() => handleOk(unit._id)}
+                    onCancel={handleCancel}>
+                    <p>Bạn có chắc chắn muốn xoá đơn vị {unit.name}</p>
+                  </Modal>
                 </Space>
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <Toaster />
     </TableContainer>
   )
 }

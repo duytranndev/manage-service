@@ -62,8 +62,6 @@ export default function FormAddStaff() {
   }
 
   async function handleOnSubmit(): Promise<void> {
-    console.log('sub :>> ')
-
     if (Object.keys(formData).length !== 0) {
       const newStaff = {
         ...formData,
@@ -89,7 +87,6 @@ export default function FormAddStaff() {
       }
     }
   }
-  console.log('errors :>> ', errors)
   return (
     <>
       <Form

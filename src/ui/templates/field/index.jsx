@@ -2,9 +2,8 @@ import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import { Button, Empty } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchFields } from '../../../store/recuders/field.reducer'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import DrawerComponent from '../../molecules/drawer'
 import FormAddField from '../../organisms/field/add-field/index'
 import ManagementField from '../../organisms/field/list-field'
@@ -32,19 +31,11 @@ const useStyles = makeStyles({
   }
 })
 
-export default function Filed() {
+export default function Field() {
   const [visible, setVisible] = useState(false)
   const classes = useStyles()
 
   const fields = useSelector((state) => state.field.data)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const loadField = async () => {
-      await dispatch(fetchFields())
-    }
-    loadField()
-  }, [])
 
   const handleShowDrawer = () => {
     setVisible(true)
