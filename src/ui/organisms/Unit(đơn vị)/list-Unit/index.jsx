@@ -18,13 +18,15 @@ import { DELETE_UNIT } from '../../../../store/actions/unit.action'
 
 export default function ManagementUnit({ data }: props) {
   const match = useRouteMatch()
+  const [idUnit, setIdUnit] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
-  const showModal = () => {
+  const showModal = (id) => {
+    setIdUnit(id)
     setIsModalVisible(true)
   }
 
-  const handleOnDelete = async (id: any) => {
+  const handleOnDelete = async (id) => {
     const myPromise = moduleApi.delete(UNIT_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',
@@ -36,7 +38,7 @@ export default function ManagementUnit({ data }: props) {
       dispatch({ type: DELETE_UNIT, id: id })
     }
   }
-  const handleOk = (id: any) => {
+  const handleOk = (id) => {
     handleOnDelete(id)
     setIsModalVisible(false)
   }
@@ -77,7 +79,7 @@ export default function ManagementUnit({ data }: props) {
                     </Tag>
                   </Link>
                   <Tag
-                    onClick={showModal}
+                    onClick={() => showModal(unit._id)}
                     // onClick={() => handleOnDelete(row._id)}
                     style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                     color='error'>
@@ -86,9 +88,9 @@ export default function ManagementUnit({ data }: props) {
                   <Modal
                     title='Basic Modal'
                     visible={isModalVisible}
-                    onOk={() => handleOk(unit._id)}
+                    onOk={() => handleOk(idUnit)}
                     onCancel={handleCancel}>
-                    <p>Bạn có chắc chắn muốn xoá đơn vị {unit.name}</p>
+                    <p>Bạn có chắc chắn muốn xoá đơn vị này</p>
                   </Modal>
                 </Space>
               </TableCell>

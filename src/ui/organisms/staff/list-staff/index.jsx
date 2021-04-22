@@ -1,4 +1,5 @@
 import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { makeStyles } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -21,12 +22,20 @@ type ManagementStaffProps = {
   data: StaffInterface[]
 }
 
+const useStyles = makeStyles({
+  table: {
+    minWidth: 650
+  }
+})
+
 export default function ManagementStaff({ data }: ManagementStaffProps) {
   const match = useRouteMatch()
-
+  const [idStaff, setIdStaff] = useState('')
+  const classes = useStyles()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
-  const showModal = () => {
+  const showModal = (id) => {
+    setIdStaff(id)
     setIsModalVisible(true)
   }
 
@@ -53,7 +62,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table size='medium' aria-label='a dense table'>
+        <Table className={classes.table} size='medium' aria-label='simple table'>
           <TableHead>
             <TableRow>
               <TableCell align='center'>Họ tên</TableCell>
@@ -61,21 +70,19 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
               <TableCell align='center'>Chức vụ</TableCell>
               <TableCell align='center'>Số điện thoại</TableCell>
               <TableCell align='center'>Quyền hạn</TableCell>
-              <TableCell align='center'>Địa chỉ</TableCell>
               <TableCell align='center'>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((staff: StaffInterface) => (
               <TableRow key={staff._id}>
-                <TableCell component='th' scope='row'>
+                <TableCell component='th' scope='row' align='center'>
                   {staff.name}
                 </TableCell>
                 <TableCell align='center'>{staff.department}</TableCell>
                 <TableCell align='center'>{staff.position}</TableCell>
                 <TableCell align='center'>{staff.phone}</TableCell>
                 <TableCell align='center'>{staff.role}</TableCell>
-                <TableCell align='center'>{staff.address}</TableCell>
                 <TableCell align='center'>
                   <Space align='center' size='small'>
                     <Link to={`/${match.path}/${staff.slug}`}>
@@ -89,8 +96,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                       </Tag>
                     </Link>
                     <Tag
-                      onClick={showModal}
-                      // onClick={() => handleOnDelete(row._id)}
+                      onClick={() => showModal(staff._id)}
                       style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                       color='error'>
                       <DeleteOutlined />
@@ -98,9 +104,9 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                     <Modal
                       title='Basic Modal'
                       visible={isModalVisible}
-                      onOk={() => handleOk(staff._id)}
+                      onOk={() => handleOk(idStaff)}
                       onCancel={handleCancel}>
-                      <p>Bạn có chắc chắn muốn xoá nhân viên {staff?.name}</p>
+                      <p>Bạn có chắc chắn muốn xoá nhân viên này</p>
                     </Modal>
                   </Space>
                 </TableCell>

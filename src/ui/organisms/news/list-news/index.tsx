@@ -35,10 +35,11 @@ type ManagementNewsProps = {
 }
 export default function ManagementNews({ data }: ManagementNewsProps) {
   const classes = useStyles()
+  const [idNews, setIdNews] = useState('')
   const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const handleOnDelete = async (id: any) => {
+  const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(NEWS_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',
@@ -51,11 +52,12 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
     }
   }
 
-  const showModal = () => {
+  const showModal = (id: string) => {
+    setIdNews(id)
     setIsModalVisible(true)
   }
 
-  const handleOk = (id: any) => {
+  const handleOk = (id: string) => {
     handleOnDelete(id)
     setIsModalVisible(false)
   }
@@ -82,15 +84,19 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
                 </CardContent>
               </CardActionArea>
               <CardActions>
-                <Button onClick={showModal} variant='contained' color='secondary' startIcon={<DeleteIcon />}>
+                <Button
+                  onClick={() => showModal(item._id as string)}
+                  variant='contained'
+                  color='secondary'
+                  startIcon={<DeleteIcon />}>
                   Delete
                 </Button>
                 <Modal
                   title='Basic Modal'
                   visible={isModalVisible}
-                  onOk={() => handleOk(item._id)}
+                  onOk={() => handleOk(idNews)}
                   onCancel={handleCancel}>
-                  <p>Bạn có chắc chắn muốn xoá {item.title}</p>
+                  <p>Bạn có chắc chắn muốn xoá bài viết này?</p>
                 </Modal>
                 <Button variant='contained' color='primary' endIcon={<Icon>send</Icon>}>
                   Learn more
