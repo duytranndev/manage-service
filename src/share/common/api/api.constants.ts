@@ -6,6 +6,7 @@ export const NEWS_URL = BASE_URL + '/news'
 export const SENDER_URL = BASE_URL + '/sender'
 export const FIELD_URL = BASE_URL + '/field'
 export const UNIT_URL = BASE_URL + '/unit'
+export const SERVICE_URL = BASE_URL + '/service'
 
 export const CLOUD_URI = 'https://api.cloudinary.com/v1_1/duytrann/image/upload'
 export const PRESENT = 'ml_default'

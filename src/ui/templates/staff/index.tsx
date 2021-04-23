@@ -2,11 +2,10 @@ import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import { Button, Empty } from 'antd'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 import { DepartmentInterface } from '../../../share/interface/department.interface'
 import { StaffInterface } from '../../../share/interface/staff.interface'
-import { fetchStaffs } from '../../../store/recuders/staff.reducer'
 import { AppState } from '../../../store/types'
 import DrawerComponent from '../../molecules/drawer'
 import FormAddStaff from '../../organisms/staff/add-staff'
@@ -44,15 +43,6 @@ export default function Staff() {
     const department = departments.find((item) => item._id === staff.departmentId)
     return (staff['department'] = department?.name)
   })
-  console.log('staffs :>> ', staffs)
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const loadStaff = async () => {
-      await dispatch(fetchStaffs())
-    }
-    loadStaff()
-  }, [])
 
   const handleShowDrawer = () => {
     setVisible(true)

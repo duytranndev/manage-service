@@ -54,30 +54,32 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
   const handleCancel = () => {
     setIsModalVisible(false)
   }
+
   return (
     <>
       <TableContainer component={Paper}>
+        <button onClick={() => window.location.reload(false)}>Click to reload!</button>
         <Table size='medium' aria-label='a dense table'>
           <TableHead>
             <TableRow>
-              <TableCell align='center'>Mã phòng ban</TableCell>
-              <TableCell align='center'>Tên phòng</TableCell>
-              <TableCell align='center'>Số lượng nhân viên</TableCell>
-              <TableCell align='center'>Ngày tạo</TableCell>
-              <TableCell align='center'>Liên kết tĩnh</TableCell>
+              <TableCell align='left'>Mã phòng ban</TableCell>
+              <TableCell align='left'>Tên phòng</TableCell>
+              <TableCell align='left'>Số lượng nhân viên</TableCell>
+              <TableCell align='left'>Ngày tạo</TableCell>
+              <TableCell align='left'>Liên kết tĩnh</TableCell>
               <TableCell align='center'>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {data.map((row: DepartmentInterface) => (
               <TableRow key={row._id}>
-                <TableCell align='center' component='th' scope='row'>
+                <TableCell align='left' component='th' scope='row'>
                   {row.departmentCode}
                 </TableCell>
-                <TableCell align='center'>{row.name}</TableCell>
+                <TableCell align='left'>{row.name}</TableCell>
                 <TableCell align='center'>{row.totalStaff}</TableCell>
-                <TableCell align='center'>{row.insertTime}</TableCell>
-                <TableCell align='center'>{row.slug}</TableCell>
+                <TableCell align='left'>{row.insertTime}</TableCell>
+                <TableCell align='left'>{row.slug}</TableCell>
                 <TableCell align='center'>
                   <Space align='center' size='small'>
                     <Link to={`/admin/department/${row.slug}`}>

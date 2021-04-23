@@ -52,22 +52,22 @@ export default function ManagementField({ data }: any) {
       <Table size='medium' aria-label='a dense table'>
         <TableHead>
           <TableRow>
-            <TableCell align='center'>Mã lĩnh vực</TableCell>
-            <TableCell align='center'>Tên lĩnh vực</TableCell>
-            <TableCell align='center'>Ngày tạo</TableCell>
-            <TableCell align='center'>Liên kết tĩnh</TableCell>
+            <TableCell align='left'>Mã lĩnh vực</TableCell>
+            <TableCell align='left'>Tên lĩnh vực</TableCell>
+            <TableCell align='left'>Ngày tạo</TableCell>
+            <TableCell align='left'>Liên kết tĩnh</TableCell>
             <TableCell align='center'>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((field) => (
             <TableRow key={field._id}>
-              <TableCell component='th' scope='row' align='center'>
+              <TableCell component='th' scope='row' align='left'>
                 {field.fieldCode}
               </TableCell>
-              <TableCell align='center'>{field.name}</TableCell>
-              <TableCell align='center'>{field.insertTime}</TableCell>
-              <TableCell align='center'>{field.slug}</TableCell>
+              <TableCell align='left'>{field.name}</TableCell>
+              <TableCell align='left'>{field.insertTime}</TableCell>
+              <TableCell align='left'>{field.slug}</TableCell>
               <TableCell align='center'>
                 <Space align='center' size='small'>
                   <Link to={`/${match.path}/${field.slug}`}>

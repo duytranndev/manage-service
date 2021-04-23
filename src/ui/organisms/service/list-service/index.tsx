@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
-import { makeStyles } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -13,90 +13,85 @@ import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { STAFF_URL } from '../../../../share/common/api/api.constants'
+import { SERVICE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
-import { StaffInterface } from '../../../../share/interface/staff.interface'
-import { DELETE_STAFF } from '../../../../store/actions/staff.action'
-
-type ManagementStaffProps = {
-  data: StaffInterface[]
+import { ServiceInterface } from '../../../../share/interface/service.interface'
+import { DELETE_SERVICE } from '../../../../store/actions/service.action'
+type ManagementServiceProps = {
+  data: ServiceInterface[]
 }
 
-const useStyles = makeStyles({
-  table: {
-    minWidth: 650
-  }
-})
-
-export default function ManagementStaff({ data }: ManagementStaffProps) {
-  const match = useRouteMatch()
-  const [idStaff, setIdStaff] = useState('')
-  const classes = useStyles()
-  const [isModalVisible, setIsModalVisible] = useState(false)
+export default function ManagementService({ data }: ManagementServiceProps) {
   const dispatch = useDispatch()
-  const showModal = (id) => {
-    setIdStaff(id)
-    setIsModalVisible(true)
-  }
+  const match = useRouteMatch()
+  const [idService, setIdService] = useState('')
 
-  const handleOnDelete = async (id: any) => {
-    const myPromise = moduleApi.delete(STAFF_URL, id)
+  const handleOnDelete = async (id: string) => {
+    const myPromise = moduleApi.delete(SERVICE_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',
-      success: 'Xoá nhân viên thành công',
-      error: 'Xoá nhân viên thất bại'
+      success: 'Xoá dịch vụ thành công',
+      error: 'Xoá dịch vụ thất bại'
     })
     const status = await myPromise.then((response) => response.status)
     if (status === 204) {
-      dispatch({ type: DELETE_STAFF, id: id })
+      dispatch({ type: DELETE_SERVICE, id: id })
     }
   }
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const handleOk = (id: any) => {
+  const showModal = (id: string) => {
+    setIdService(id)
+    setIsModalVisible(true)
+  }
+
+  const handleOk = (id: string) => {
     handleOnDelete(id)
     setIsModalVisible(false)
   }
+
   const handleCancel = () => {
     setIsModalVisible(false)
   }
+
   return (
     <>
       <TableContainer component={Paper}>
-        <Table className={classes.table} size='medium' aria-label='simple table'>
+        <Table size='medium' aria-label='a dense table'>
           <TableHead>
             <TableRow>
-              <TableCell align='left'>Họ tên</TableCell>
-              <TableCell align='left'>Phòng ban</TableCell>
-              <TableCell align='left'>Chức vụ</TableCell>
-              <TableCell align='left'>Số điện thoại</TableCell>
-              <TableCell align='left'>Quyền hạn</TableCell>
+              <TableCell align='left'>Mã dịch vụ</TableCell>
+              <TableCell align='left'>Tên dịch vụ</TableCell>
+              <TableCell align='left'>Đơn vị</TableCell>
+              <TableCell align='left'>Lĩnh vực</TableCell>
+              <TableCell align='left'>Liên kết tĩnh</TableCell>
               <TableCell align='center'>Action</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((staff: StaffInterface) => (
-              <TableRow key={staff._id}>
-                <TableCell component='th' scope='row' align='left'>
-                  {staff.name}
+            {data.map((row: ServiceInterface) => (
+              <TableRow key={row._id}>
+                <TableCell align='left' component='th' scope='row'>
+                  {row.serviceCode}
                 </TableCell>
-                <TableCell align='left'>{staff.department}</TableCell>
-                <TableCell align='left'>{staff.position}</TableCell>
-                <TableCell align='left'>{staff.phone}</TableCell>
-                <TableCell align='left'>{staff.role}</TableCell>
+                <TableCell align='left'>{row.name}</TableCell>
+                <TableCell align='left'>{row.unitName}</TableCell>
+                <TableCell align='left'>{row.fieldName}</TableCell>
+                <TableCell align='left'>{row.slug}</TableCell>
                 <TableCell align='center'>
                   <Space align='center' size='small'>
-                    <Link to={`/admin/staff/${staff.slug}`}>
+                    <Link to={`${match.path}/${row.slug}`}>
                       <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
                         <SearchOutlined />
                       </Tag>
                     </Link>
-                    <Link to={`/${match.path}/${staff.slug}`}>
+                    <Link to={`${match.path}/${row.slug}`}>
                       <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
                         <ToolOutlined />
                       </Tag>
                     </Link>
                     <Tag
-                      onClick={() => showModal(staff._id)}
+                      onClick={() => showModal(row._id as string)}
                       style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                       color='error'>
                       <DeleteOutlined />
@@ -104,9 +99,9 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                     <Modal
                       title='Basic Modal'
                       visible={isModalVisible}
-                      onOk={() => handleOk(idStaff)}
+                      onOk={() => handleOk(idService)}
                       onCancel={handleCancel}>
-                      <p>Bạn có chắc chắn muốn xoá nhân viên này</p>
+                      <p>Bạn có chắc chắn muốn xoá dịch vụ này?</p>
                     </Modal>
                   </Space>
                 </TableCell>
