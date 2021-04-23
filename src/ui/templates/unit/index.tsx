@@ -2,11 +2,10 @@ import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import EditIcon from '@material-ui/icons/Edit'
 import { Button, Empty } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { FieldInterface } from '../../../share/interface/field.interface'
 import { UnitInterface } from '../../../share/interface/unit.interface'
-import { fetchUnits } from '../../../store/recuders/unit.reducer'
 import { AppState } from '../../../store/types'
 import DrawerComponent from '../../molecules/drawer'
 import FormAddUnit from '../../organisms/Unit(đơn vị)/add-Unit'
@@ -45,13 +44,6 @@ export default function Unit() {
     return (unit['fieldName'] = field?.name)
   })
   const dispatch = useDispatch()
-
-  useEffect(() => {
-    const loadUnit = async () => {
-      await dispatch(fetchUnits())
-    }
-    loadUnit()
-  }, [])
 
   const handleShowDrawer = () => {
     setVisible(true)

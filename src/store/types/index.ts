@@ -2,6 +2,7 @@ import { Action } from 'redux'
 import { DepartmentInterface } from '../../share/interface/department.interface'
 import { FieldInterface } from '../../share/interface/field.interface'
 import { NewsInterface } from '../../share/interface/image.interface'
+import { ServiceInterface } from '../../share/interface/service.interface'
 import { StaffInterface } from '../../share/interface/staff.interface'
 import { UnitInterface } from '../../share/interface/unit.interface'
 
@@ -11,10 +12,17 @@ export interface AppState {
   field: FieldState
   news: NewsState
   unit: UnitState
+  service: ServiceState
 }
 
 export interface DepartmentState {
   data: DepartmentInterface[]
+  pending?: boolean
+  error?: any
+}
+
+export interface ServiceState {
+  data: ServiceInterface[]
   pending?: boolean
   error?: any
 }

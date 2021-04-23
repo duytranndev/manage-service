@@ -1,8 +1,14 @@
 import { Layout } from 'antd'
 import 'antd/dist/antd.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import AdminRouting from '../../../share/routing/admin'
+import { fetchDepartments } from '../../../store/recuders/department.reducer'
+import { fetchFields } from '../../../store/recuders/field.reducer'
+import { fetchServices } from '../../../store/recuders/service.reducer'
+import { fetchStaffs } from '../../../store/recuders/staff.reducer'
+import { fetchUnits } from '../../../store/recuders/unit.reducer'
 import HeaderAdmin from '../../../ui/organisms/header'
 import MenuAdmin from '../../../ui/organisms/menu'
 // import './index.scss'
@@ -10,6 +16,42 @@ import MenuAdmin from '../../../ui/organisms/menu'
 const { Sider, Content } = Layout
 export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false)
+
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const loadDepartment = async () => {
+      await dispatch(fetchDepartments())
+    }
+    loadDepartment()
+  }, [])
+
+  useEffect(() => {
+    const loadField = async () => {
+      await dispatch(fetchFields())
+    }
+    loadField()
+  }, [])
+
+  useEffect(() => {
+    const loadStaff = async () => {
+      await dispatch(fetchStaffs())
+    }
+    loadStaff()
+  }, [])
+
+  useEffect(() => {
+    const loadUnit = async () => {
+      await dispatch(fetchUnits())
+    }
+    loadUnit()
+  }, [])
+
+  useEffect(() => {
+    const loadService = async () => {
+      await dispatch(fetchServices())
+    }
+    loadService()
+  }, [])
 
   return (
     <>

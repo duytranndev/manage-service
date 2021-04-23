@@ -41,7 +41,6 @@ export default function News() {
     loadNews()
   }, [])
   const listNews = useSelector<AppState, NewsInterface[]>((state) => state.news.data)
-  console.log('listNews :>> ', listNews)
 
   const handleShowDrawer = () => {
     setVisible(true)

@@ -17,7 +17,7 @@ const layout = {
 
 export default function FormAddUnit() {
   const [formData, setFormData] = useState()
-  const [field, setField] = useState('')
+  const [field, setField] = useState()
   const [fields, setFields] = useState([])
   const dispatch = useDispatch()
 
@@ -52,6 +52,7 @@ export default function FormAddUnit() {
       console.log('data :>> ', data)
       dispatch({ type: CREATE_UNIT, payload: data })
       setFormData({})
+      setField('')
     }
   }
 
@@ -63,10 +64,15 @@ export default function FormAddUnit() {
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Tên đơn vị'>
-        <Input placeholder='Nhập tên đơn vị...' name='name' onChange={handleOnChange} />
+        <Input placeholder='Nhập tên đơn vị...' name='name' onChange={handleOnChange} value={formData?.name} />
       </Form.Item>
       <Form.Item label='Tên lĩnh vực'>
-        <Select showSearch placeholder='Chọn lĩnh vực...' optionFilterProp='children' onChange={onChangeDepartment}>
+        <Select
+          showSearch
+          placeholder='Chọn lĩnh vực...'
+          optionFilterProp='children'
+          onChange={onChangeDepartment}
+          value={field}>
           {fields.map((item) => (
             <Option key={item._id} value={item._id}>
               {item.name}
@@ -75,7 +81,13 @@ export default function FormAddUnit() {
         </Select>
       </Form.Item>
       <Form.Item label='Mô tả'>
-        <TextArea placeholder='Nhập mô tả...' rows={4} name='description' onChange={handleOnChange} />
+        <TextArea
+          placeholder='Nhập mô tả...'
+          rows={4}
+          name='description'
+          onChange={handleOnChange}
+          value={formData?.description}
+        />
       </Form.Item>
 
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>

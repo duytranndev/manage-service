@@ -50,22 +50,22 @@ export default function ManagementUnit({ data }: props) {
       <Table size='medium' aria-label='a dense table'>
         <TableHead>
           <TableRow>
-            <TableCell align='center'>Tên đơn vị</TableCell>
-            <TableCell align='center'>Tên lĩnh vực</TableCell>
-            <TableCell align='center'>Mã đơn vị</TableCell>
-            <TableCell align='center'>Ngày tạo</TableCell>
+            <TableCell>Mã đơn vị</TableCell>
+            <TableCell align='left'>Tên đơn vị</TableCell>
+            <TableCell align='left'>Tên lĩnh vực</TableCell>
+            <TableCell align='left'>Ngày tạo</TableCell>
             <TableCell align='center'>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {data.map((unit) => (
             <TableRow key={unit._id}>
-              <TableCell align='center' component='th' scope='row'>
+              <TableCell align='left'>{unit.unitCode}</TableCell>
+              <TableCell align='left' component='th' scope='row'>
                 {unit.name}
               </TableCell>
-              <TableCell align='center'>{unit.fieldName}</TableCell>
-              <TableCell align='center'>{unit.unitCode}</TableCell>
-              <TableCell align='center'>{unit.insertTime}</TableCell>
+              <TableCell align='left'>{unit.fieldName}</TableCell>
+              <TableCell align='left'>{unit.insertTime}</TableCell>
               <TableCell align='center'>
                 <Space align='center' size='small'>
                   <Link to={`/${match.path}/${unit.slug}`}>
