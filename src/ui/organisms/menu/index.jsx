@@ -10,7 +10,7 @@ import {
 import { Menu } from 'antd'
 import 'antd/dist/antd.css'
 import React, { useState } from 'react'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { NavLink, useRouteMatch } from 'react-router-dom'
 import './index.scss'
 
 const { SubMenu } = Menu
@@ -31,39 +31,42 @@ export default function MenuAdmin() {
 
       <Menu theme={theme} mode='inline' defaultSelectedKeys={['sub1']}>
         <Menu.Item key='1' icon={<ApartmentOutlined />}>
-          <Link to={`${match.path}/department`}>Phòng Ban</Link>
+          <NavLink to={`${match.path}/department`}>Phòng Ban</NavLink>
         </Menu.Item>
         <Menu.Item key='2' icon={<TeamOutlined />}>
-          <Link to={`${match.path}/staff`}>Nhân Viên</Link>
+          <NavLink to={`${match.path}/staff`}>Nhân Viên</NavLink>
         </Menu.Item>
         <Menu.Item key='3' icon={<GlobalOutlined />}>
-          <Link to={`${match.path}/field`}>Lĩnh Vực</Link>
+          <NavLink to={`${match.path}/field`}>Lĩnh Vực</NavLink>
         </Menu.Item>
         <Menu.Item key='4' icon={<ReadOutlined />}>
-          <Link to={`${match.path}/unit`}>Đơn Vị</Link>
+          <NavLink to={`${match.path}/unit`}>Đơn Vị</NavLink>
         </Menu.Item>
         <Menu.Item key='5' icon={<ReadOutlined />}>
-          <Link to={`${match.path}/service`}>Dịch Vụ</Link>
+          <NavLink to={`${match.path}/service`}>Dịch Vụ</NavLink>
         </Menu.Item>
 
-        <SubMenu key='sub1' icon={<ReadOutlined />} title={<Link to={`${match.path}/profile`}>Quản Lý Hồ Sơ</Link>}>
+        <SubMenu
+          key='sub1'
+          icon={<ReadOutlined />}
+          title={<NavLink to={`${match.path}/profile`}>Quản Lý Hồ Sơ</NavLink>}>
           <Menu.Item key='8'>Danh sách hồ sơ</Menu.Item>
           <Menu.Item key='9'>
-            <Link to={`${match.path}/profile/records_received`}>Hồ sơ nhận</Link>
+            <NavLink to={`${match.path}/profile/records_received`}>Hồ sơ nhận</NavLink>
           </Menu.Item>
           <Menu.Item key='10'>Hồ sơ duyệt</Menu.Item>
         </SubMenu>
-        <SubMenu key='sub2' icon={<ReadOutlined />} title={<Link to={`${match.path}/profile`}>Phân Công</Link>}>
+        <SubMenu key='sub2' icon={<ReadOutlined />} title={<NavLink to={`${match.path}/profile`}>Phân Công</NavLink>}>
           <Menu.Item key='11'>Tạo mới phân công</Menu.Item>
           <Menu.Item key='12'>Đã phân công</Menu.Item>
         </SubMenu>
         <Menu.Item key='6' icon={<CompassOutlined />}>
-          <Link to={`${match.path}/news`}>Tin Tức</Link>
+          <NavLink to={`${match.path}/news`}>Tin Tức</NavLink>
         </Menu.Item>
         <Menu.Item key='7' icon={<WhatsAppOutlined />}>
-          <Link to={`${match.path}/sender`}>Người Gửi</Link>
+          <NavLink to={`${match.path}/sender`}>Người Gửi</NavLink>
         </Menu.Item>
-        <SubMenu key='sub3' icon={<LineChartOutlined />} title={<Link to={`${match.path}`}>Thống Kê</Link>}>
+        <SubMenu key='sub3' icon={<LineChartOutlined />} title={<NavLink to={`${match.path}`}>Thống Kê</NavLink>}>
           <Menu.Item key='13'>Option 5</Menu.Item>
           <Menu.Item key='14'>Option 6</Menu.Item>
           <Menu.Item key='15'>Option 7</Menu.Item>

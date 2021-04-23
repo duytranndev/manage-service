@@ -20,7 +20,6 @@ const middleWare = [thunk]
 
 const logger: Middleware = () => (next: unknown) => (action: Action): void => {
   if (process.env.NODE_ENV !== 'production') {
-    console.log('Logger', action)
   }
   return typeof next === 'function' ? next(action) : undefined
 }

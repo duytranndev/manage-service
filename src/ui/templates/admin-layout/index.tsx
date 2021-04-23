@@ -58,7 +58,9 @@ export default function AdminLayout() {
       <Layout>
         <Sider theme='light' trigger={null} collapsible collapsed={collapsed}>
           <Link to='/admin'>
-            <div className='logo'>This is Logo</div>
+            <div className='logo'>
+              <img src='https://dichvucong.gov.vn/p/home/theme/img/header/logo.png' style={{ width: '100%' }} alt='' />
+            </div>
           </Link>
           <MenuAdmin />
         </Sider>
