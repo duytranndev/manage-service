@@ -1,8 +1,8 @@
 import { createStyles, Grid, makeStyles, TextField, Theme } from '@material-ui/core'
+import AddCircleIcon from '@material-ui/icons/AddCircle'
+import RemoveCircleIcon from '@material-ui/icons/RemoveCircle'
 import { Collapse, Form, Radio } from 'antd'
 import { ChangeEvent, default as React, useState } from 'react'
-import { useForm } from '../../../../share/hooks/useForm'
-import { validate } from '../../../../share/validator/validator'
 const { Panel } = Collapse
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,7 +45,6 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
   }
   const classes = useStyles()
   const [value, setValue] = useState('')
-  const { formData, handleInputChange, setErrors, errors, isReady, setFormData, setIsSubmitting } = useForm<any>({})
   const [inputFields, setInputFields] = useState<any>([
     {
       name: '',
@@ -99,17 +98,17 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
   }
 
   const handleOnSubmit = (e: any) => {
-    e.preventDefault()
-    setErrors(validate(formData))
-    setIsSubmitting(true)
-    if (isReady) {
-      const data = { ...formData }
-      console.log('data :>> ', data)
-      setFormData({})
-      setInputFields([])
-      onSubmit('awdawd')
-    }
-    return null
+    // e.preventDefault()
+    // setErrors(validate(formData))
+    // setIsSubmitting(true)
+    // if (isReady) {
+    //   const data = { ...formData }
+    //   console.log('data :>> ', data)
+    //   setFormData({})
+    //   setInputFields([])
+    //   onSubmit('awdawd')
+    // }
+    // return null
   }
 
   return (
@@ -407,6 +406,10 @@ export default function TransferPaper({ onSubmit }: TransferPaperProps) {
                     shrink: true
                   }}
                 />
+              </Grid>
+              <Grid item xs={1}>
+                <RemoveCircleIcon />
+                <AddCircleIcon />
               </Grid>
             </Grid>
           </div>

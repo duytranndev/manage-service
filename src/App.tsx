@@ -1,11 +1,11 @@
 import React from 'react'
 import './App.scss'
-import AppLayout from './ui/templates/layout'
+import AdminLayout from './ui/templates/admin-layout'
 
 function App() {
   return (
     <div className='App'>
-      <AppLayout />
+      <AdminLayout />
     </div>
   )
 }

@@ -26,37 +26,38 @@ import Unit from '../../../ui/templates/unit'
 
 export default function AdminRouting() {
   const match = useRouteMatch()
+  console.log('match :>> ', match)
 
   const routeList = [
     {
-      component: <Route key='1' path={`${match.path}/department`} component={Department} exact />
+      component: <Route key='1' path={`/admin/department`} component={Department} exact />
     },
     {
       component: <Route key='2' path={`/admin`} component={AdminPage} exact />
     },
     {
-      component: <Route key='3' path={`${match.path}/staff`} component={Staff} exact />
+      component: <Route key='3' path={`/admin/staff`} component={Staff} exact />
     },
     {
-      component: <Route key='4' path={`${match.path}/news`} component={News} exact />
+      component: <Route key='4' path={`/admin/news`} component={News} exact />
     },
     {
-      component: <Route key='5' path={`${match.path}/field`} component={Field} exact />
+      component: <Route key='5' path={`/admin/field`} component={Field} exact />
     },
     {
-      component: <Route key='6' path={`${match.path}/service`} component={Service} exact />
+      component: <Route key='6' path={`/admin/service`} component={Service} exact />
     },
     {
-      component: <Route key='7' path={`${match.path}/sender`} component={Sender} exact />
+      component: <Route key='7' path={`/admin/sender`} component={Sender} exact />
     },
     {
-      component: <Route key='8' path={`${match.path}/profile`} component={Profile} exact />
+      component: <Route key='8' path={`/admin/profile`} component={Profile} exact />
     },
     {
-      component: <Route key='9' path={`${match.path}/unit`} component={Unit} exact />
+      component: <Route key='9' path={`/admin/unit`} component={Unit} exact />
     },
     {
-      component: <Route key='10' path={`${match.path}/profile/records_received`} component={RecordsReceived} exact />
+      component: <Route key='10' path={`/admin/profile/records_received`} component={RecordsReceived} exact />
     }
 
     // trùng key
