@@ -22,9 +22,9 @@ export default function Unit() {
         <PlusOutlined /> Thêm đơn vị
       </Button>
       <ManagementUnit/>
-      {/* <DrawerComponent title='Thêm đơn vị' visible={visible} onClose={handleCloseDrawer} width={680}>
+      <DrawerComponent title='Thêm đơn vị' visible={visible} onClose={handleCloseDrawer} width={680}>
         <FormAddUnit/>
-      </DrawerComponent> */}
+      </DrawerComponent>
     </>
   )
 }
