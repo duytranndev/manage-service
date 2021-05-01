@@ -52,7 +52,7 @@ export default function FormAddUnit() {
       console.log('data :>> ', data)
       dispatch({ type: CREATE_UNIT, payload: data })
       setFormData({})
-      setField('')
+      setField()
     }
   }
 
