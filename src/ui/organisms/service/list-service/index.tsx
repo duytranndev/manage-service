@@ -63,8 +63,6 @@ export default function ManagementService({ data }: ManagementServiceProps) {
               <TableCell align='left'>Mã dịch vụ</TableCell>
               <TableCell align='left'>Tên dịch vụ</TableCell>
               <TableCell align='left'>Đơn vị</TableCell>
-              <TableCell align='left'>Lĩnh vực</TableCell>
-              <TableCell align='left'>Liên kết tĩnh</TableCell>
               <TableCell align='center'>Action</TableCell>
             </TableRow>
           </TableHead>
@@ -76,8 +74,6 @@ export default function ManagementService({ data }: ManagementServiceProps) {
                 </TableCell>
                 <TableCell align='left'>{row.name}</TableCell>
                 <TableCell align='left'>{row.unitName}</TableCell>
-                <TableCell align='left'>{row.fieldName}</TableCell>
-                <TableCell align='left'>{row.slug}</TableCell>
                 <TableCell align='center'>
                   <Space align='center' size='small'>
                     <Link to={`${match.path}/${row.slug}`}>

@@ -58,6 +58,9 @@ export default function AdminRouting() {
     },
     {
       component: <Route key='10' path={`/admin/profile/records_received`} component={RecordsReceived} exact />
+    },
+    {
+      component: <Route key='11' path={``} component={AdminPage} exact />
     }
 
     // trùng key

@@ -34,14 +34,15 @@ const useStyles = makeStyles({
 export default function Service() {
   const classes = useStyles()
   const [visible, setVisible] = useState(false)
-  const services = useSelector((state) => state.service.data)
-  const units = useSelector((state) => state.unit.data)
-  const fields = useSelector((state) => state.field.data)
 
-  services.map((service) => {
-    const unit = units.find((item) => item._id === service?.unitId)
-    const field = fields.find((item) => item._id === unit?.fieldId)
-    return (service['unitName'] = unit?.name), (service['fieldName'] = field?.name)
+  const services = useSelector((state) => state.service.data)
+
+  const units = useSelector((state) => state.unit.data)
+  // const fields = useSelector((state) => state.field.data)
+
+  services.map(async (service) => {
+    const unit = await units.find((item) => item._id === service.unitId)
+    return await (service['unitName'] = unit?.name)
   })
 
   const handleShowDrawer = () => {
