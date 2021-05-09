@@ -1,9 +1,9 @@
 import { BaseInterface } from './base.interface'
 
 export interface DepartmentInterface extends BaseInterface {
-  slug: string
+  slug?: string
   description?: string
-  code: string
-  departmentCode: string
-  totalStaff: string
+  code?: string
+  departmentCode?: string
+  totalStaff?: string
 }

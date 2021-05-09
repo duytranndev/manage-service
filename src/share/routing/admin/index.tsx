@@ -9,7 +9,6 @@ import Field from '../../../ui/templates/field'
 import News from '../../../ui/templates/news'
 import Profile from '../../../ui/templates/profile'
 import RecordsReceived from '../../../ui/templates/profile/records-received(hồ sơ nhận)'
-import Sender from '../../../ui/templates/sender'
 import Service from '../../../ui/templates/service'
 import Staff from '../../../ui/templates/staff'
 import Unit from '../../../ui/templates/unit'
@@ -47,9 +46,7 @@ export default function AdminRouting() {
     {
       component: <Route key='6' path={`/admin/service`} component={Service} exact />
     },
-    {
-      component: <Route key='7' path={`/admin/sender`} component={Sender} exact />
-    },
+
     {
       component: <Route key='8' path={`/admin/profile`} component={Profile} exact />
     },
