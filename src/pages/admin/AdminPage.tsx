@@ -1,7 +1,6 @@
 import { StarTwoTone } from '@ant-design/icons'
 import React from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
-import HouseholdRegistration from '../../ui/organisms/household-registration'
 import ProfileReceived from '../../ui/organisms/profile/list-profile'
 import ProgressChart from '../../ui/organisms/progress'
 import './admin.scss'
@@ -127,8 +126,6 @@ export default function AdminPage() {
           </div>
         </div>
       </div>
-
-      <HouseholdRegistration />
     </>
   )
 }

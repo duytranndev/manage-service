@@ -12,37 +12,50 @@ import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { FIELD_URL } from '../../../../share/common/api/api.constants'
+import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
-import { DELETE_FIELD } from '../../../../store/actions/field.action'
+import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
+import DrawerComponent from '../../../molecules/drawer'
+import EditField from '../update-field/index'
 
 export default function ManagementField({ data }: any) {
   const match = useRouteMatch()
   const [idField, setIdField] = useState('')
-
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [newField, setNewField] = useState()
+  const [visible, setVisible] = useState(false)
   const dispatch = useDispatch()
   const showModal = (id) => {
     setIdField(id)
     setIsModalVisible(true)
   }
+  const handleShowDrawer = (index: number) => {
+    // console.log('index :>> ', index)
+    setNewField(data[index])
+    setVisible(true)
+  }
+  const handleCloseDrawer = () => {
+    setVisible(false)
+  }
 
-  const handleOnDelete = async (id) => {
-    const myPromise = moduleApi.delete(FIELD_URL, id)
+  const handleOnDelete = async (id: string) => {
+    const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',
-      success: 'Xoá lĩnh vực thành công',
-      error: 'Xoá lĩnh vực thất bại'
+      success: 'Xoá phòng ban thành công',
+      error: 'Xoá phòng ban thất bại'
     })
     const status = await myPromise.then((response) => response.status)
     if (status === 204) {
-      dispatch({ type: DELETE_FIELD, id: id })
+      dispatch({ type: DELETE_DEPARTMENT, id: id })
     }
   }
-  const handleOk = (id) => {
+
+  const handleOk = (id: string) => {
     handleOnDelete(id)
     setIsModalVisible(false)
   }
+
   const handleCancel = () => {
     setIsModalVisible(false)
   }
@@ -60,7 +73,7 @@ export default function ManagementField({ data }: any) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((field) => (
+          {data.map((field, index) => (
             <TableRow key={field._id}>
               <TableCell component='th' scope='row' align='left'>
                 {field.fieldCode}
@@ -75,11 +88,15 @@ export default function ManagementField({ data }: any) {
                       <SearchOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`/${match.path}/${field.slug}`}>
-                    <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
-                      <ToolOutlined />
-                    </Tag>
-                  </Link>
+                  <Tag
+                    onClick={() => handleShowDrawer(index)}
+                    style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }}
+                    color='warning'>
+                    <ToolOutlined />
+                  </Tag>
+                  <DrawerComponent title='Thêm lĩnh vực' visible={visible} onClose={handleCloseDrawer} width={680}>
+                    <EditField data={newField} />
+                  </DrawerComponent>
                   <Tag
                     onClick={() => showModal(field._id)}
                     // onClick={() => handleOnDelete(row._id)}

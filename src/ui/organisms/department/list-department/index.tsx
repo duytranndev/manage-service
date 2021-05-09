@@ -17,6 +17,8 @@ import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
+import DrawerComponent from '../../../molecules/drawer'
+import EditDepartment from '../edit-department'
 import './management.scss'
 type ManagementDepartmentProps = {
   data: DepartmentInterface[]
@@ -24,8 +26,17 @@ type ManagementDepartmentProps = {
 
 export default function ManagementDepartment({ data }: ManagementDepartmentProps) {
   const dispatch = useDispatch()
-
   const [idDepartment, setIdDepartment] = useState('')
+  const [department, setDepartment] = useState<DepartmentInterface>()
+  const [isModalVisible, setIsModalVisible] = useState(false)
+  const [visible, setVisible] = useState(false)
+  const handleShowDrawer = (index: number) => {
+    setDepartment(data[index])
+    setVisible(true)
+  }
+  const handleCloseDrawer = () => {
+    setVisible(false)
+  }
 
   const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
@@ -39,7 +50,6 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
       dispatch({ type: DELETE_DEPARTMENT, id: id })
     }
   }
-  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const showModal = (id: string) => {
     setIdDepartment(id)
@@ -58,7 +68,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
   return (
     <>
       <TableContainer component={Paper}>
-        <button onClick={() => window.location.reload(false)}>Click to reload!</button>
+        {/* <button onClick={() => window.location.reload(false)}>Click to reload!</button> */}
         <Table size='medium' aria-label='a dense table'>
           <TableHead>
             <TableRow>
@@ -71,7 +81,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((row: DepartmentInterface) => (
+            {data.map((row: DepartmentInterface, index: number) => (
               <TableRow key={row._id}>
                 <TableCell align='left' component='th' scope='row'>
                   {row.departmentCode}
@@ -87,11 +97,15 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
                         <SearchOutlined />
                       </Tag>
                     </Link>
-                    <Link to={`/admin/department/${row.slug}`}>
-                      <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
-                        <ToolOutlined />
-                      </Tag>
-                    </Link>
+                    <Tag
+                      onClick={() => handleShowDrawer(index)}
+                      style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                      color='warning'>
+                      <ToolOutlined />
+                    </Tag>
+                    <DrawerComponent title='Thêm lĩnh vực' visible={visible} onClose={handleCloseDrawer} width={680}>
+                      <EditDepartment data={department} />
+                    </DrawerComponent>
                     <Tag
                       onClick={() => showModal(row._id as string)}
                       style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}

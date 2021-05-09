@@ -12,7 +12,7 @@ export const moduleApi = {
     return axios.post(url, body, config)
   },
   update(url: string, body: any) {
-    const path = `${url}/${body.id}`
+    const path = `${url}/${body._id}`
     return axios.patch(path, body)
   },
   delete(url: string, id: string) {
