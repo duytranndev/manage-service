@@ -1,68 +1,73 @@
 import { StarTwoTone } from '@ant-design/icons'
-import React from 'react'
+import { TableContainer } from '@material-ui/core'
+import Paper from '@material-ui/core/Paper'
+import Table from '@material-ui/core/Table'
+import TableBody from '@material-ui/core/TableBody'
+import TableCell from '@material-ui/core/TableCell'
+import TableHead from '@material-ui/core/TableHead'
+import TableRow from '@material-ui/core/TableRow'
+import { Tag } from 'antd'
+import { default as React, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
-import ProfileReceived from '../../ui/organisms/profile/list-profile'
-import ProgressChart from '../../ui/organisms/progress'
+import { ProfileInterface } from '../../share/interface/profile.interface'
+import { fetchProfiles } from '../../store/recuders/profile.reducer'
+import { AppState } from '../../store/types'
 import './admin.scss'
 export default function AdminPage() {
   const match = useRouteMatch()
-  // const [department, setDepartment] = useState<Department[]>([])
-  // const [department, setDepartment] = useState<Department[]>([])
-  //nếu m click vào cái accept current change là lấy cái code cũ do m sửa
-  // accept incoming change là m lấy cái code mới ở trên git, nãy t quên. t phải lên git xem lại code hiện giờ ở đoạn đó là gì.
-  // nếu m không chọn cái nào thì nó tồn tại cục code đó, và nó bị xung đột với nhau nên nó sẽ ko cho m merge
-  // sau khi m kiểm tra hết, không thấy cái lỗi nào như vừa nãy nữa thì m click vào dấu + của file đó
+  // const [profiles, setProfiles] = useState<ProfileInterface[]>()
+  const dispatch = useDispatch()
+  useEffect(() => {
+    const loadProfiles = async () => {
+      await dispatch(fetchProfiles())
+    }
+    loadProfiles()
+  }, [])
+  const profiles = useSelector<AppState, ProfileInterface[]>((state) => state.profile.data)
   // useEffect(() => {
-  //   const params = {
-  //     departmentCode: 'TC'
-  //   }
-  //   moduleApi
-  //     .get(DEPARTMENT_URL)
-  //     .then((res) => setDepartment(res.data.data))
-  //     .catch((error) => console.log('error :>> ', error))
+  //   moduleApi.get(PROFILE_URL).then((res) => setProfiles(res.data.data))
   // }, [])
 
-  // console.log('department :>> ', department)
+  // const data: any = [
+  //   {
+  //     name: 'dan su 1',
+  //     code: 12131123,
+  //     slug: 'awdawdaawd',
+  //     check: true
+  //   },
+  //   {
+  //     name: 'dan su 2',
+  //     code: 1223123,
+  //     slug: 'awdawdsawd',
+  //     check: true
+  //   },
+  //   {
+  //     name: 'dan su 3',
+  //     code: 1231323,
+  //     slug: 'awdadwdawd',
+  //     check: true
+  //   },
+  //   {
+  //     name: 'dan su 4',
+  //     code: 1231232,
+  //     slug: 'awdawdgawd',
+  //     check: false
+  //   },
+  //   {
+  //     name: 'dan su 5',
+  //     code: 1231231,
+  //     slug: 'awdawdddawd',
+  //     check: false
+  //   }
+  // ]
 
-  const data: any = [
-    {
-      name: 'dan su 1',
-      code: 12131123,
-      slug: 'awdawdaawd',
-      check: true
-    },
-    {
-      name: 'dan su 2',
-      code: 1223123,
-      slug: 'awdawdsawd',
-      check: true
-    },
-    {
-      name: 'dan su 3',
-      code: 1231323,
-      slug: 'awdadwdawd',
-      check: true
-    },
-    {
-      name: 'dan su 4',
-      code: 1231232,
-      slug: 'awdawdgawd',
-      check: false
-    },
-    {
-      name: 'dan su 5',
-      code: 1231231,
-      slug: 'awdawdddawd',
-      check: false
-    }
-  ]
+  // const check = (data: any) => {
+  //   const number = data.filter((item: any) => item.check === true)
+  //   return (number.length / data.length) * 100
+  // }
 
-  const check = (data: any) => {
-    const number = data.filter((item: any) => item.check === true)
-    return (number.length / data.length) * 100
-  }
-
-  const value = check(data)
+  // const value = check(data)
 
   return (
     <>
@@ -114,15 +119,105 @@ export default function AdminPage() {
         <div className='col-lg-12 document-received'>
           <h4 style={{ color: 'red' }}>Hồ sơ đến</h4>
           <div className='row title' style={{ display: 'flex' }}>
-            <div className='col-lg-9'>
-              <ProfileReceived data={data} />
-            </div>
-            <div className='col-lg-3' style={{ textAlign: 'center' }}>
+            <>
+              <TableContainer component={Paper}>
+                <Table size='medium' aria-label='a dense table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align='center'>Mã hồ sơ</TableCell>
+                      <TableCell align='center'>Lĩnh vực</TableCell>
+                      <TableCell align='center'>Tên văn bản</TableCell>
+                      <TableCell align='center'>Tên người gửi</TableCell>
+                      <TableCell align='center'>Ngày gửi</TableCell>
+                      <TableCell align='center'>Trạng thái</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {profiles?.map((row: ProfileInterface) => (
+                      <TableRow key={row._id}>
+                        <TableCell component='th' scope='row'>
+                          {row.code}
+                        </TableCell>
+                        <TableCell align='right'>{row.fieldName}</TableCell>
+                        <TableCell align='right'>{row.nameDocument}</TableCell>
+                        <TableCell align='right'>{row.name}</TableCell>
+                        <TableCell align='right'>{row.insertTime}</TableCell>
+                        <TableCell align='right'>
+                          {row.check ? <Tag color='success'>Đã Duyệt</Tag> : <Tag color='error'>Chưa Duyệt</Tag>}
+                        </TableCell>
+                        {/* <TableCell align='center'>
+                  <Space align='center' size='small'>
+                    <Link to={`${match.path}/department/${row.slug}`}>
+                      <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
+                        <SearchOutlined />
+                      </Tag>
+                    </Link>
+
+                    <Link to={`${match.path}/department/${row.slug}`}>
+                      <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='error'>
+                        <DeleteOutlined />
+                      </Tag>
+                    </Link>
+                  </Space>
+                </TableCell> */}
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              {/* <Table dataSource={data} pagination={{ position: ['bottomCenter'] }}>
+        <Column title='Mã hồ sơ' dataIndex='code' key='code' />
+        <Column title='Lĩnh vực' dataIndex='name' key='name' />
+        <Column title='Tên văn bản' dataIndex='name' key='as' />
+        <Column title='Ngày gửi' dataIndex='name' key='awd' />
+        <Column
+          title='Trạng thái'
+          dataIndex='check'
+          key='check'
+          render={(text, record) => (
+            <Space size='middle'>
+              {text ? (
+                <Tag key={text} color='success'>
+                  Đã Duyệt
+                </Tag>
+              ) : (
+                <Tag color='error'>Chưa Duyệt</Tag>
+              )}
+            </Space>
+          )}
+        />
+        <Column
+          title='Action'
+          key='action'
+          align='center'
+          render={(text, record) => (
+            <Space align='center' size='small'>
+              <Link to={`${path}/${text.slug}`}>
+                <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
+                  <SearchOutlined />
+                </Tag>
+              </Link>
+              <Link to={`${path}/${text.slug}`}>
+                <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
+                  <ToolOutlined />
+                </Tag>
+              </Link>
+              <Link to={`${path}/${text.slug}`}>
+                <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='error'>
+                  <DeleteOutlined />
+                </Tag>
+              </Link>
+            </Space>
+          )}
+        />
+      </Table> */}
+            </>
+            {/* <div className='col-lg-3' style={{ textAlign: 'center' }}>
               <div className='sum' style={{ textAlign: 'center' }}>
                 <h6>Tổng hồ sơ đã duyệt</h6>
               </div>
               <ProgressChart value={value} />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

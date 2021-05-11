@@ -12,11 +12,13 @@ import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
-import { Link, useRouteMatch } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { STAFF_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { DELETE_STAFF } from '../../../../store/actions/staff.action'
+import DrawerComponent from '../../../molecules/drawer'
+import FormUpdateStaff from '../update-staff'
 
 type ManagementStaffProps = {
   data: StaffInterface[]
@@ -29,8 +31,9 @@ const useStyles = makeStyles({
 })
 
 export default function ManagementStaff({ data }: ManagementStaffProps) {
-  const match = useRouteMatch()
   const [idStaff, setIdStaff] = useState('')
+  const [visible, setVisible] = useState(false)
+  const [newStaff, setNewStaff] = useState()
   const classes = useStyles()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
@@ -52,6 +55,13 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
     }
   }
 
+  const handleShowDrawer = (index: number) => {
+    setNewStaff(data[index])
+    setVisible(true)
+  }
+  const handleCloseDrawer = () => {
+    setVisible(false)
+  }
   const handleOk = (id: any) => {
     handleOnDelete(id)
     setIsModalVisible(false)
@@ -74,7 +84,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {data.map((staff: StaffInterface) => (
+            {data.map((staff: StaffInterface, index: number) => (
               <TableRow key={staff._id}>
                 <TableCell component='th' scope='row' align='left'>
                   {staff.name}
@@ -90,11 +100,19 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                         <SearchOutlined />
                       </Tag>
                     </Link>
-                    <Link to={`/${match.path}/${staff.slug}`}>
-                      <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
-                        <ToolOutlined />
-                      </Tag>
-                    </Link>
+                    <Tag
+                      onClick={() => handleShowDrawer(index)}
+                      style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                      color='warning'>
+                      <ToolOutlined />
+                    </Tag>
+                    <DrawerComponent
+                      title='Sửa thông tin nhân viên'
+                      visible={visible}
+                      onClose={handleCloseDrawer}
+                      width={680}>
+                      <FormUpdateStaff data={newStaff} />
+                    </DrawerComponent>
                     <Tag
                       onClick={() => showModal(staff._id)}
                       style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}

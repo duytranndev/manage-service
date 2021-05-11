@@ -6,7 +6,8 @@ import {
   DELETE_SERVICE,
   FETCH_SERVICE_ERROR,
   FETCH_SERVICE_PENDING,
-  FETCH_SERVICE_SUCCESS
+  FETCH_SERVICE_SUCCESS,
+  UPDATE_SERVICE
 } from '../actions/service.action'
 import { ServiceState } from '../types'
 
@@ -41,6 +42,25 @@ export const ServiceReducer = (state = initialState, action: any): ServiceState 
     case DELETE_SERVICE:
       const services = [...state.data].filter((item: ServiceInterface) => item._id !== action.id)
       return { ...state, data: services }
+
+    case UPDATE_SERVICE:
+      const { payload } = action
+      const { data } = state
+      return {
+        ...state,
+        data: data.map((service: ServiceInterface) => {
+          if (service._id === payload._id) {
+            return {
+              ...service,
+              name: payload.name,
+              description: payload.description
+            }
+          } else {
+            return service
+          }
+        })
+      }
+
     default:
       return state
   }

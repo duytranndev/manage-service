@@ -4,8 +4,7 @@ import {
   GlobalOutlined,
   LineChartOutlined,
   ReadOutlined,
-  TeamOutlined,
-  WhatsAppOutlined
+  TeamOutlined
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import 'antd/dist/antd.css'
@@ -47,11 +46,12 @@ export default function MenuAdmin() {
         </Menu.Item>
 
         <SubMenu key='sub1' icon={<ReadOutlined />} title={<NavLink to={`/admin/profile`}>Quản Lý Hồ Sơ</NavLink>}>
-          <Menu.Item key='8'>Danh sách hồ sơ</Menu.Item>
           <Menu.Item key='9'>
-            <NavLink to={`/admin/profile/records_received`}>Hồ sơ nhận</NavLink>
+            <NavLink to={`/admin/profile/records_received`}>Hồ sơ đã nhận</NavLink>
           </Menu.Item>
-          <Menu.Item key='10'>Hồ sơ duyệt</Menu.Item>
+          <Menu.Item key='10'>
+            <NavLink to={`/admin/profile/records_browsed`}>Hồ sơ đã duyệt</NavLink>
+          </Menu.Item>
         </SubMenu>
         <SubMenu key='sub2' icon={<ReadOutlined />} title={<NavLink to={`/admin/profile`}>Phân Công</NavLink>}>
           <Menu.Item key='11'>Tạo mới phân công</Menu.Item>
@@ -59,9 +59,6 @@ export default function MenuAdmin() {
         </SubMenu>
         <Menu.Item key='6' icon={<CompassOutlined />}>
           <NavLink to={`/admin/news`}>Tin Tức</NavLink>
-        </Menu.Item>
-        <Menu.Item key='7' icon={<WhatsAppOutlined />}>
-          <NavLink to={`/admin/sender`}>Người Gửi</NavLink>
         </Menu.Item>
         <SubMenu key='sub3' icon={<LineChartOutlined />} title={<NavLink to={`/admin`}>Thống Kê</NavLink>}>
           <Menu.Item key='13'>Option 5</Menu.Item>

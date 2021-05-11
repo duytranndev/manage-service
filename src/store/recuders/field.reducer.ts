@@ -6,7 +6,8 @@ import {
   DELETE_FIELD,
   FETCH_FIELD_ERROR,
   FETCH_FIELD_PENDING,
-  FETCH_FIELD_SUCCESS
+  FETCH_FIELD_SUCCESS,
+  UPDATE_FIELD
 } from '../actions/field.action'
 import { FieldState } from '../types'
 
@@ -41,6 +42,25 @@ export const FieldReducer = (state = initialState, action: any): FieldState => {
     case DELETE_FIELD:
       const staffs = [...state.data].filter((item: FieldInterface) => item._id !== action.id)
       return { ...state, data: staffs }
+
+    case UPDATE_FIELD:
+      const { payload } = action
+      const { data } = state
+      return {
+        ...state,
+        data: data.map((field: FieldInterface) => {
+          if (field._id === payload._id) {
+            return {
+              ...field,
+              name: payload.name,
+              description: payload.description
+            }
+          } else {
+            return field
+          }
+        })
+      }
+
     default:
       return state
   }
