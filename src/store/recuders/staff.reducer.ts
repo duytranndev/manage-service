@@ -6,7 +6,8 @@ import {
   DELETE_STAFF,
   FETCH_STAFF_ERROR,
   FETCH_STAFF_PENDING,
-  FETCH_STAFF_SUCCESS
+  FETCH_STAFF_SUCCESS,
+  UPDATE_STAFF
 } from '../actions/staff.action'
 import { StaffState } from '../types'
 
@@ -41,6 +42,33 @@ export const StaffReducer = (state = initialState, action: any): StaffState => {
     case DELETE_STAFF:
       const staffs = [...state.data].filter((item: StaffInterface) => item._id !== action.id)
       return { ...state, data: staffs }
+
+    case UPDATE_STAFF:
+      const { payload } = action
+      const { data } = state
+      return {
+        ...state,
+        data: data.map((staff: StaffInterface) => {
+          if (staff._id === payload._id) {
+            return {
+              ...staff,
+              name: payload.name,
+              email: payload.email,
+              username: payload.username,
+              password: payload.password,
+              address: payload.address,
+              homeTown: payload.homeTown,
+              cardId: payload.cardId,
+              phone: payload.phone,
+              position: payload.position,
+              role: payload.role
+            }
+          } else {
+            return staff
+          }
+        })
+      }
+
     default:
       return state
   }

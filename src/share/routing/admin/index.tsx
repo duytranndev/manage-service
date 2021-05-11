@@ -4,11 +4,12 @@ import React, { Suspense } from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router-dom'
 import AdminPage from '../../../pages/admin/AdminPage'
 import NotFoundPage from '../../../pages/not-found'
+import ManagementRecordsBrowsed from '../../../ui/organisms/profile/records-browsed'
+import ManagementRecordsReceived from '../../../ui/organisms/profile/records-received'
 import Department from '../../../ui/templates/department'
 import Field from '../../../ui/templates/field'
 import News from '../../../ui/templates/news'
 import Profile from '../../../ui/templates/profile'
-import RecordsReceived from '../../../ui/templates/profile/records-received(hồ sơ nhận)'
 import Service from '../../../ui/templates/service'
 import Staff from '../../../ui/templates/staff'
 import Unit from '../../../ui/templates/unit'
@@ -54,13 +55,14 @@ export default function AdminRouting() {
       component: <Route key='9' path={`/admin/unit`} component={Unit} exact />
     },
     {
-      component: <Route key='10' path={`/admin/profile/records_received`} component={RecordsReceived} exact />
+      component: <Route key='10' path={`/admin/profile/records_received`} component={ManagementRecordsReceived} exact />
+    },
+    {
+      component: <Route key='7' path={`/admin/profile/records_browsed`} component={ManagementRecordsBrowsed} exact />
     },
     {
       component: <Route key='11' path={``} component={AdminPage} exact />
     }
-
-    // trùng key
   ]
 
   return (

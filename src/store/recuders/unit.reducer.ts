@@ -6,7 +6,8 @@ import {
   DELETE_UNIT,
   FETCH_UNIT_ERROR,
   FETCH_UNIT_PENDING,
-  FETCH_UNIT_SUCCESS
+  FETCH_UNIT_SUCCESS,
+  UPDATE_UNIT
 } from '../actions/unit.action'
 import { UnitState } from '../types'
 
@@ -39,8 +40,27 @@ export const UnitReducer = (state = initialState, action: any): UnitState => {
       list.push(action.payload)
       return { ...state, data: list }
     case DELETE_UNIT:
-      const units = [...state.data].filter((item: UnitInterface) => item._id !== action.id)
+      const units = [...state.data].filter((unit: UnitInterface) => unit._id !== action.id)
       return { ...state, data: units }
+
+    case UPDATE_UNIT:
+      const { payload } = action
+      const { data } = state
+      return {
+        ...state,
+        data: data.map((unit: UnitInterface) => {
+          if (unit._id === payload._id) {
+            return {
+              ...unit,
+              name: payload.name,
+              description: payload.description
+            }
+          } else {
+            return unit
+          }
+        })
+      }
+
     default:
       return state
   }

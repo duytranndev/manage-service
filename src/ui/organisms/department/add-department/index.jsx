@@ -17,6 +17,7 @@ const layout = {
 }
 
 export default function FormAddDepartment() {
+  // const []
   const { formData, setFormData, handleOnInput, handleInputChange, setErrors, handleSubmit, errors } = useForm(
     {},
     handleOnSubmit
@@ -39,13 +40,14 @@ export default function FormAddDepartment() {
       })
       const status = await myPromise.then((res) => res.data.message)
       const data = await myPromise.then((res) => res.data.data)
+      const data1 = await myPromise.then((res) => res.data)
+      console.log('data1 :>> ', data1)
       if (status === 'success') {
         dispatch({ type: CREATE_DEPARTMENT, payload: data })
         setFormData({})
       }
     }
   }
-  console.log('errors :>> ', errors)
 
   return (
     <>

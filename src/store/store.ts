@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import { DepartmentReducer } from './recuders/department.reducer'
 import { FieldReducer } from './recuders/field.reducer'
 import { NewsReducer } from './recuders/news.reducer'
+import { ProfileReducer } from './recuders/profile.reducer'
 import { ServiceReducer } from './recuders/service.reducer'
 import { StaffReducer } from './recuders/staff.reducer'
 import { UnitReducer } from './recuders/unit.reducer'
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   field: FieldReducer,
   news: NewsReducer,
   unit: UnitReducer,
-  service: ServiceReducer
+  service: ServiceReducer,
+  profile: ProfileReducer
 })
 
 const middleWare = [thunk]

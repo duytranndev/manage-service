@@ -43,13 +43,8 @@ export const DepartmentReducer = (state = initialState, action: any): Department
       return { ...state, data: list }
 
     case UPDATE_DEPARTMENT:
-      // list = [...state.data] as DepartmentInterface[]
-      // console.log(`list`, list)
-      // list.push(action.payload)
-      // console.log(`action.payload`, action.payload)
       const { payload } = action
       const { data } = state
-
       return {
         ...state,
         data: data.map((department: DepartmentInterface) => {
@@ -64,18 +59,6 @@ export const DepartmentReducer = (state = initialState, action: any): Department
           }
         })
       }
-    // return state.data.map((post: DepartmentInterface) => {
-    //   if (post.id === action.id) {
-    //     return {
-    //       ...post,
-    //       title: action.newTitle,
-    //       content: action.newContent,
-    //       editing: !post.editing
-    //     }
-    //   } else {
-    //     return post
-    //   }
-    // })
     default:
       return state
   }

@@ -15,15 +15,33 @@ import { Link, useRouteMatch } from 'react-router-dom'
 import { UNIT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DELETE_UNIT } from '../../../../store/actions/unit.action'
+import DrawerComponent from '../../../molecules/drawer'
+import FormUpdateUnit from '../update-Unit/index'
 
 export default function ManagementUnit({ data }: props) {
   const match = useRouteMatch()
+  const [unitIndex, setUnitIndex] = useState(0)
+  const [newUnit, setNewUnit] = useState()
+  const [visible, setVisible] = useState(false)
   const [idUnit, setIdUnit] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
   const showModal = (id) => {
     setIdUnit(id)
     setIsModalVisible(true)
+  }
+
+  let firstPageUnit = data.slice(unitIndex, unitIndex + 5)
+
+  const nextPageUnit = () => {
+    setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex + 5)
+  }
+  const prevPageUnit = () => {
+    if (unitIndex === 0 || unitIndex < 0) {
+      setUnitIndex(5)
+    } else {
+      setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex - 5)
+    }
   }
 
   const handleOnDelete = async (id) => {
@@ -38,6 +56,15 @@ export default function ManagementUnit({ data }: props) {
       dispatch({ type: DELETE_UNIT, id: id })
     }
   }
+
+  const handleShowDrawer = (index: number) => {
+    setNewUnit(data[index])
+    setVisible(true)
+  }
+  const handleCloseDrawer = () => {
+    setVisible(false)
+  }
+
   const handleOk = (id) => {
     handleOnDelete(id)
     setIsModalVisible(false)
@@ -45,6 +72,7 @@ export default function ManagementUnit({ data }: props) {
   const handleCancel = () => {
     setIsModalVisible(false)
   }
+
   return (
     <TableContainer component={Paper}>
       <Table size='medium' aria-label='a dense table'>
@@ -58,7 +86,7 @@ export default function ManagementUnit({ data }: props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map((unit) => (
+          {firstPageUnit.map((unit, index) => (
             <TableRow key={unit._id}>
               <TableCell align='left'>{unit.unitCode}</TableCell>
               <TableCell align='left' component='th' scope='row'>
@@ -73,13 +101,23 @@ export default function ManagementUnit({ data }: props) {
                       <SearchOutlined />
                     </Tag>
                   </Link>
-                  <Link to={`/${match.path}/${unit.slug}`}>
-                    <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
-                      <ToolOutlined />
-                    </Tag>
-                  </Link>
+
                   <Tag
-                    onClick={() => showModal(unit._id)}
+                    onClick={() => handleShowDrawer(index)}
+                    style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                    color='warning'>
+                    <ToolOutlined />
+                  </Tag>
+
+                  <DrawerComponent
+                    title='Sửa thông tin nhân viên'
+                    visible={visible}
+                    onClose={handleCloseDrawer}
+                    width={680}>
+                    <FormUpdateUnit data={newUnit} />
+                  </DrawerComponent>
+                  <Tag
+                    onClick={() => showModal(unit?._id)}
                     // onClick={() => handleOnDelete(row._id)}
                     style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                     color='error'>
@@ -99,6 +137,14 @@ export default function ManagementUnit({ data }: props) {
         </TableBody>
       </Table>
       <Toaster />
+      <div className='button-group' style={{ textAlign: 'center' }}>
+        <button type='button' className='btn' onClick={prevPageUnit}>
+          Prev
+        </button>
+        <button type='button' className='btn' onClick={nextPageUnit}>
+          Next
+        </button>
+      </div>
     </TableContainer>
   )
 }
