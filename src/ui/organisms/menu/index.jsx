@@ -11,15 +11,17 @@ import 'antd/dist/antd.css'
 import React, { useState } from 'react'
 import { NavLink, useRouteMatch } from 'react-router-dom'
 import './index.scss'
-
 const { SubMenu } = Menu
+
+let user = JSON.parse(sessionStorage.getItem('user'))
+
 export default function MenuAdmin() {
   const [collapsed, setCollapsed] = useState(false)
   const [theme, setTheme] = useState('light')
   const match = useRouteMatch()
 
   const changeTheme = (value) => {
-    setTheme((theme) => (value ? 'dark' : 'light'))
+    setTheme((theme) => (value ? '' : 'light'))
   }
   const toggleCollapsed = () => {
     setCollapsed(!collapsed)
@@ -28,7 +30,22 @@ export default function MenuAdmin() {
     <>
       {/* <Switch checked={theme === 'dark'} onChange={changeTheme} checkedChildren='Dark' unCheckedChildren='Light' /> */}
 
-      <Menu theme={theme} mode='inline' defaultSelectedKeys={['sub1']}>
+      <Menu
+        style={{ width: 217, position: 'fixed', overflowY: 'scroll', height: '100%' }}
+        theme={'dark'}
+        defaultSelectedKeys={['1']}
+        defaultOpenKeys={['sub1']}
+        mode='inline'
+        theme='dark'>
+        <Menu.Item
+          key='19'
+          icon={
+            <img
+              src='https://dichvucong.gov.vn/p/home/theme/img/header/logo.png'
+              style={{ width: '100%', height: '80%' }}
+              alt=''
+            />
+          }></Menu.Item>
         <Menu.Item key='1' icon={<ApartmentOutlined />}>
           <NavLink to={`/admin/department`}>Phòng Ban</NavLink>
         </Menu.Item>
@@ -45,18 +62,19 @@ export default function MenuAdmin() {
           <NavLink to={`/admin/service`}>Dịch Vụ</NavLink>
         </Menu.Item>
 
-        <SubMenu key='sub1' icon={<ReadOutlined />} title={<NavLink to={`/admin/profile`}>Quản Lý Hồ Sơ</NavLink>}>
-          <Menu.Item key='9'>
-            <NavLink to={`/admin/profile/records_received`}>Hồ sơ đã nhận</NavLink>
-          </Menu.Item>
-          <Menu.Item key='10'>
-            <NavLink to={`/admin/profile/records_browsed`}>Hồ sơ đã duyệt</NavLink>
-          </Menu.Item>
-        </SubMenu>
-        <SubMenu key='sub2' icon={<ReadOutlined />} title={<NavLink to={`/admin/profile`}>Phân Công</NavLink>}>
-          <Menu.Item key='11'>Tạo mới phân công</Menu.Item>
-          <Menu.Item key='12'>Đã phân công</Menu.Item>
-        </SubMenu>
+        {user?.role === 'ADMIN' && (
+          <SubMenu key='10' icon={<ReadOutlined />} title='Quản Lý Hồ Sơ'>
+            <Menu.Item key='9' icon={<ReadOutlined />}>
+              <NavLink to={`/admin/profile`}>Hồ sơ đã nhận</NavLink>
+            </Menu.Item>
+            <Menu.Item key='10' icon={<ReadOutlined />}>
+              <NavLink to={`/admin/approved-profile`}>Hồ sơ đã duyệt</NavLink>
+            </Menu.Item>
+            <Menu.Item key='11' icon={<ReadOutlined />}>
+              <NavLink to={`/admin/assignment`}>Đã phân công</NavLink>
+            </Menu.Item>
+          </SubMenu>
+        )}
         <Menu.Item key='6' icon={<CompassOutlined />}>
           <NavLink to={`/admin/news`}>Tin Tức</NavLink>
         </Menu.Item>

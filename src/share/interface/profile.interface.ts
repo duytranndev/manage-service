@@ -11,6 +11,7 @@ export interface ProfileInterface extends BaseInterface {
     changementPaper?: object
     demographicDeclaration?: object
   }
-  status?: boolean
+  status?: string
   profileCode?: string
+  assignment?: boolean
 }

@@ -2,7 +2,8 @@ import { Layout } from 'antd'
 import 'antd/dist/antd.css'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { BrowserRouter, Link } from 'react-router-dom'
+import { BrowserRouter, useHistory } from 'react-router-dom'
+import LoginPage from '../../../pages/login/LoginPage'
 import AdminRouting from '../../../share/routing/admin'
 import { fetchDepartments } from '../../../store/recuders/department.reducer'
 import { fetchFields } from '../../../store/recuders/field.reducer'
@@ -14,10 +15,14 @@ import HeaderAdmin from '../../organisms/header-admin'
 // import './index.scss'
 
 const { Sider, Content } = Layout
-export default function AdminLayout() {
-  const [collapsed, setCollapsed] = useState(false)
+let user = JSON.parse(sessionStorage.getItem('user') as string)
 
+export default function AdminLayout() {
+  const [isLogin, setIsLogin] = useState<boolean>(false)
+  const [collapsed, setCollapsed] = useState(false)
+  const history = useHistory()
   const dispatch = useDispatch()
+
   useEffect(() => {
     const loadDepartment = async () => {
       await dispatch(fetchDepartments())
@@ -53,37 +58,41 @@ export default function AdminLayout() {
     loadService()
   }, [])
 
+  useEffect(() => {
+    if (user) {
+      // history.push('admin')
+      return setIsLogin(true)
+    } else {
+      history.push('')
+    }
+  }, [user])
+
   return (
     <>
-      <BrowserRouter>
-        <Layout>
-          <Sider theme='light' trigger={null} collapsible collapsed={collapsed}>
-            <Link to='/admin'>
-              <div className='logo'>
-                <img
-                  src='https://dichvucong.gov.vn/p/home/theme/img/header/logo.png'
-                  style={{ width: '100%' }}
-                  alt=''
-                />
-              </div>
-            </Link>
-            <MenuAdmin />
-          </Sider>
+      {isLogin ? (
+        <BrowserRouter>
+          <Layout>
+            <Sider theme='light' trigger={null} collapsible collapsed={collapsed}>
+              <MenuAdmin />
+            </Sider>
 
-          <Layout className='site-layout'>
-            <HeaderAdmin />
-            <Content
-              className='site-layout-background'
-              style={{
-                margin: '24px 16px',
-                padding: '10px 24px',
-                minHeight: 280
-              }}>
-              <AdminRouting />
-            </Content>
+            <Layout className='site-layout'>
+              <HeaderAdmin />
+              <Content
+                className='site-layout-background'
+                style={{
+                  margin: '24px 16px',
+                  padding: '10px 24px',
+                  minHeight: 280
+                }}>
+                <AdminRouting />
+              </Content>
+            </Layout>
           </Layout>
-        </Layout>
-      </BrowserRouter>
+        </BrowserRouter>
+      ) : (
+        <LoginPage />
+      )}
     </>
   )
 }

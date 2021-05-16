@@ -1,6 +1,14 @@
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Select } from 'antd'
+import { Option } from 'antd/lib/mentions'
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { STAFF_URL } from '../../../../share/common/api/api.constants'
+import { moduleApi } from '../../../../share/handle/fetchData'
+import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
+import { UPDATE_STAFF } from '../../../../store/actions/staff.action'
+import { AppState } from '../../../../store/types'
 
 const layout = {
   wrapperCol: {
@@ -11,24 +19,37 @@ const layout = {
 export default function FormUpdateStaff(props: any) {
   const { data } = props //tuỳ vào prop của state
   const [staff, setStaff] = useState<StaffInterface>()
+  const departments = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     return setStaff(data)
   }, [data])
 
-  console.log('staff :>> ', staff)
+  function onChangeDepartment(value: string) {
+    const departmentName = departments.find((item) => item._id === value)
+    setStaff({ ...staff, departmentId: value, department: departmentName?.name })
+    // setDepartment(value)
+  }
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setStaff({ ...staff, [e.target.name]: e.target.value })
   }
 
-  const handleOnSubmit = (e: any) => {
-    console.log('e :>> ', e)
+  const handleOnSubmit = async (e: any) => {
     e.preventDefault()
-    // const newUser = {
-    //   name: user?.name
-    // }
-    // console.log('newUser :>> ', newUser)
+    const updateStaff = moduleApi.update(STAFF_URL, staff)
+    await toast.promise(updateStaff, {
+      loading: 'Loading',
+      success: 'Sửa thông tin nhân viên thành công',
+      error: 'Sửa thông tin nhân viên thất bại'
+    })
+    const status = await updateStaff.then((res) => res.data.message)
+    if (status === 'success') {
+      // dispatch({ type: CREATE_DEPARTMENT, payload: data })
+      dispatch({ type: UPDATE_STAFF, payload: staff })
+      setStaff({})
+    }
   }
 
   // const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
@@ -69,6 +90,21 @@ export default function FormUpdateStaff(props: any) {
       </Form.Item>
       <Form.Item label='Số điện thoại'>
         <Input placeholder='Basic usage' name='password' value={staff?.phone} onChange={handleOnChange} />
+      </Form.Item>
+
+      <Form.Item label='Phòng ban'>
+        <Select
+          showSearch
+          placeholder='Chọn phòng ban...'
+          value={staff?.department}
+          optionFilterProp='children'
+          onChange={onChangeDepartment}>
+          {departments.map((item) => (
+            <Option key={item._id} value={item._id as string}>
+              {item.name}
+            </Option>
+          ))}
+        </Select>
       </Form.Item>
 
       <Form.Item label='Chức vụ'>

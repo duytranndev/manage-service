@@ -1,0 +1,20 @@
+section.note {
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+  color: rgba(0, 0, 0, 0.85);
+  padding: 24px 24px 50px;
+  .title {
+    width: 100%;
+    font-size: 120% !important;
+    font-weight: 500;
+  }
+  textarea.ant-input {
+    margin-top: 10px;
+    height: auto;
+    line-height: 1.5715;
+    max-width: 100%;
+    min-height: 32px;
+    transition: all 0.3s, height 0s;
+    vertical-align: bottom;
+  }
+}

@@ -1,6 +1,6 @@
 import { Button, Form, Input } from 'antd'
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
@@ -61,6 +61,15 @@ const EditDepartment = ({ data }: EditDepartmentProps): JSX.Element => {
           />
         </Form.Item>
 
+        <Form.Item label='Mã phòng ban'>
+          <Input
+            placeholder='Nhập mã phòng ban'
+            name='departmentCode'
+            onChange={handleOnChange}
+            value={department?.departmentCode}
+          />
+        </Form.Item>
+
         <Form.Item label='Miêu tả'>
           <Input
             placeholder='Nhập nội dung miêu tả'
@@ -76,7 +85,6 @@ const EditDepartment = ({ data }: EditDepartmentProps): JSX.Element => {
           </Button>
         </Form.Item>
       </Form>
-      <Toaster />
     </>
   )
 }

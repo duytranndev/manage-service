@@ -1,6 +1,6 @@
 import { Button, Form, Input, Select } from 'antd'
 import React from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { Actor } from '../../../../share/common/app-constants'
@@ -93,7 +93,6 @@ export default function FormAddDepartment() {
           </Button>
         </Form.Item>
       </Form>
-      <Toaster />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,14 +9,12 @@ import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { UNIT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DELETE_UNIT } from '../../../../store/actions/unit.action'
-import DrawerComponent from '../../../molecules/drawer'
-import FormUpdateUnit from '../update-Unit/index'
 
 export default function ManagementUnit({ data }: props) {
   const match = useRouteMatch()
@@ -31,16 +29,16 @@ export default function ManagementUnit({ data }: props) {
     setIsModalVisible(true)
   }
 
-  let firstPageUnit = data.slice(unitIndex, unitIndex + 5)
+  let firstPageUnit = data.slice(unitIndex, unitIndex + 10)
 
   const nextPageUnit = () => {
-    setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex + 5)
+    setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex + 10)
   }
   const prevPageUnit = () => {
     if (unitIndex === 0 || unitIndex < 0) {
-      setUnitIndex(5)
+      setUnitIndex(10)
     } else {
-      setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex - 5)
+      setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex - 10)
     }
   }
 
@@ -75,14 +73,14 @@ export default function ManagementUnit({ data }: props) {
 
   return (
     <TableContainer component={Paper}>
-      <Table size='medium' aria-label='a dense table'>
+      <Table size='small' aria-label='a dense table'>
         <TableHead>
           <TableRow>
             <TableCell>Mã đơn vị</TableCell>
             <TableCell align='left'>Tên đơn vị</TableCell>
             <TableCell align='left'>Tên lĩnh vực</TableCell>
             <TableCell align='left'>Ngày tạo</TableCell>
-            <TableCell align='center'>Action</TableCell>
+            <TableCell align='center'></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -96,26 +94,12 @@ export default function ManagementUnit({ data }: props) {
               <TableCell align='left'>{unit.insertTime}</TableCell>
               <TableCell align='center'>
                 <Space align='center' size='small'>
-                  <Link to={`/${match.path}/${unit.slug}`}>
+                  <Link to={`/admin/unit/${unit.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
                       <SearchOutlined />
                     </Tag>
                   </Link>
 
-                  <Tag
-                    onClick={() => handleShowDrawer(index)}
-                    style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
-                    color='warning'>
-                    <ToolOutlined />
-                  </Tag>
-
-                  <DrawerComponent
-                    title='Sửa thông tin nhân viên'
-                    visible={visible}
-                    onClose={handleCloseDrawer}
-                    width={680}>
-                    <FormUpdateUnit data={newUnit} />
-                  </DrawerComponent>
                   <Tag
                     onClick={() => showModal(unit?._id)}
                     // onClick={() => handleOnDelete(row._id)}
@@ -136,7 +120,6 @@ export default function ManagementUnit({ data }: props) {
           ))}
         </TableBody>
       </Table>
-      <Toaster />
       <div className='button-group' style={{ textAlign: 'center' }}>
         <button type='button' className='btn' onClick={prevPageUnit}>
           Prev

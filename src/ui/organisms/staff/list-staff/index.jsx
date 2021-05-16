@@ -1,4 +1,4 @@
-import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import { makeStyles } from '@material-ui/core'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
@@ -10,15 +10,13 @@ import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { STAFF_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { DELETE_STAFF } from '../../../../store/actions/staff.action'
-import DrawerComponent from '../../../molecules/drawer'
-import FormUpdateStaff from '../update-staff'
 
 type ManagementStaffProps = {
   data: StaffInterface[]
@@ -32,8 +30,6 @@ const useStyles = makeStyles({
 
 export default function ManagementStaff({ data }: ManagementStaffProps) {
   const [idStaff, setIdStaff] = useState('')
-  const [visible, setVisible] = useState(false)
-  const [newStaff, setNewStaff] = useState()
   const classes = useStyles()
   const [isModalVisible, setIsModalVisible] = useState(false)
   const dispatch = useDispatch()
@@ -55,13 +51,6 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
     }
   }
 
-  const handleShowDrawer = (index: number) => {
-    setNewStaff(data[index])
-    setVisible(true)
-  }
-  const handleCloseDrawer = () => {
-    setVisible(false)
-  }
   const handleOk = (id: any) => {
     handleOnDelete(id)
     setIsModalVisible(false)
@@ -72,7 +61,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table className={classes.table} size='medium' aria-label='simple table'>
+        <Table className={classes.table} size='small' aria-label='simple table'>
           <TableHead>
             <TableRow>
               <TableCell align='left'>Họ tên</TableCell>
@@ -80,7 +69,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
               <TableCell align='left'>Chức vụ</TableCell>
               <TableCell align='left'>Số điện thoại</TableCell>
               <TableCell align='left'>Quyền hạn</TableCell>
-              <TableCell align='center'>Action</TableCell>
+              <TableCell align='center'></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -100,19 +89,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                         <SearchOutlined />
                       </Tag>
                     </Link>
-                    <Tag
-                      onClick={() => handleShowDrawer(index)}
-                      style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
-                      color='warning'>
-                      <ToolOutlined />
-                    </Tag>
-                    <DrawerComponent
-                      title='Sửa thông tin nhân viên'
-                      visible={visible}
-                      onClose={handleCloseDrawer}
-                      width={680}>
-                      <FormUpdateStaff data={newStaff} />
-                    </DrawerComponent>
+
                     <Tag
                       onClick={() => showModal(staff._id)}
                       style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
@@ -133,7 +110,6 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Toaster />
     </>
   )
 }

@@ -136,7 +136,7 @@ export default function AdminPage() {
                     {profiles?.map((row: ProfileInterface) => (
                       <TableRow key={row._id}>
                         <TableCell component='th' scope='row'>
-                          {row.code}
+                          <Link to={`/admin/profile/${row.slug}`}>{row.profileCode}</Link>
                         </TableCell>
                         <TableCell align='right'>{row.fieldName}</TableCell>
                         <TableCell align='right'>{row.nameDocument}</TableCell>
