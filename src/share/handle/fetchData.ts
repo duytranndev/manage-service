@@ -4,8 +4,10 @@ export const moduleApi = {
   get(url: string, params?: any) {
     return axios.get(url, { params })
   },
-  getDetail(url: string, id: string) {
+  getDetail(url: string, id: any) {
+    console.log(`id`, id)
     const path = `${url}/${id}`
+    console.log(`path`, path)
     return axios.get(path)
   },
   create(url: string, body: object, config?: any) {

@@ -7,7 +7,7 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Tag } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { useRouteMatch } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom'
 import { PROFILE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 
@@ -21,7 +21,6 @@ export default function ManagementRecordsReceived() {
     match.path = '/admin'
   }
 
-  alert('adawda')
   return (
     <>
       {profiles && (
@@ -41,7 +40,7 @@ export default function ManagementRecordsReceived() {
               {profiles?.map((row) => (
                 <TableRow key={row._id}>
                   <TableCell component='th' scope='row'>
-                    {row.code}
+                    <Link to={`/admin/profile/${row.slug}`}>{row.profileCode}</Link>
                   </TableCell>
                   <TableCell align='right'>{row.fieldName}</TableCell>
                   <TableCell align='right'>{row.nameDocument}</TableCell>

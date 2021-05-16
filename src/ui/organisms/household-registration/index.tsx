@@ -1,6 +1,6 @@
 import { Button, Steps, Tabs } from 'antd'
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import ChangementPaper from '../household/changement-paper'
 import DemographicDeclaration from '../household/demographic-declaration'
 import TransferPaper from '../household/transfer-paper'
@@ -82,7 +82,6 @@ export default function HouseholdRegistration() {
             Done
           </Button>
         )}
-        <Toaster />
         {current > 0 && (
           <Button style={{ margin: '0 8px' }} onClick={() => prev()}>
             Previous

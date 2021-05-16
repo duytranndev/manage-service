@@ -1,24 +1,18 @@
-import {
-  Button,
-  Card,
-  CardActionArea,
-  CardActions,
-  CardContent,
-  CardMedia,
-  makeStyles,
-  Typography
-} from '@material-ui/core'
-import Icon from '@material-ui/core/Icon'
-import DeleteIcon from '@material-ui/icons/Delete'
+import { DeleteOutlined } from '@ant-design/icons'
+import { makeStyles } from '@material-ui/core'
+import { List, Skeleton, Tag } from 'antd'
+import 'antd/dist/antd.css'
+import Avatar from 'antd/lib/avatar/avatar'
 import Modal from 'antd/lib/modal/Modal'
 import { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { NEWS_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { NewsInterface } from '../../../../share/interface/image.interface'
 import { DELETE_NEWS } from '../../../../store/actions/news.action'
-
+import './index.scss'
 const useStyles = makeStyles({
   root: {
     float: 'left',
@@ -31,10 +25,9 @@ const useStyles = makeStyles({
 })
 
 type ManagementNewsProps = {
-  data: NewsInterface[]
+  data?: NewsInterface[]
 }
 export default function ManagementNews({ data }: ManagementNewsProps) {
-  const classes = useStyles()
   const [idNews, setIdNews] = useState('')
   const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
@@ -61,51 +54,52 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
     handleOnDelete(id)
     setIsModalVisible(false)
   }
+
   const handleCancel = () => {
     setIsModalVisible(false)
   }
 
   return (
     <>
-      {data &&
-        data.map((item, index) => {
-          return (
-            <Card key={item._id} style={{ width: '355px' }} className={classes.root}>
-              <CardActionArea>
-                <CardMedia component='i' className={classes.media} image={item.image} />
-                <CardContent>
-                  <Typography gutterBottom variant='h5' component='h2'>
-                    {item.title}
-                  </Typography>
-                  <Typography variant='body2' color='textSecondary' component='p'>
-                    {/* <div dangerouslySetInnerHTML={{ __html: item.content as string }} /> */}
-                    {item.description}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-              <CardActions>
-                <Button
-                  onClick={() => showModal(item._id as string)}
-                  variant='contained'
-                  color='secondary'
-                  startIcon={<DeleteIcon />}>
-                  Delete
-                </Button>
-                <Modal
-                  title='Basic Modal'
-                  visible={isModalVisible}
-                  onOk={() => handleOk(idNews)}
-                  onCancel={handleCancel}>
-                  <p>Bạn có chắc chắn muốn xoá bài viết này?</p>
-                </Modal>
-                <Button variant='contained' color='primary' endIcon={<Icon>send</Icon>}>
-                  Learn more
-                </Button>
-              </CardActions>
-            </Card>
-          )
-        })}
-      <Toaster />
+      {data && (
+        <List
+          className='demo-loadmore-list'
+          itemLayout='horizontal'
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item
+              style={{ margin: '50px' }}
+              actions={[
+                <a key='list-loadmore-edit'>Edit</a>,
+
+                <>
+                  <Tag
+                    onClick={() => showModal(item._id as string)}
+                    style={{ padding: '5px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                    color='error'>
+                    <DeleteOutlined />
+                  </Tag>
+                  <Modal
+                    title='Basic Modal'
+                    visible={isModalVisible}
+                    onOk={() => handleOk(idNews)}
+                    onCancel={handleCancel}>
+                    <p>Bạn có chắc chắn muốn xoá phòng ban này?</p>
+                  </Modal>
+                </>
+              ]}>
+              <Skeleton avatar title={false} loading={item.loading} active>
+                <List.Item.Meta
+                  avatar={<Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />}
+                  title={<a href='https://ant.design'>{item.title}</a>}
+                  description={item.description}
+                />
+                <Link to={`/admin/news/${item.slug}`}>View more</Link>
+              </Skeleton>
+            </List.Item>
+          )}
+        />
+      )}
     </>
   )
 }

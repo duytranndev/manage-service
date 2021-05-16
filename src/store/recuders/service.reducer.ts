@@ -53,6 +53,8 @@ export const ServiceReducer = (state = initialState, action: any): ServiceState 
             return {
               ...service,
               name: payload.name,
+              unitId: payload.unitId,
+              unitName: payload.unitName,
               description: payload.description
             }
           } else {

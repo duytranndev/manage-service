@@ -2,7 +2,6 @@ import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { Button, Empty } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Toaster } from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { NewsInterface } from '../../../share/interface/image.interface'
 import { fetchNewss } from '../../../store/recuders/news.reducer'
@@ -30,9 +29,10 @@ const useStyles = makeStyles({
 
 export default function News() {
   const classes = useStyles()
-
   const [visible, setVisible] = useState<boolean>(false)
   const dispatch = useDispatch()
+
+  let listNews = useSelector<AppState, NewsInterface[]>((state) => state.news.data)
 
   useEffect(() => {
     const loadNews = async () => {
@@ -40,7 +40,8 @@ export default function News() {
     }
     loadNews()
   }, [])
-  const listNews = useSelector<AppState, NewsInterface[]>((state) => state.news.data)
+
+  const isPending = useSelector<AppState, any>((state) => state.news.pending)
 
   const handleShowDrawer = () => {
     setVisible(true)
@@ -50,36 +51,41 @@ export default function News() {
   }
   return (
     <>
-      {listNews.length > 0 ? (
+      {!isPending ? (
         <>
-          <Fab color='secondary' aria-label='add' onClick={handleShowDrawer} className={classes.btn_add_action}>
-            <AddIcon />
-          </Fab>
-          <div className='content'>
-            <ManagementNews data={listNews} />
-          </div>
-          <DrawerComponent title='Thêm phòng ban' visible={visible} onClose={handleCloseDrawer} width={680}>
-            <FormAddNews />
-          </DrawerComponent>
+          {(listNews?.length as any) > 0 ? (
+            <>
+              <Fab color='secondary' aria-label='add' onClick={handleShowDrawer} className={classes.btn_add_action}>
+                <AddIcon />
+              </Fab>
+              <div className='content'>
+                <ManagementNews data={listNews} />
+              </div>
+              <DrawerComponent title='Thêm phòng ban' visible={visible} onClose={handleCloseDrawer} width={680}>
+                <FormAddNews />
+              </DrawerComponent>
+            </>
+          ) : (
+            <>
+              <Empty
+                image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
+                imageStyle={{
+                  height: 100
+                }}
+                className={classes.root}
+                description={<span>Danh sách tin tức hiện đang trống</span>}>
+                <Button type='primary' onClick={handleShowDrawer}>
+                  Thêm tin tức
+                </Button>
+              </Empty>
+              <DrawerComponent title='Thêm tin tức' visible={visible} onClose={handleCloseDrawer} width={800}>
+                <FormAddNews />
+              </DrawerComponent>
+            </>
+          )}
         </>
       ) : (
-        <>
-          <Empty
-            image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
-            imageStyle={{
-              height: 100
-            }}
-            className={classes.root}
-            description={<span>Danh sách tin tức hiện đang trống</span>}>
-            <Button type='primary' onClick={handleShowDrawer}>
-              Thêm tin tức
-            </Button>
-          </Empty>
-          <DrawerComponent title='Thêm tin tức' visible={visible} onClose={handleCloseDrawer} width={800}>
-            <FormAddNews />
-          </DrawerComponent>
-          <Toaster />
-        </>
+        <div className='classic-5'></div>
       )}
     </>
   )

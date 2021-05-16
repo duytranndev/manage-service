@@ -53,6 +53,8 @@ export const UnitReducer = (state = initialState, action: any): UnitState => {
             return {
               ...unit,
               name: payload.name,
+              fieldId: payload.fieldId,
+              fieldName: payload.fieldName,
               description: payload.description
             }
           } else {

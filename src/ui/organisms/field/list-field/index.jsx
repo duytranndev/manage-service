@@ -1,4 +1,4 @@
-import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -9,14 +9,12 @@ import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
-import DrawerComponent from '../../../molecules/drawer'
-import EditField from '../update-field/index'
 
 export default function ManagementField({ data }: any) {
   const match = useRouteMatch()
@@ -62,14 +60,14 @@ export default function ManagementField({ data }: any) {
 
   return (
     <TableContainer component={Paper}>
-      <Table size='medium' aria-label='a dense table'>
+      <Table size='small' aria-label='a dense table'>
         <TableHead>
           <TableRow>
             <TableCell align='left'>Mã lĩnh vực</TableCell>
             <TableCell align='left'>Tên lĩnh vực</TableCell>
             <TableCell align='left'>Ngày tạo</TableCell>
             <TableCell align='left'>Liên kết tĩnh</TableCell>
-            <TableCell align='center'>Action</TableCell>
+            <TableCell align='center'></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -83,20 +81,12 @@ export default function ManagementField({ data }: any) {
               <TableCell align='left'>{field.slug}</TableCell>
               <TableCell align='center'>
                 <Space align='center' size='small'>
-                  <Link to={`/${match.path}/${field.slug}`}>
+                  <Link to={`/admin/field/${field.slug}`}>
                     <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
                       <SearchOutlined />
                     </Tag>
                   </Link>
-                  <Tag
-                    onClick={() => handleShowDrawer(index)}
-                    style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }}
-                    color='warning'>
-                    <ToolOutlined />
-                  </Tag>
-                  <DrawerComponent title='Thêm lĩnh vực' visible={visible} onClose={handleCloseDrawer} width={680}>
-                    <EditField data={newField} />
-                  </DrawerComponent>
+
                   <Tag
                     onClick={() => showModal(field._id)}
                     // onClick={() => handleOnDelete(row._id)}
@@ -117,7 +107,6 @@ export default function ManagementField({ data }: any) {
           ))}
         </TableBody>
       </Table>
-      <Toaster />
     </TableContainer>
   )
 }

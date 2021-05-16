@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { SERVICE_URL } from '../../../../share/common/api/api.constants'
@@ -57,13 +57,12 @@ export default function ManagementService({ data }: ManagementServiceProps) {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table size='medium' aria-label='a dense table'>
+        <Table size='small' aria-label='a dense table'>
           <TableHead>
             <TableRow>
               <TableCell align='left'>Mã dịch vụ</TableCell>
               <TableCell align='left'>Tên dịch vụ</TableCell>
-              <TableCell align='left'>Đơn vị</TableCell>
-              <TableCell align='center'>Action</TableCell>
+              <TableCell align='center'></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -73,17 +72,11 @@ export default function ManagementService({ data }: ManagementServiceProps) {
                   {row.serviceCode}
                 </TableCell>
                 <TableCell align='left'>{row.name}</TableCell>
-                <TableCell align='left'>{row.unitName}</TableCell>
                 <TableCell align='center'>
                   <Space align='center' size='small'>
                     <Link to={`${match.path}/${row.slug}`}>
                       <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
                         <SearchOutlined />
-                      </Tag>
-                    </Link>
-                    <Link to={`${match.path}/${row.slug}`}>
-                      <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='warning'>
-                        <ToolOutlined />
                       </Tag>
                     </Link>
                     <Tag
@@ -106,7 +99,6 @@ export default function ManagementService({ data }: ManagementServiceProps) {
           </TableBody>
         </Table>
       </TableContainer>
-      <Toaster />
     </>
   )
 }

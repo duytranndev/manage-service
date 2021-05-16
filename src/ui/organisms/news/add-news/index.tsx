@@ -47,37 +47,12 @@ const formats = [
 ]
 
 export default function FormAddNews() {
-  const [image, setImage] = useState('')
-  const [file, setFile] = useState('')
   const [formData, setFormData] = useState<NewsInterface>()
   const [valueEditor, setValueEditor] = useState('')
   const dispatch = useDispatch()
 
-  const handleOnChangeImage = async (e: any) => {
-    const img = URL.createObjectURL(e.target.files[0])
-    setFile(img)
-    setImage(e.target.files[0])
-    // setImage(e.target.files[0])
-    // const pathImage = e.target.files[0]
-    // const uploadImagle = uploadSingle(pathImage, CLOUD_URI, PRESENT)
-    // await toast
-    //   .promise(uploadImagle, {
-    //     loading: 'Loading',
-    //     success: 'Thêm hình ảnh thành công',
-    //     error: 'Thêm hình ảnh thất bại'
-    //   })
-    //   .then((res) => setImage(res.data.url))
-  }
-
   const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value })
-  }
-  const normFile = (e: any) => {
-    console.log('Upload event:', e)
-    if (Array.isArray(e)) {
-      return e
-    }
-    return e && e.fileList
   }
 
   function onChange(e: any) {
@@ -88,8 +63,7 @@ export default function FormAddNews() {
     const news = {
       title: formData?.title,
       description: formData?.description,
-      content: valueEditor,
-      image: image
+      content: valueEditor
     }
 
     const myPromise = moduleApi.create(NEWS_URL, news)
@@ -104,7 +78,6 @@ export default function FormAddNews() {
       console.log('data :>> ', data)
       dispatch({ type: CREATE_NEWS, payload: data })
       setFormData({})
-      setImage('')
     }
   }
   return (
@@ -144,12 +117,7 @@ export default function FormAddNews() {
         />
         {/* <Quill placeholder={'Start Posting Something'} onEditorChange={onChange} onFilesChange={onFilesChange} /> */}
       </Form.Item>
-      <Form.Item label='Hình ảnh'>
-        <div>
-          <input type='file' onChange={handleOnChangeImage} />
-        </div>
-        {file && <img style={{ width: '100%', height: '100%' }} src={file} />}
-      </Form.Item>
+
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
           Submit

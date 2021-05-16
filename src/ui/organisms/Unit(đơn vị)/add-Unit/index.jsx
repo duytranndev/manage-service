@@ -1,7 +1,7 @@
 import { Button, Form, Input, Select } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import React, { useEffect, useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { FIELD_URL, UNIT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
@@ -95,7 +95,6 @@ export default function FormAddUnit() {
           Submit
         </Button>
       </Form.Item>
-      <Toaster position='top-center' />
     </Form>
   )
 }

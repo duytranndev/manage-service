@@ -1,5 +1,12 @@
-import { Button, Form, Input } from 'antd'
+import { Button, Form, Input, Select } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
+import { Option } from 'antd/lib/mentions'
 import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { UNIT_URL } from '../../../../share/common/api/api.constants'
+import { moduleApi } from '../../../../share/handle/fetchData'
+import { UPDATE_UNIT } from '../../../../store/actions/unit.action'
 
 const layout = {
   wrapperCol: {
@@ -10,18 +17,40 @@ const layout = {
 export default function FormUpdateUnit(props) {
   const { data } = props //tuỳ vào prop của state
   const [unit, setUnit] = useState()
+  const fields = useSelector((state) => state.field.data)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     return setUnit(data)
   }, [data])
 
+  function onChangeDepartment(value: string) {
+    const field = fields.find((item) => item._id === value)
+    setUnit({ ...unit, fieldId: value, fieldName: field?.name })
+    // setDepartment(value)
+  }
+
   const handleOnChange = (e) => {
     setUnit({ ...unit, [e.target.name]: e.target.value })
   }
 
-  async function handleOnSubmit() {
-    // moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
+  const handleOnSubmit = async (e: any) => {
+    e.preventDefault()
+    const updateStaff = moduleApi.update(UNIT_URL, unit)
+    await toast.promise(updateStaff, {
+      loading: 'Loading',
+      success: 'Sửa thông tin đơn vị thành công',
+      error: 'Sửa thông tin đơn vị viên thất bại'
+    })
+    const status = await updateStaff.then((res) => res.data.message)
+    if (status === 'success') {
+      dispatch({ type: UPDATE_UNIT, payload: unit })
+      setUnit({})
+    }
   }
+
+  console.log('unit :>> ', unit)
+
   return (
     <Form
       labelCol={{ span: 7 }}
@@ -29,21 +58,33 @@ export default function FormUpdateUnit(props) {
       layout='horizontal'
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
-      <Form.Item label='Cư trú và giấy tờ tuỳ thân'>
-        <Input placeholder='Nhập cư trú và giấy tờ tuỳ thân...' name='hokhau' onChange={handleOnChange} />
-      </Form.Item>
-      <Form.Item label='Hôn nhân và gia đình'>
-        <Input placeholder='Nhập hôn nhân và gia đình...' name='mota' onChange={handleOnChange} />
-      </Form.Item>
       <Form.Item label='Tên đơn vị'>
-        <Input placeholder='Nhập tên đơn vị...' name='unitCode' onChange={handleOnChange} />
-      </Form.Item>
-      <Form.Item label='Mã đơn vị'>
-        <Input placeholder='Nhập mã đơn vị...' name='unitCode' onChange={handleOnChange} />
+        <Input placeholder='Nhập tên đơn vị...' name='name' onChange={handleOnChange} value={unit?.name} />
       </Form.Item>
       <Form.Item label='Tên lĩnh vực'>
-        <Input placeholder='Nhập tên lĩnh vực...' name='unitCode' onChange={handleOnChange} />
+        <Select
+          showSearch
+          placeholder='Chọn lĩnh vực...'
+          optionFilterProp='children'
+          onChange={onChangeDepartment}
+          value={unit?.fieldName}>
+          {fields?.map((item) => (
+            <Option key={item._id} value={item._id}>
+              {item.name}
+            </Option>
+          ))}
+        </Select>
       </Form.Item>
+      <Form.Item label='Mô tả'>
+        <TextArea
+          placeholder='Nhập mô tả...'
+          rows={4}
+          name='description'
+          onChange={handleOnChange}
+          value={unit?.description}
+        />
+      </Form.Item>
+
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
           Submit

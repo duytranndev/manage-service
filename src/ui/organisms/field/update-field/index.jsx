@@ -1,8 +1,10 @@
 import { Button, Form, Input, Select } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { STAFF_URL } from '../../../../share/common/api/api.constants'
+import toast from 'react-hot-toast'
+import { useDispatch } from 'react-redux'
+import { FIELD_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
-import { useForm } from '../../../../share/hooks/useForm'
+import { UPDATE_FIELD } from '../../../../store/actions/field.action'
 const { Option } = Select
 
 const layout = {
@@ -13,44 +15,47 @@ const layout = {
 
 export default function EditField({ data }: any) {
   const [field, setField] = useState()
-  const { formData, handleInputChange, setErrors, handleInputValidation, errors, isSubmitting, handleSubmit } = useForm(
-    {},
-    handleOnSubmit
-  )
+  const dispatch = useDispatch()
+
   useEffect(() => {
     return setField(data)
   }, [data])
-  // console.log('field :>> ', field)
 
   const handleOnChange = (e) => {
     setField({ ...field, [e.target.name]: e.target.value })
   }
-  async function handleOnSubmit() {
-    const newStaff = {
-      name: formData.name
+
+  async function handleOnSubmit(e: any) {
+    e.preventDefault()
+    const myPromise = moduleApi.update(FIELD_URL, field)
+    await toast.promise(myPromise, {
+      loading: 'Loading',
+      success: 'Sửa thông tin lĩnh vực thành công',
+      error: 'Sửa thông tin lĩnh vực thất bại'
+    })
+    const status = await myPromise.then((res) => res.data.message)
+    if (status === 'success') {
+      // dispatch({ type: CREATE_DEPARTMENT, payload: data })
+      dispatch({ type: UPDATE_FIELD, payload: field })
+      setField({})
     }
-    moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
   }
+
   return (
     <Form
       labelCol={{ span: 7 }}
       wrapperCol={{ span: 15 }}
       layout='horizontal'
       hideRequiredMark
-      onSubmitCapture={handleSubmit}>
+      onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Tên lĩnh vực'>
-        <Input placeholder='Nhập tên lĩnh vực...' name='name' onChange={handleInputChange} value={field?.name} />
+        <Input placeholder='Nhập tên lĩnh vực...' name='name' onChange={handleOnChange} value={field?.name} />
       </Form.Item>
       <Form.Item label='Mô tả'>
-        <Input placeholder='Nhập mô tả...' name='description' onChange={handleInputChange} value={field?.description} />
+        <Input placeholder='Nhập mô tả...' name='description' onChange={handleOnChange} value={field?.description} />
       </Form.Item>
       <Form.Item label='Mã lĩnh vực'>
-        <Input
-          placeholder='Nhập mã lĩnh vực...'
-          name='fieldCode'
-          onChange={handleInputChange}
-          value={field?.fieldCode}
-        />
+        <Input placeholder='Nhập mã lĩnh vực...' name='fieldCode' onChange={handleOnChange} value={field?.fieldCode} />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>

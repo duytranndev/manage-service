@@ -6,6 +6,12 @@ function App() {
   return (
     <div className='App'>
       <AdminLayout />
+      {/* <Route path='/' exact>
+            <LoginPage />
+          </Route>
+          <Route path='/login' exact>
+            <LoginPage />
+          </Route> */}
     </div>
   )
 }

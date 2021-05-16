@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { DeleteOutlined, SearchOutlined, ToolOutlined } from '@ant-design/icons'
+import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -10,15 +10,13 @@ import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
-import toast, { Toaster } from 'react-hot-toast'
+import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
-import DrawerComponent from '../../../molecules/drawer'
-import EditDepartment from '../edit-department'
 import './management.scss'
 type ManagementDepartmentProps = {
   data: DepartmentInterface[]
@@ -27,16 +25,7 @@ type ManagementDepartmentProps = {
 export default function ManagementDepartment({ data }: ManagementDepartmentProps) {
   const dispatch = useDispatch()
   const [idDepartment, setIdDepartment] = useState('')
-  const [department, setDepartment] = useState<DepartmentInterface>()
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [visible, setVisible] = useState(false)
-  const handleShowDrawer = (index: number) => {
-    setDepartment(data[index])
-    setVisible(true)
-  }
-  const handleCloseDrawer = () => {
-    setVisible(false)
-  }
 
   const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
@@ -69,7 +58,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
     <>
       <TableContainer component={Paper}>
         {/* <button onClick={() => window.location.reload(false)}>Click to reload!</button> */}
-        <Table size='medium' aria-label='a dense table'>
+        <Table size='small' aria-label='a dense table'>
           <TableHead>
             <TableRow>
               <TableCell align='left'>Mã phòng ban</TableCell>
@@ -77,7 +66,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
               <TableCell align='left'>Số lượng nhân viên</TableCell>
               <TableCell align='left'>Ngày tạo</TableCell>
               <TableCell align='left'>Liên kết tĩnh</TableCell>
-              <TableCell align='center'>Action</TableCell>
+              <TableCell align='center'></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -97,15 +86,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
                         <SearchOutlined />
                       </Tag>
                     </Link>
-                    <Tag
-                      onClick={() => handleShowDrawer(index)}
-                      style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
-                      color='warning'>
-                      <ToolOutlined />
-                    </Tag>
-                    <DrawerComponent title='Thêm lĩnh vực' visible={visible} onClose={handleCloseDrawer} width={680}>
-                      <EditDepartment data={department} />
-                    </DrawerComponent>
+
                     <Tag
                       onClick={() => showModal(row._id as string)}
                       style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
@@ -126,7 +107,6 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
           </TableBody>
         </Table>
       </TableContainer>
-      <Toaster />
     </>
   )
 }

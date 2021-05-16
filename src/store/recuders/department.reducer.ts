@@ -52,6 +52,7 @@ export const DepartmentReducer = (state = initialState, action: any): Department
             return {
               ...department,
               name: payload.name,
+              departmentCode: payload.departmentCode,
               description: payload.description
             }
           } else {

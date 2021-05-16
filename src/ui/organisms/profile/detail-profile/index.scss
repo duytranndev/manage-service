@@ -1,0 +1,23 @@
+.MsoNormal {
+  font-size: 130%;
+}
+
+.title {
+  font-size: 90% !important;
+  color: rgb(75, 74, 74) !important;
+}
+.content {
+  font-size: 100% !important;
+  margin-left: 10px;
+  // text-transform: uppercase;
+  color: black !important;
+}
+.info {
+  margin-left: 120px !important;
+}
+.bottom {
+  margin-left: 100px !important;
+}
+[class*='classic']:before {
+  content: 'Loading...';
+}

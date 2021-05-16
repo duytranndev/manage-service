@@ -1,10 +1,11 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd'
-import React, { useState } from 'react'
-import { CLOUD_URI, PRESENT, STAFF_URL } from '../../../../share/common/api/api.constants'
+import { Button, Form, Input, Select } from 'antd'
+import TextArea from 'antd/lib/input/TextArea'
+import React, { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useDispatch, useSelector } from 'react-redux'
+import { SERVICE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
-import { uploadSingle } from '../../../../share/handle/upload'
-import { useForm } from '../../../../share/hooks/useForm'
-import { Filed } from '../../../../share/interface/field.interface'
+import { UPDATE_SERVICE } from '../../../../store/actions/service.action'
 const { Option } = Select
 
 const layout = {
@@ -13,79 +14,76 @@ const layout = {
   }
 }
 
-export default function FormUpdateService() {
-  const {
-    formData,
-    handleInputChange,
-    setErrors,
-    handleInputValidation,
-    errors,
-    isSubmitting,
-    handleSubmit
-  } = useForm ({}, handleOnSubmit)
-  const [image, setImage] = useState()
-  const [department, setDepartment] = useState()
+export default function FormUpdateService(props) {
+  const { data } = props //tuỳ vào prop của state
+  const [service, setService] = useState()
+  const fields = useSelector((state) => state.field.data)
+  const units = useSelector((state) => state.unit.data)
+  const dispatch = useDispatch()
 
-  const handleOnChangeImage = (e) => {
-    console.log(' :>> ', e.target.files)
-    setImage(e.target.files[0])
+  useEffect(() => {
+    return setService(data)
+  }, [data])
+
+  function onChangeUnit(value: string) {
+    const unit = units.find((item) => item._id === value)
+    setService({ ...service, unitId: value, unitName: unit?.name })
+    // setDepartment(value)
   }
 
-  function onChangeDate(date, dateString) {
-    console.log(date, dateString)
-  }
-  function onChangeDepartment(value) {
-    setDepartment(value)
-    setErrors({ ...errors, department: '' })
+  const handleOnChange = (e) => {
+    setService({ ...service, [e.target.name]: e.target.value })
   }
 
-  console.log('errors :>> ', errors)
-  console.log('formData :>> ', formData)
-
-  async function handleOnSubmit(){
-    let uploader = await uploadSingle(image, CLOUD_URI, PRESENT)
-    const imageUrl = uploader.data.url
-    const newStaff = {
-      name: formData.name,
-      image: imageUrl
+  const handleOnSubmit = async (e) => {
+    e.preventDefault()
+    const updateService = moduleApi.update(SERVICE_URL, service)
+    await toast.promise(updateService, {
+      loading: 'Loading',
+      success: 'Sửa thông tin đơn vị thành công',
+      error: 'Sửa thông tin đơn vị viên thất bại'
+    })
+    const status = await updateService.then((res) => res.data.message)
+    if (status === 'success') {
+      dispatch({ type: UPDATE_SERVICE, payload: service })
+      setService({})
     }
-    moduleApi.create(STAFF_URL, newStaff).then((res) => console.log('res.data :>> ', res.data.data))
   }
+  console.log('service :>> ', service)
   return (
     <Form
       labelCol={{ span: 7 }}
       wrapperCol={{ span: 15 }}
       layout='horizontal'
       hideRequiredMark
-      onSubmitCapture={handleSubmit}>
-      <Form.Item label='Đăng ký hộ khẩu'>
-        <Input
-          placeholder='Nhập hộ khẩu...'
-          onInput={(e) => setErrors({ ...errors, [e.target.name]: '' })}
-          name='hokhau'
-          onChange={handleInputChange}
-        />
-        {errors.name && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.name}
-          </p>
-        )}
+      onSubmitCapture={handleOnSubmit}>
+      <Form.Item label='Tên dịch vụ'>
+        <Input placeholder='Nhập tên dịch vụ...' name='name' onChange={handleOnChange} value={service?.name} />
       </Form.Item>
+
+      <Form.Item label='Tên đơn vị'>
+        <Select
+          showSearch
+          placeholder='Chọn đơn vị...'
+          optionFilterProp='children'
+          value={service?.unitName}
+          onChange={onChangeUnit}>
+          {units?.map((item) => (
+            <Option key={item._id} value={item._id}>
+              {item.name}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+
       <Form.Item label='Mô tả'>
-        <Input placeholder='Nhập mô tả...' name='mota' onChange={handleInputChange} />
-        {errors.decription && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.decription}
-          </p>
-        )}
-      </Form.Item>
-      <Form.Item label='Mã đơn vị'>
-        <Input placeholder='Nhập mã đơn vị...' name='unitCode' onChange={handleInputChange} />
-        {errors.unitCode && (
-          <p className='help is-danger' style={{ color: 'red' }}>
-            *{errors.unitCode}
-          </p>
-        )}
+        <TextArea
+          placeholder='Nhập mô tả...'
+          rows={4}
+          name='description'
+          onChange={handleOnChange}
+          value={service?.description}
+        />
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>

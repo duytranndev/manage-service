@@ -15,11 +15,17 @@ export interface AppState {
   unit: UnitState
   service: ServiceState
   profile: ProfileState
+  authentication: AuthenticationState
 }
 
 export interface DepartmentState {
   data: DepartmentInterface[]
   pending?: boolean
+  error?: any
+}
+export interface AuthenticationState {
+  loggingIn: boolean
+  user: any
   error?: any
 }
 export interface ProfileState {
@@ -51,7 +57,7 @@ export interface NewsState {
 }
 export interface StaffState {
   data: StaffInterface[]
-  pending?: boolean
+  pending: boolean
   error?: any
 }
 export interface AppAction extends Action {

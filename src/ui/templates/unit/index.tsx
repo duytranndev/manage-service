@@ -1,6 +1,5 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import EditIcon from '@material-ui/icons/Edit'
 import { Button, Empty } from 'antd'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -58,9 +57,7 @@ export default function Unit() {
           <Fab color='secondary' aria-label='add' onClick={handleShowDrawer} className={classes.btn_add_action}>
             <AddIcon />
           </Fab>
-          <Fab color='primary' aria-label='edit' className={classes.btn_update_action}>
-            <EditIcon />
-          </Fab>
+
           <div className='content'>
             <ManagementUnit data={units} />
           </div>
