@@ -1,7 +1,8 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { Button, Empty } from 'antd'
-import React, { useState } from 'react'
+import BackspaceIcon from '@material-ui/icons/Backspace'
+import { Button, Descriptions, Empty } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { DepartmentInterface } from '../../../share/interface/department.interface'
 import { StaffInterface } from '../../../share/interface/staff.interface'
@@ -9,6 +10,7 @@ import { AppState } from '../../../store/types'
 import DrawerComponent from '../../molecules/drawer'
 import FormAddStaff from '../../organisms/staff/add-staff'
 import ManagementStaff from '../../organisms/staff/list-staff'
+import './index.scss'
 
 const useStyles = makeStyles({
   root: {
@@ -38,10 +40,28 @@ export default function Staff() {
   const [visible, setVisible] = useState<boolean>(false)
   const staffs = useSelector<AppState, StaffInterface[]>((state) => state.staff.data)
   const departments = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
+  const [staff, setStaff] = useState<StaffInterface>()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+
   staffs.map((staff) => {
     const department = departments.find((item) => item._id === staff.departmentId)
     return (staff['department'] = department?.name)
   })
+
+  const handleChange = (event: any) => {
+    setSearchTerm(event.target.value)
+  }
+
+  useEffect(() => {
+    if (!searchTerm) {
+      return setSearchResults([])
+    }
+    const results = staffs?.filter((person) => person?.name?.toUpperCase().includes(searchTerm.toUpperCase())) as any
+    return setSearchResults(results)
+
+    // console.log('results :>> ', results)
+  }, [searchTerm])
 
   const handleShowDrawer = () => {
     setVisible(true)
@@ -49,6 +69,16 @@ export default function Staff() {
   const handleCloseDrawer = () => {
     setVisible(false)
   }
+  const handleOnSelectStaff = (staff: StaffInterface) => {
+    setStaff(staff)
+    setSearchResults([])
+    setSearchTerm('')
+  }
+
+  const handleOnRemoveSearch = () => {
+    setSearchTerm('')
+  }
+
   return (
     <>
       {staffs.length > 0 ? (
@@ -57,9 +87,48 @@ export default function Staff() {
             <AddIcon />
           </Fab>
 
+          <div className='search-form'>
+            <div className='simple-search'>
+              <input type='text' placeholder='Tìm kiếm nhân viên' value={searchTerm} onChange={handleChange} />
+              <button onClick={handleOnRemoveSearch}>
+                <BackspaceIcon style={{ marginTop: '5px' }} />
+              </button>
+            </div>
+          </div>
+          <ul className='search-result'>
+            {searchResults?.length > 0 &&
+              searchResults?.map((item: StaffInterface) => (
+                <li className='item' key={item._id} onClick={() => handleOnSelectStaff(item)}>
+                  {item?.name}
+                </li>
+              ))}
+          </ul>
           <div className='content'>
             <ManagementStaff data={staffs} />
           </div>
+
+          {staff && (
+            <div className='detail'>
+              <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết nhân viên' size='default'>
+                <Descriptions.Item label='Tên nhân viên'>{staff?.name}</Descriptions.Item>
+                <Descriptions.Item label='Phòng ban'>{staff?.department}</Descriptions.Item>
+                <Descriptions.Item label='Chức vụ'>{staff?.position}</Descriptions.Item>
+                <Descriptions.Item label='Quyền hạn'>{staff?.role}</Descriptions.Item>
+                <Descriptions.Item label='Ngày sinh'>{staff?.dateOfBirth}</Descriptions.Item>
+                <Descriptions.Item label='Quê quán'>{staff?.homeTown}</Descriptions.Item>
+                <Descriptions.Item label='Địa chỉ'>{staff?.address}</Descriptions.Item>
+                <Descriptions.Item label='Số điện thoại'>{staff?.phone}</Descriptions.Item>
+                <Descriptions.Item label='Số chứng minh nhân dân'>{staff?.cardId}</Descriptions.Item>
+                <Descriptions.Item label='Email'>{staff?.email}</Descriptions.Item>
+                <Descriptions.Item label='Tên đăng nhập'>{staff?.username}</Descriptions.Item>
+                <Descriptions.Item label='Mật khẩu'>{staff?.password}</Descriptions.Item>
+                <Descriptions.Item label='Hình ảnh'>
+                  <img style={{ width: 350, height: 200 }} src={staff?.image} alt='' />
+                </Descriptions.Item>
+              </Descriptions>
+            </div>
+          )}
+
           <DrawerComponent title='Thêm nhân viên' visible={visible} onClose={handleCloseDrawer} width={680}>
             <FormAddStaff />
           </DrawerComponent>

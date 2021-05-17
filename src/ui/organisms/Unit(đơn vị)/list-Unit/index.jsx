@@ -72,7 +72,7 @@ export default function ManagementUnit({ data }: props) {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
       <Table size='small' aria-label='a dense table'>
         <TableHead>
           <TableRow>
@@ -84,7 +84,7 @@ export default function ManagementUnit({ data }: props) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {firstPageUnit.map((unit, index) => (
+          {data.map((unit, index) => (
             <TableRow key={unit._id}>
               <TableCell align='left'>{unit.unitCode}</TableCell>
               <TableCell align='left' component='th' scope='row'>
@@ -120,14 +120,15 @@ export default function ManagementUnit({ data }: props) {
           ))}
         </TableBody>
       </Table>
-      <div className='button-group' style={{ textAlign: 'center' }}>
-        <button type='button' className='btn' onClick={prevPageUnit}>
+      {/* <div className='button-group' style={{ position: 'fixed', left: '50%', bottom: '13%', zIndex: 1 }}>
+        <Button className='btn' type='primary' onClick={prevPageUnit}>
           Prev
-        </button>
-        <button type='button' className='btn' onClick={nextPageUnit}>
+        </Button>
+        &ensp;
+        <Button className='btn' type='primary' onClick={nextPageUnit}>
           Next
-        </button>
-      </div>
+        </Button>
+      </div> */}
     </TableContainer>
   )
 }

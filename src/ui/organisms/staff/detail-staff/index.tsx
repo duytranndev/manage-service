@@ -46,7 +46,12 @@ const StaffDetail = (): JSX.Element => {
   console.log('staff :>> ', staff)
   return (
     <>
-      <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết nhân viên' size='default'>
+      <Descriptions
+        labelStyle={{ fontSize: '110%' }}
+        layout='horizontal'
+        bordered
+        title='Chi tiết nhân viên'
+        size='default'>
         <Descriptions.Item label='Tên nhân viên'>{staff?.name}</Descriptions.Item>
         <Descriptions.Item label='Phòng ban'>{staff?.department}</Descriptions.Item>
         <Descriptions.Item label='Chức vụ'>{staff?.position}</Descriptions.Item>

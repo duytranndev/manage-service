@@ -45,26 +45,19 @@ const DepartmentDetail = (): JSX.Element => {
   }
   return (
     <>
-      <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết phòng ban' size='default'>
+      <Descriptions
+        labelStyle={{ fontSize: '110%' }}
+        layout='vertical'
+        bordered
+        title='Chi tiết phòng ban'
+        size='default'>
         <Descriptions.Item label='Tên phòng ban'>{department?.name}</Descriptions.Item>
         <Descriptions.Item label='Mã phòng ban'>{department?.departmentCode}</Descriptions.Item>
         <Descriptions.Item label='Ngày tạo'>{department?.insertTime}</Descriptions.Item>
         {/* <Descriptions.Item label='Amount'>$80.00</Descriptions.Item>
         <Descriptions.Item label='Discount'>$20.00</Descriptions.Item>
         <Descriptions.Item label='Official'>$60.00</Descriptions.Item> */}
-        <Descriptions.Item label='Mô tả'>
-          Data disk type: MongoDB
-          <br />
-          Database version: 3.4
-          <br />
-          Package: dds.mongo.mid
-          <br />
-          Storage space: 10 GB
-          <br />
-          Replication factor: 3
-          <br />
-          Region: East China 1<br />
-        </Descriptions.Item>
+        <Descriptions.Item label='Mô tả'>{department?.description}</Descriptions.Item>
       </Descriptions>
       <Fab color='secondary' aria-label='add' onClick={handleShowDrawer} className={classes.btn_edit_action}>
         <EditIcon />

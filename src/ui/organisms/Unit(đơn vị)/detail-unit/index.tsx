@@ -46,7 +46,7 @@ const UnitDetail = (): JSX.Element => {
 
   return (
     <>
-      <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết đơn vị' size='small'>
+      <Descriptions labelStyle={{ fontSize: '110%' }} layout='vertical' bordered title='Chi tiết đơn vị' size='small'>
         <Descriptions.Item label='Tên đơn vị'>{unit?.name}</Descriptions.Item>
         <Descriptions.Item label='Mã đơn vị'>{unit?.unitCode}</Descriptions.Item>
         <Descriptions.Item label='Tên lĩnh vực'>{unit?.fieldName}</Descriptions.Item>

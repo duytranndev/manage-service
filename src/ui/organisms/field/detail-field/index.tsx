@@ -46,7 +46,12 @@ const FieldDetail = (): JSX.Element => {
 
   return (
     <>
-      <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết phòng ban' size='default'>
+      <Descriptions
+        labelStyle={{ fontSize: '110%' }}
+        layout='vertical'
+        bordered
+        title='Chi tiết phòng ban'
+        size='default'>
         <Descriptions.Item label='Tên phòng ban'>{field?.name}</Descriptions.Item>
         <Descriptions.Item label='Mã phòng ban'>{field?.fieldCode}</Descriptions.Item>
         <Descriptions.Item label='Ngày tạo'>{field?.insertTime}</Descriptions.Item>

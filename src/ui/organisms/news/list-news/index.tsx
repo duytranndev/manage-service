@@ -66,6 +66,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
           className='demo-loadmore-list'
           itemLayout='horizontal'
           dataSource={data}
+          style={{ maxHeight: '400px' }}
           renderItem={(item) => (
             <List.Item
               style={{ margin: '50px' }}
