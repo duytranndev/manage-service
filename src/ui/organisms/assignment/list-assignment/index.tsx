@@ -60,7 +60,7 @@ const ManagementAssignment = ({ data }: ManagementAssignmentProps): JSX.Element 
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
         {/* <button onClick={() => window.location.reload(false)}>Click to reload!</button> */}
         <Table size='small' aria-label='a dense table'>
           <TableHead>

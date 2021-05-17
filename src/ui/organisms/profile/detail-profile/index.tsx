@@ -61,6 +61,8 @@ const ProfileDetail = (): JSX.Element => {
 
   const profiles = profile?.profiles
 
+  console.log('profile :>> ', profile)
+
   return (
     <>
       {isFetching ? (
@@ -72,9 +74,11 @@ const ProfileDetail = (): JSX.Element => {
             size='default'
             extra={
               <>
-                <Button variant='contained' color='primary' onClick={handleShowDrawer}>
-                  Phân công
-                </Button>
+                {profile?.assignment ? null : (
+                  <Button variant='contained' color='primary' onClick={handleShowDrawer}>
+                    Phân công
+                  </Button>
+                )}
                 <Button variant='contained' color='secondary'>
                   Duyệt hồ sơ
                 </Button>

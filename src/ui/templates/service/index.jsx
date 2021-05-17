@@ -1,7 +1,8 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { Button, Empty } from 'antd'
-import React, { useState } from 'react'
+import BackspaceIcon from '@material-ui/icons/Backspace'
+import { Button, Descriptions, Empty } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import DrawerComponent from '../../molecules/drawer'
 import FormAddService from '../../organisms/service/add-service'
@@ -33,10 +34,36 @@ const useStyles = makeStyles({
 export default function Service() {
   const classes = useStyles()
   const [visible, setVisible] = useState(false)
-
+  const [service, setService] = useState()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
   const services = useSelector((state) => state.service.data)
 
   // const fields = useSelector((state) => state.field.data)
+
+  const handleChange = (event: any) => {
+    setSearchTerm(event.target.value)
+  }
+
+  useEffect(() => {
+    if (!searchTerm) {
+      return setSearchResults([])
+    }
+    const results = services?.filter((person) => person?.name?.toUpperCase().includes(searchTerm.toUpperCase()))
+    return setSearchResults(results)
+
+    // console.log('results :>> ', results)
+  }, [searchTerm])
+
+  const handleOnSelectService = (service) => {
+    setService(service)
+    setSearchResults([])
+    setSearchTerm('')
+  }
+
+  const handleOnRemoveSearch = () => {
+    setSearchTerm('')
+  }
 
   const handleShowDrawer = () => {
     setVisible(true)
@@ -53,9 +80,42 @@ export default function Service() {
             <AddIcon />
           </Fab>
 
+          <div className='search-form'>
+            <div className='simple-search'>
+              <input type='text' placeholder='Tìm kiếm dịch vụ' value={searchTerm} onChange={handleChange} />
+              <button onClick={handleOnRemoveSearch}>
+                <BackspaceIcon style={{ marginTop: '5px' }} />
+              </button>
+            </div>
+          </div>
+          <ul className='search-result'>
+            {searchResults?.length > 0 &&
+              searchResults?.map((item: StaffInterface) => (
+                <li className='item' key={item._id} onClick={() => handleOnSelectService(item)}>
+                  {item?.name}
+                </li>
+              ))}
+          </ul>
+
           <div className='content'>
             <ManagementService data={services} />
           </div>
+
+          {service && (
+            <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết dịch vụ' size='small'>
+              <Descriptions.Item label='Tên dịch vụ'>{service?.name}</Descriptions.Item>
+              <Descriptions.Item label='Mã dịch vụ'>{service?.serviceCode}</Descriptions.Item>
+              <Descriptions.Item label='Tên đơn vị'>
+                {/* {unit?.name} */}
+                {service?.unitName}
+                {/* {units?.find((item) => item._id === service?.fieldId)?.name} */}
+              </Descriptions.Item>
+              <Descriptions.Item label='Ngày tạo'>{service?.insertTime}</Descriptions.Item>
+
+              <Descriptions.Item label='Mô tả'>{service?.description}</Descriptions.Item>
+            </Descriptions>
+          )}
+
           <DrawerComponent title='Thêm dịch vụ' visible={visible} onClose={handleCloseDrawer} width={680}>
             <FormAddService />
           </DrawerComponent>

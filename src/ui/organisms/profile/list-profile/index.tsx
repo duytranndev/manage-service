@@ -51,10 +51,12 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
   const handleCancel = () => {
     setIsModalVisible(false)
   }
+
+  console.log('data :>> ', data)
   return (
     <>
       <Paper style={{ width: '100%' }}>
-        <TableContainer>
+        <TableContainer style={{ maxHeight: '400px' }}>
           <Table stickyHeader size='small' aria-label='sticky table'>
             <TableHead>
               <TableRow>

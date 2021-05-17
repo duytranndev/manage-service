@@ -60,7 +60,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
   }
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
         <Table className={classes.table} size='small' aria-label='simple table'>
           <TableHead>
             <TableRow>

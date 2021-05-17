@@ -9,7 +9,7 @@ import {
 import { Menu } from 'antd'
 import 'antd/dist/antd.css'
 import React, { useState } from 'react'
-import { NavLink, useRouteMatch } from 'react-router-dom'
+import { Link, NavLink, useRouteMatch } from 'react-router-dom'
 import './index.scss'
 const { SubMenu } = Menu
 
@@ -37,15 +37,16 @@ export default function MenuAdmin() {
         defaultOpenKeys={['sub1']}
         mode='inline'
         theme='dark'>
-        <Menu.Item
-          key='19'
-          icon={
+        <Menu.Item>
+          <Link to='/admin'>
             <img
               src='https://dichvucong.gov.vn/p/home/theme/img/header/logo.png'
-              style={{ width: '100%', height: '80%' }}
+              style={{ width: '100%', zIndex: 1, height: '100%' }}
               alt=''
             />
-          }></Menu.Item>
+          </Link>
+        </Menu.Item>
+
         <Menu.Item key='1' icon={<ApartmentOutlined />}>
           <NavLink to={`/admin/department`}>Phòng Ban</NavLink>
         </Menu.Item>

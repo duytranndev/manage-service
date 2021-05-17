@@ -59,7 +59,7 @@ export default function ManagementField({ data }: any) {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
       <Table size='small' aria-label='a dense table'>
         <TableHead>
           <TableRow>

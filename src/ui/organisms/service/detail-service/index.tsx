@@ -46,7 +46,7 @@ const ServiceDetail = (): JSX.Element => {
 
   return (
     <>
-      <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết dịch vụ' size='small'>
+      <Descriptions labelStyle={{ fontSize: '110%' }} layout='vertical' bordered title='Chi tiết dịch vụ' size='small'>
         <Descriptions.Item label='Tên dịch vụ'>{service?.name}</Descriptions.Item>
         <Descriptions.Item label='Mã dịch vụ'>{service?.serviceCode}</Descriptions.Item>
         <Descriptions.Item label='Tên đơn vị'>

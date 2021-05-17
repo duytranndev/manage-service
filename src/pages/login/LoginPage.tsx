@@ -1,3 +1,4 @@
+import { Button } from 'antd'
 import Form from 'antd/lib/form/Form'
 import { ChangeEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -73,9 +74,9 @@ const LoginPage = (): JSX.Element => {
               </span>
             </div>
             <div className='container-login100-form-btn'>
-              <button type='submit' className='login100-form-btn'>
+              <Button htmlType='submit' className='login100-form-btn'>
                 Login
-              </button>
+              </Button>
             </div>
             <div className='text-center p-t-136'>
               <span className='txt1'>Forgot </span>

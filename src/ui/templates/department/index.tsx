@@ -1,7 +1,8 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { Button, Empty } from 'antd'
-import React, { useState } from 'react'
+import BackspaceIcon from '@material-ui/icons/Backspace'
+import { Button, Descriptions, Empty } from 'antd'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { DepartmentInterface } from '../../../share/interface/department.interface'
 import { AppState } from '../../../store/types'
@@ -30,12 +31,41 @@ export default function Department() {
   const [visible, setVisible] = useState(false)
   const departments = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
   const classes = useStyles()
+  const [department, setDepartment] = useState<DepartmentInterface>()
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchResults, setSearchResults] = useState([])
+
+  useEffect(() => {
+    if (!searchTerm) {
+      return setSearchResults([])
+    }
+    const results = departments?.filter((person) =>
+      person?.name?.toUpperCase().includes(searchTerm.toUpperCase())
+    ) as any
+    return setSearchResults(results)
+
+    // console.log('results :>> ', results)
+  }, [searchTerm])
+
+  const handleChange = (event: any) => {
+    setSearchTerm(event.target.value)
+  }
 
   const handleShowDrawer = () => {
     setVisible(true)
   }
   const handleCloseDrawer = () => {
     setVisible(false)
+  }
+
+  const handleOnSelectDepartment = (department: DepartmentInterface) => {
+    setDepartment(department)
+    setSearchResults([])
+    setSearchTerm('')
+  }
+
+  const handleOnRemoveSearch = () => {
+    setSearchTerm('')
   }
   return (
     <>
@@ -44,9 +74,45 @@ export default function Department() {
           <Fab color='secondary' aria-label='add' onClick={handleShowDrawer} className={classes.btn_add_action}>
             <AddIcon />
           </Fab>
+          <div className='search-form'>
+            <div className='simple-search'>
+              <input type='text' placeholder='Tìm kiếm phòng ban' value={searchTerm} onChange={handleChange} />
+              <button onClick={handleOnRemoveSearch}>
+                <BackspaceIcon style={{ marginTop: '5px' }} />
+              </button>
+            </div>
+          </div>
+          <ul className='search-result'>
+            {searchResults?.length > 0 &&
+              searchResults?.map((item: DepartmentInterface) => (
+                <li className='item' key={item._id} onClick={() => handleOnSelectDepartment(item)}>
+                  {item?.name}
+                </li>
+              ))}
+          </ul>
           <div className='content'>
             <ManagementDepartment data={departments} />
           </div>
+
+          {department && (
+            <div className='detail'>
+              <Descriptions
+                layout='vertical'
+                labelStyle={{ fontSize: '110%' }}
+                bordered
+                title='Chi tiết phòng ban'
+                size='default'>
+                <Descriptions.Item label='Tên phòng ban'>{department?.name}</Descriptions.Item>
+                <Descriptions.Item label='Mã phòng ban'>{department?.departmentCode}</Descriptions.Item>
+                <Descriptions.Item label='Ngày tạo'>{department?.insertTime}</Descriptions.Item>
+                {/* <Descriptions.Item label='Amount'>$80.00</Descriptions.Item>
+        <Descriptions.Item label='Discount'>$20.00</Descriptions.Item>
+        <Descriptions.Item label='Official'>$60.00</Descriptions.Item> */}
+                <Descriptions.Item label='Mô tả'>{department.description}</Descriptions.Item>
+              </Descriptions>
+            </div>
+          )}
+
           <DrawerComponent title='Thêm phòng ban' visible={visible} onClose={handleCloseDrawer} width={680}>
             <FormAddDepartment />
           </DrawerComponent>
