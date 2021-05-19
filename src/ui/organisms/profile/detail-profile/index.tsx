@@ -82,7 +82,7 @@ const ProfileDetail = (): JSX.Element => {
             size='default'
             extra={
               <>
-                {profile?.assignment ? null : (
+                {!profile?.assignment ? null : (
                   <Button variant='contained' color='primary' onClick={handleShowDrawer}>
                     Phân công
                   </Button>

@@ -47,23 +47,30 @@ export default function AdminLayout() {
               theme='light'
               trigger={null}
               collapsible
-              style={{ width: 217, position: 'fixed', overflowY: 'scroll', height: '100%' }}>
+              className='menu'
+              style={{
+                width: 217,
+                position: 'fixed',
+                overflowY: 'scroll',
+                height: '100%',
+                backgroundColor: '#001529'
+              }}>
               <Link to='/admin'>
                 <img
                   src='https://dichvucong.gov.vn/p/home/theme/img/header/logo.png'
-                  style={{ width: '100%', zIndex: 1, height: '100%' }}
+                  style={{ width: '100%', zIndex: 1, height: '6%' }}
                   alt=''
                 />
               </Link>
               <MenuAdmin />
             </Sider>
 
-            <Layout className='site-layout'>
+            <Layout className='site-layout' style={{ marginLeft: '185px' }}>
               <HeaderAdmin />
               <Content
                 className='site-layout-background'
                 style={{
-                  margin: '24px 16px',
+                  margin: '10px 16px',
                   padding: '10px 24px',
                   minHeight: 280
                 }}>
