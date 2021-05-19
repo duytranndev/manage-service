@@ -4,7 +4,8 @@ export const REGISTER_REQUEST = 'USERS_REGISTER_REQUEST'
 export const REGISTER_SUCCESS = 'USERS_REGISTER_SUCCESS'
 export const REGISTER_FAILURE = 'USERS_REGISTER_FAILURE'
 
-export const LOGOUT = 'USERS_LOGOUT'
+export const USER_LOGOUT = 'USERS_LOGOUT'
+export const USER_LOGIN = 'USER_LOGIN'
 
 export const GETALL_REQUEST = 'USERS_GETALL_REQUEST'
 export const GETALL_SUCCESS = 'USERS_GETALL_SUCCESS'
@@ -19,31 +20,21 @@ export const LOGIN_SUCCESS = 'USERS_LOGIN_SUCCESS'
 export const LOGIN_FAILURE = 'USERS_LOGIN_FAILURE'
 
 export const userActions = {
-  login: (username: string, password: string) => {
+  login: (username: string, password: string, from: any) => {
     return (dispatch: (arg0: { type: string; user?: any; error?: any }) => void) => {
-      dispatch(request({ username }))
       userService.login(username, password).then(
         (user: any) => {
-          // history.push('/admin')
-          dispatch(success(user))
-          window.location.reload()
-          // window.location.href = `${window.location.href}admin`
+          window.location.href = `${window.location.origin}/admin`
+          // moduleApi.getDetail(STAFF_URL, AuthStr).then((res) => dispatch(success(res.data.data)))
+          // console.log(`user`, user)
+          // window.location.reload()
+          // console.log(`window.location`, window.location)
         },
         (error) => {
           alert('Đăng nhập thất bại!. Xin vui lòng kiểm tra lại tài khoản hoặc mật khẩu.')
-          dispatch(failure(error.toString()))
           //   dispatch(alertActions.error(error.toString()))
         }
       )
-    }
-    function request(user: object) {
-      return { type: LOGIN_REQUEST, payload: user }
-    }
-    function success(user: object) {
-      return { type: LOGIN_SUCCESS, payload: user }
-    }
-    function failure(error: object) {
-      return { type: LOGIN_FAILURE, error: error }
     }
   }
 }

@@ -35,10 +35,9 @@ export default function News() {
   let listNews = useSelector<AppState, NewsInterface[]>((state) => state.news.data)
 
   useEffect(() => {
-    const loadNews = async () => {
-      await dispatch(fetchNewss())
+    if (listNews.length === 0) {
+      dispatch(fetchNewss())
     }
-    loadNews()
   }, [])
 
   const isPending = useSelector<AppState, any>((state) => state.news.pending)

@@ -11,12 +11,14 @@ import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
+import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
+import { AppState } from '../../../../store/types'
 import './management.scss'
 type ManagementDepartmentProps = {
   data: DepartmentInterface[]
@@ -26,6 +28,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
   const dispatch = useDispatch()
   const [idDepartment, setIdDepartment] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
 
   const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
@@ -41,6 +44,11 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
   }
 
   const showModal = (id: string) => {
+    if (user?.role !== 'ADMIN') {
+      toast.error('Không đủ phân quyền!')
+      // alert('chu tuoi gi')
+      return null
+    }
     setIdDepartment(id)
     setIsModalVisible(true)
   }

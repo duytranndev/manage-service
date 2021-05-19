@@ -17,6 +17,7 @@ import UnitDetail from '../../../ui/organisms/Unit(đơn vị)/detail-unit'
 import Department from '../../../ui/templates/department'
 import Field from '../../../ui/templates/field'
 import Assignment from '../../../ui/templates/manage-profile/assignment'
+import MyProfile from '../../../ui/templates/manage-profile/my-profile'
 import Profile from '../../../ui/templates/manage-profile/profile'
 import News from '../../../ui/templates/news'
 import Service from '../../../ui/templates/service'
@@ -61,6 +62,9 @@ export default function AdminRouting() {
     },
     {
       component: <Route key='19' path={`/admin/news/:slug`} component={NewsDetail} exact />
+    },
+    {
+      component: <Route key='20' path={`/admin/my-profile`} component={MyProfile} exact />
     },
     {
       component: <Route key='5' path={`/admin/field`} component={Field} exact />

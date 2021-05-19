@@ -1,9 +1,9 @@
 import { Button } from 'antd'
 import Form from 'antd/lib/form/Form'
 import { ChangeEvent, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { useLocation } from 'react-router'
 import { userActions } from '../../store/actions/user.action'
-import { AppState } from '../../store/types'
 import './css/animate.css'
 import './css/main.css'
 import './css/util.css'
@@ -17,7 +17,8 @@ let user = JSON.parse(localStorage.getItem('user') as string)
 
 const LoginPage = (): JSX.Element => {
   const [login, setLogin] = useState<UserProps>()
-  const loggingIn = useSelector<AppState>((state) => state.authentication.loggingIn)
+  const location = useLocation()
+
   const dispatch = useDispatch()
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setLogin({ ...login, [e.target.name]: e.target.value })
@@ -31,9 +32,11 @@ const LoginPage = (): JSX.Element => {
 
   const handleOnLogin = () => {
     if (login?.username && login.password) {
-      dispatch(userActions.login(login.username, login.password))
+      const { from } = location.state || ({ from: { pathname: '/admin' } } as any)
+      dispatch(userActions.login(login.username, login.password, from))
     }
   }
+
   return (
     <div className='limiter'>
       <div className='container-login100'>

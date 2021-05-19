@@ -6,12 +6,14 @@ import Avatar from 'antd/lib/avatar/avatar'
 import Modal from 'antd/lib/modal/Modal'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { NEWS_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { NewsInterface } from '../../../../share/interface/image.interface'
+import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { DELETE_NEWS } from '../../../../store/actions/news.action'
+import { AppState } from '../../../../store/types'
 import './index.scss'
 const useStyles = makeStyles({
   root: {
@@ -31,6 +33,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
   const [idNews, setIdNews] = useState('')
   const dispatch = useDispatch()
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
 
   const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(NEWS_URL, id)

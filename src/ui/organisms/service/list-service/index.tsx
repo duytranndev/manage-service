@@ -11,12 +11,14 @@ import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { SERVICE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { ServiceInterface } from '../../../../share/interface/service.interface'
+import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { DELETE_SERVICE } from '../../../../store/actions/service.action'
+import { AppState } from '../../../../store/types'
 type ManagementServiceProps = {
   data: ServiceInterface[]
 }
@@ -25,6 +27,7 @@ export default function ManagementService({ data }: ManagementServiceProps) {
   const dispatch = useDispatch()
   const match = useRouteMatch()
   const [idService, setIdService] = useState('')
+  const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
 
   const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(SERVICE_URL, id)
@@ -41,6 +44,11 @@ export default function ManagementService({ data }: ManagementServiceProps) {
   const [isModalVisible, setIsModalVisible] = useState(false)
 
   const showModal = (id: string) => {
+    if (user?.role !== 'ADMIN') {
+      toast.error('Không đủ phân quyền!')
+      // alert('chu tuoi gi')
+      return null
+    }
     setIdService(id)
     setIsModalVisible(true)
   }

@@ -56,8 +56,6 @@ const ManagementAssignment = ({ data }: ManagementAssignmentProps): JSX.Element 
     setIsModalVisible(false)
   }
 
-  console.log(`data`, data)
-
   return (
     <>
       <TableContainer component={Paper} style={{ maxHeight: '400px' }}>

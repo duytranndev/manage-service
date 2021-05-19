@@ -2,6 +2,7 @@ import { Descriptions } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 import { ASSIGNMENT_URL, PROFILE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { AssignmentInterface } from '../../../../share/interface/assignment.inteface'
@@ -26,11 +27,11 @@ const AssignmentDetail = (): JSX.Element => {
   }, [])
 
   useEffect(() => {
-    setProfile(profiles?.find((item) => item.profileCode === slug))
+    return setProfile(profiles?.find((item) => item.profileCode === slug))
   }, [slug, profiles])
 
   useEffect(() => {
-    setAssignment(assignments?.find((item) => item.profileCode === slug))
+    return setAssignment(assignments?.find((item) => item.profileCode === slug))
   }, [slug, assignments])
 
   return (
@@ -43,7 +44,9 @@ const AssignmentDetail = (): JSX.Element => {
       size='small'>
       <Descriptions.Item label='Tên người gửi'>{profile?.name}</Descriptions.Item>
       <Descriptions.Item label='Lĩnh vực'>{profile?.fieldName}</Descriptions.Item>
-      <Descriptions.Item label='Mã hồ sơ'>{profile?.profileCode}</Descriptions.Item>
+      <Descriptions.Item label='Mã hồ sơ'>
+        <Link to={`/admin/profile/${slug}`}>{profile?.profileCode}</Link>
+      </Descriptions.Item>
       <Descriptions.Item label='Trạng thái'>
         {(profile?.status as any) === true ? 'Đã duyệt' : 'Chưa duyệt'}
       </Descriptions.Item>

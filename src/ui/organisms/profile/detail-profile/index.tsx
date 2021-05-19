@@ -1,10 +1,14 @@
 import { Button, makeStyles } from '@material-ui/core'
 import { Descriptions, Tabs } from 'antd'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
+import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { PROFILE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { ProfileInterface } from '../../../../share/interface/profile.interface'
+import { StaffInterface } from '../../../../share/interface/staff.interface'
+import { AppState } from '../../../../store/types'
 import DrawerComponent from '../../../molecules/drawer'
 import Assignment from '../assignment'
 import ChangementPaper from '../tabs/ChangementPaper'
@@ -36,8 +40,14 @@ const ProfileDetail = (): JSX.Element => {
   const [profile, setProfile] = useState<ProfileInterface>()
   const { slug } = useParams<any>()
   const [visible, setVisible] = useState(false)
+  const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
 
   const handleShowDrawer = () => {
+    if (user?.role !== 'ADMIN') {
+      toast.error('Không đủ phân quyền!')
+      // alert('chu tuoi gi')
+      return null
+    }
     setVisible(true)
   }
   const handleCloseDrawer = () => {
@@ -60,8 +70,6 @@ const ProfileDetail = (): JSX.Element => {
   // }, [profile])
 
   const profiles = profile?.profiles
-
-  console.log('profile :>> ', profile)
 
   return (
     <>

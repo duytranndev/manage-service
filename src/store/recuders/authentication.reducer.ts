@@ -1,26 +1,34 @@
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, LOGOUT } from '../actions/user.action'
+import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS, USER_LOGOUT } from '../actions/user.action'
 
 let user = JSON.parse(localStorage.getItem('user') as string)
-const initialState = user ? { loggedIn: true, user } : {}
+const initialState = user ? { loggedIn: true, data: user } : {}
 
-export function authentication(state = initialState, action: any) {
+// const initialState = {
+//   data: null,
+//   loggingIn: false
+// }
+
+export const authenticationReducer = (state = initialState, action: any): any => {
   // console.log('action :>> ', action)
+
   switch (action.type) {
     case LOGIN_REQUEST:
       return {
+        ...state,
         loggingIn: true,
-        user: action.user
+        data: action.payload
       }
     case LOGIN_SUCCESS:
+      console.log(`action.payload`, action)
+
       return {
-        loggedIn: true,
-        user: action.user
+        ...state,
+        loggingIn: true,
+        data: action.payload
       }
     case LOGIN_FAILURE:
-      console.log(action)
-
       return {}
-    case LOGOUT:
+    case USER_LOGOUT:
       return {}
     default:
       return state
