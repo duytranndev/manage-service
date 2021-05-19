@@ -5,9 +5,7 @@ export const moduleApi = {
     return axios.get(url, { params })
   },
   getDetail(url: string, id: any) {
-    console.log(`id`, id)
     const path = `${url}/${id}`
-    console.log(`path`, path)
     return axios.get(path)
   },
   create(url: string, body: object, config?: any) {

@@ -52,7 +52,6 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
     setIsModalVisible(false)
   }
 
-  console.log('data :>> ', data)
   return (
     <>
       <Paper style={{ width: '100%' }}>

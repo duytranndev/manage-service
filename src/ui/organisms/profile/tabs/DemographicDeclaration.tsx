@@ -352,7 +352,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
 
             {data?.member?.map((item: any, index) => {
               return (
-                <tr key={item._id} style={{ textAlign: 'center' }}>
+                <tr key={index} style={{ textAlign: 'center' }}>
                   <td
                     style={{
                       width: '33.9pt',
@@ -518,7 +518,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
 
             {data?.member?.map((item: any, index) => {
               return (
-                <tr key={item._id} style={{ textAlign: 'center' }}>
+                <tr key={index} style={{ textAlign: 'center' }}>
                   <td
                     style={{
                       width: '10%',

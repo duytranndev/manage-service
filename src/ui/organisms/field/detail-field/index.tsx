@@ -2,9 +2,11 @@ import { Fab, makeStyles } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import { Descriptions } from 'antd'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { FieldInterface } from '../../../../share/interface/field.interface'
+import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { AppState } from '../../../../store/types'
 import DrawerComponent from '../../../molecules/drawer'
 import EditField from '../update-field'
@@ -30,6 +32,8 @@ const FieldDetail = (): JSX.Element => {
   const [visible, setVisible] = useState(false)
   const fields = useSelector<AppState, FieldInterface[]>((state) => state.field.data)
   const [field, setField] = useState<FieldInterface>()
+  const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
+
   const { slug } = useParams<any>()
   const classes = useStyles()
 
@@ -38,6 +42,11 @@ const FieldDetail = (): JSX.Element => {
   }, [slug, fields])
 
   const handleShowDrawer = () => {
+    if (user?.role !== 'ADMIN') {
+      toast.error('Không đủ phân quyền!')
+      // alert('chu tuoi gi')
+      return null
+    }
     setVisible(true)
   }
   const handleCloseDrawer = () => {

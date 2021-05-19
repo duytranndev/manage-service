@@ -2,6 +2,7 @@ import { Fab, makeStyles } from '@material-ui/core'
 import EditIcon from '@material-ui/icons/Edit'
 import { Descriptions } from 'antd'
 import { useEffect, useState } from 'react'
+import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
@@ -29,6 +30,8 @@ const useStyles = makeStyles({
 const StaffDetail = (): JSX.Element => {
   const [visible, setVisible] = useState(false)
   const staffs = useSelector<AppState, StaffInterface[]>((state) => state.staff.data)
+  const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
+
   const [staff, setStaff] = useState<StaffInterface>()
   const { slug } = useParams<any>()
   const classes = useStyles()
@@ -38,6 +41,11 @@ const StaffDetail = (): JSX.Element => {
   }, [slug, staffs])
 
   const handleShowDrawer = () => {
+    if (user?.role !== 'ADMIN') {
+      toast.error('Không đủ phân quyền!')
+      // alert('chu tuoi gi')
+      return null
+    }
     setVisible(true)
   }
   const handleCloseDrawer = () => {

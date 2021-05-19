@@ -1,10 +1,11 @@
 import axios from 'axios'
+import { BASE_URL } from '../common/api/api.constants'
 
 export const userService = {
   login: (username?: string, password?: string) => {
     return axios({
       method: 'POST',
-      url: 'https://manage-service-api-demo.herokuapp.com/api/auth/login',
+      url: `${BASE_URL}/auth/login`,
       headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify({ username, password })
     }).then((response) => {

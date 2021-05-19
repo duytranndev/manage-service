@@ -11,7 +11,7 @@ import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { STAFF_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
@@ -32,8 +32,15 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
   const [idStaff, setIdStaff] = useState('')
   const classes = useStyles()
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const user = useSelector((state) => state.authentication.data)
+
   const dispatch = useDispatch()
   const showModal = (id) => {
+    if (user?.role !== 'ADMIN') {
+      toast.error('Không đủ phân quyền!')
+      // alert('chu tuoi gi')
+      return null
+    }
     setIdStaff(id)
     setIsModalVisible(true)
   }

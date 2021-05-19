@@ -16,6 +16,7 @@ export interface AppState {
   service: ServiceState
   profile: ProfileState
   authentication: AuthenticationState
+  user: UserState
 }
 
 export interface DepartmentState {
@@ -25,7 +26,7 @@ export interface DepartmentState {
 }
 export interface AuthenticationState {
   loggingIn: boolean
-  user: any
+  data: StaffInterface
   error?: any
 }
 export interface ProfileState {
@@ -43,6 +44,10 @@ export interface UnitState {
   data: UnitInterface[]
   pending?: boolean
   error?: any
+}
+
+export interface UserState {
+  data: StaffInterface
 }
 
 export interface FieldState {

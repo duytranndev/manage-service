@@ -6,7 +6,6 @@ type TabTransferPaperProps = {
 }
 
 const TransferPaper = ({ data }: TabTransferPaperProps): JSX.Element => {
-  console.log('data :>> ', data)
   return (
     <Grid container spacing={2}>
       <Grid item xs={3}>
@@ -327,7 +326,7 @@ const TransferPaper = ({ data }: TabTransferPaperProps): JSX.Element => {
 
             {data?.member?.map((item: any, index) => {
               return (
-                <tr key={item._id} style={{ textAlign: 'center' }}>
+                <tr key={index} style={{ textAlign: 'center' }}>
                   <td
                     style={{
                       width: '33.9pt',

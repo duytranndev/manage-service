@@ -40,7 +40,7 @@ export default function ManagementRecordsReceived() {
               {profiles?.map((row) => (
                 <TableRow key={row._id}>
                   <TableCell component='th' scope='row'>
-                    <Link to={`/admin/profile/${row.slug}`}>{row.profileCode}</Link>
+                    <Link to={`/admin/profile/${row.profileCode}`}>{row.profileCode}</Link>
                   </TableCell>
                   <TableCell align='right'>{row.fieldName}</TableCell>
                   <TableCell align='right'>{row.nameDocument}</TableCell>

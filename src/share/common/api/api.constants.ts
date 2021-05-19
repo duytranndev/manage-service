@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://manage-service-api-demo.herokuapp.com/api'
+export const BASE_URL = 'http://localhost:3001/api'
 // export const DEPARTMENT_URL = BASE_LOCAL_URL || BASE_URL + 'department'
 export const DEPARTMENT_URL = BASE_URL + '/department'
 export const STAFF_URL = BASE_URL + '/staff'
