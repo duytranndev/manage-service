@@ -2,7 +2,7 @@ import { Grid } from '@material-ui/core'
 import { Button, Descriptions, Form, Input, TreeSelect } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { TreeNode } from 'rc-tree-select'
-import React, { ChangeEvent, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { ASSIGNMENT_URL, PROFILE_URL } from '../../../../share/common/api/api.constants'
@@ -40,7 +40,7 @@ const Assignment = ({ data }: AssignmentProps): JSX.Element => {
   }
   const selects = useMemo(() => convertSelect(departments, staffs), [departments, staffs])
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (e: any) => {
     setFormValue({ ...formValue, [e.target.name]: e.target.value })
   }
 
@@ -58,12 +58,13 @@ const Assignment = ({ data }: AssignmentProps): JSX.Element => {
     }
 
     moduleApi.update(PROFILE_URL, updateProfile)
-
+    const staff = staffs.find((item) => item._id === value)
     const newAssignment = {
       ...formValue,
       profileId: data?._id,
       profileCode: data?.profileCode,
-      staffId: value
+      staffId: value,
+      staffName: staff?.name
     }
 
     const myPromise = moduleApi.create(ASSIGNMENT_URL, newAssignment)

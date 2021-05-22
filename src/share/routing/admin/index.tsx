@@ -3,6 +3,7 @@ import 'antd/dist/antd.css'
 import React, { Suspense } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import AdminPage from '../../../pages/admin/AdminPage'
+import MyAccount from '../../../pages/my-account'
 import NotFoundPage from '../../../pages/not-found'
 import AssignmentDetail from '../../../ui/organisms/assignment/detail-assignment'
 import DepartmentDetail from '../../../ui/organisms/department/detail-department'
@@ -65,6 +66,12 @@ export default function AdminRouting() {
     },
     {
       component: <Route key='20' path={`/admin/my-profile`} component={MyProfile} exact />
+    },
+    {
+      component: <Route key='21' path={`/admin/approved-profile`} component={ManagementRecordsBrowsed} exact />
+    },
+    {
+      component: <Route key='22' path={`/admin/my-account`} component={MyAccount} exact />
     },
     {
       component: <Route key='5' path={`/admin/field`} component={Field} exact />

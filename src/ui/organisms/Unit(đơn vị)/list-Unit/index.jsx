@@ -10,11 +10,13 @@ import { Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { UNIT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DELETE_UNIT } from '../../../../store/actions/unit.action'
+
+const user = JSON.parse(sessionStorage.getItem('user'))
 
 export default function ManagementUnit({ data }: props) {
   const match = useRouteMatch()
@@ -23,7 +25,7 @@ export default function ManagementUnit({ data }: props) {
   const [visible, setVisible] = useState(false)
   const [idUnit, setIdUnit] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const user = useSelector((state) => state.authentication.data)
+  // const user = useSelector((state) => state.authentication.data)
   const dispatch = useDispatch()
 
   const showModal = (id) => {

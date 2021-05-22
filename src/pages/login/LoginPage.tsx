@@ -1,6 +1,6 @@
 import { Button } from 'antd'
 import Form from 'antd/lib/form/Form'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useLocation } from 'react-router'
 import { userActions } from '../../store/actions/user.action'
@@ -29,6 +29,11 @@ const LoginPage = (): JSX.Element => {
   //     // history.push('/admin')
   //   }
   // }, [user])
+  useEffect(() => {
+    sessionStorage.removeItem('user')
+    dispatch({ type: 'USERS_LOGOUT' })
+    // userActions.logout()
+  }, [])
 
   const handleOnLogin = () => {
     if (login?.username && login.password) {

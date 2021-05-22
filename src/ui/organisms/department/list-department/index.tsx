@@ -102,7 +102,7 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
                       <DeleteOutlined />
                     </Tag>
                     <Modal
-                      title='Basic Modal'
+                      title='Form Confirm'
                       visible={isModalVisible}
                       onOk={() => handleOk(idDepartment)}
                       onCancel={handleCancel}>

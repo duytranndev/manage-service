@@ -102,7 +102,7 @@ export default function ManagementField({ data }: any) {
                     <DeleteOutlined />
                   </Tag>
                   <Modal
-                    title='Basic Modal'
+                    title='Form Confirm'
                     visible={isModalVisible}
                     onOk={() => handleOk(idField)}
                     onCancel={handleCancel}>

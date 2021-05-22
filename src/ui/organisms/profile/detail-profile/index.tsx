@@ -1,4 +1,4 @@
-import { Button, makeStyles } from '@material-ui/core'
+import { Button, Grid, makeStyles } from '@material-ui/core'
 import { Descriptions, Tabs } from 'antd'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -11,8 +11,10 @@ import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { AppState } from '../../../../store/types'
 import DrawerComponent from '../../../molecules/drawer'
 import Assignment from '../assignment'
+import BirthCertificate from '../tabs/BirthCertificate'
 import ChangementPaper from '../tabs/ChangementPaper'
 import DemographicDeclaration from '../tabs/DemographicDeclaration'
+import RegistrationDeclaredPaperBirth from '../tabs/RegistrationDeclaredPaperBirth'
 import TransferPaper from '../tabs/TransferPaper'
 import './index.scss'
 const { TabPane } = Tabs
@@ -82,7 +84,7 @@ const ProfileDetail = (): JSX.Element => {
             size='default'
             extra={
               <>
-                {!profile?.assignment ? null : (
+                {profile?.assignment ? null : (
                   <Button variant='contained' color='primary' onClick={handleShowDrawer}>
                     Phân công
                   </Button>
@@ -103,6 +105,23 @@ const ProfileDetail = (): JSX.Element => {
           </Descriptions>
           <header style={{ margin: '10px 0px 10px', fontSize: '110%', fontWeight: 600 }}>Giấy tờ đi kèm:</header>
           <Tabs defaultActiveKey='1' type='card' size='small'>
+            {profile?.profiles?.registrationBook && (
+              <TabPane tab='Sổ hộ khẩu' key='6'>
+                {/* Sổ hộ khẩu */}
+                <Grid container spacing={2}>
+                  <Grid item xs={12}>
+                    Số sổ hộ khẩu:
+                  </Grid>
+                  <Grid item xs={12}>
+                    Họ và tên chủ hộ:
+                  </Grid>
+                  <Grid item xs={12}>
+                    Hồ sơ hộ khẩu số:
+                  </Grid>
+                </Grid>
+                {/* <RegistrationBook data={profile?.profiles?.registrationBook} /> */}
+              </TabPane>
+            )}
             {profile?.profiles?.changementPaper && (
               <TabPane tab='Phiếu báo thay đổi hộ khẩu, nhân khẩu' key='1'>
                 <ChangementPaper data={profile?.profiles?.changementPaper} />
@@ -116,6 +135,16 @@ const ProfileDetail = (): JSX.Element => {
             {profile?.profiles?.transferPaper && (
               <TabPane tab='Giấy chuyển hộ khẩu' key='3'>
                 <TransferPaper data={profile?.profiles?.transferPaper} />
+              </TabPane>
+            )}
+            {profile?.profiles?.registrationDeclaredPaperBirth && (
+              <TabPane tab='Tờ khai đăng ký khai sinh' key='4'>
+                <RegistrationDeclaredPaperBirth data={profile?.profiles?.registrationDeclaredPaperBirth} />
+              </TabPane>
+            )}
+            {profile?.profiles?.birthCertificate && (
+              <TabPane tab='Giấy chứng sinh' key='5'>
+                <BirthCertificate data={profile?.profiles?.birthCertificate} />
               </TabPane>
             )}
           </Tabs>
