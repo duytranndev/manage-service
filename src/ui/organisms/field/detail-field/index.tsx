@@ -59,7 +59,7 @@ const FieldDetail = (): JSX.Element => {
         labelStyle={{ fontSize: '110%' }}
         layout='vertical'
         bordered
-        title='Chi tiết phòng ban'
+        title='Chi tiết lĩnh vực'
         size='default'>
         <Descriptions.Item label='Tên phòng ban'>{field?.name}</Descriptions.Item>
         <Descriptions.Item label='Mã phòng ban'>{field?.fieldCode}</Descriptions.Item>

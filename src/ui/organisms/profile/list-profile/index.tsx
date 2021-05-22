@@ -64,7 +64,6 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
                 <TableCell align='center'>Ngày gửi</TableCell>
                 <TableCell align='center'>Phân công</TableCell>
                 <TableCell align='center'>Duyệt</TableCell>
-                <TableCell align='center'>Trạng thái</TableCell>
                 <TableCell align='center'></TableCell>
               </TableRow>
             </TableHead>
@@ -82,13 +81,7 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
                   <TableCell align='center'>
                     {row.browsed ? <Tag color='success'>Đã duyệt</Tag> : <Tag color='error'>Chưa duyệt</Tag>}
                   </TableCell>
-                  <TableCell align='center'>
-                    {row.browsed === true && row.assignment === true && row.status === 'Thông qua' ? (
-                      <Tag color='success'>Thông qua</Tag>
-                    ) : (
-                      <Tag color='error'>Không thông qua</Tag>
-                    )}
-                  </TableCell>
+
                   <TableCell align='center'>
                     <Space align='center' size='small'>
                       <Link to={`/admin/profile/${row.profileCode}`}>

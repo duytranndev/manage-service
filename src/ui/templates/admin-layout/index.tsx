@@ -1,4 +1,5 @@
-import { Layout } from 'antd'
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward'
+import { BackTop, Layout } from 'antd'
 import 'antd/dist/antd.css'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -37,6 +38,19 @@ export default function AdminLayout() {
   }, [user])
 
   console.log('staff :>> ', staff)
+  // console.log('user :>> ', user)
+
+  const style = {
+    height: 40,
+    width: 40,
+    lineHeight: '40px',
+    borderRadius: 4,
+    backgroundColor: '#1088e9',
+    marginLeft: '50px',
+    color: '#fff',
+    textAlign: 'center',
+    fontSize: 14
+  }
 
   return (
     <>
@@ -82,6 +96,11 @@ export default function AdminLayout() {
       ) : (
         <LoginPage />
       )}
+      <BackTop>
+        <div style={style as any}>
+          <ArrowUpwardIcon style={{ marginTop: '6px' }} />
+        </div>
+      </BackTop>
     </>
   )
 }

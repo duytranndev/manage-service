@@ -10,6 +10,9 @@ export interface ProfileInterface extends BaseInterface {
     transferPaper?: object
     changementPaper?: object
     demographicDeclaration?: object
+    birthCertificate?: object
+    registrationDeclaredPaperBirth?: object
+    registrationBook?: object
   }
   status?: string
   profileCode?: string

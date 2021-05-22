@@ -69,14 +69,7 @@ const MyProfile = (): JSX.Element => {
                   height: 100
                 }}
                 className={classes.root}
-                description={<span>Danh sách hồ sơ trống!</span>}>
-                {/* <Button type='primary' onClick={handleShowDrawer}>
-                  Thêm nhân viên
-                </Button> */}
-              </Empty>
-              {/* <DrawerComponent title='Thêm nhân viên' visible={visible} onClose={handleCloseDrawer} width={800}>
-                <FormAddStaff />
-              </DrawerComponent> */}
+                description={<span>Danh sách hồ sơ trống!</span>}></Empty>
             </>
           )}
         </>

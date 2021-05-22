@@ -88,7 +88,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
                     visible={isModalVisible}
                     onOk={() => handleOk(idNews)}
                     onCancel={handleCancel}>
-                    <p>Bạn có chắc chắn muốn xoá phòng ban này?</p>
+                    <p>Bạn có chắc chắn muốn xoá tin tức này?</p>
                   </Modal>
                 </>
               ]}>
