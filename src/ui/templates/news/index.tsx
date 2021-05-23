@@ -1,5 +1,6 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+import CreateIcon from '@material-ui/icons/Create'
 import { Button, Empty } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -50,6 +51,12 @@ export default function News() {
   }
   return (
     <>
+      <div className='title' style={{ margin: '20px 0px' }}>
+        <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+          <CreateIcon />
+          Quản Lý tin tức
+        </p>
+      </div>
       {!isPending ? (
         <>
           {(listNews?.length as any) > 0 ? (

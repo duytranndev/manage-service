@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import React from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +17,18 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1
+  },
+  btn_add_action: {
+    position: 'fixed',
+    bottom: '9%',
+    right: '3%',
+    zIndex: 1
+  },
+  btn_update_action: {
+    position: 'fixed',
+    bottom: '20%',
+    right: '3%',
+    zIndex: 1
   }
 }))
 export default function HeaderAdmin() {
@@ -25,6 +37,16 @@ export default function HeaderAdmin() {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const history = useHistory()
+  const [visible, setVisible] = useState(false)
+
+  const handleShowDrawer = () => {
+    setVisible(true)
+  }
+
+  const handleCloseDrawer = () => {
+    setVisible(false)
+  }
+
   const handleChange = (event) => {
     setAuth(event.target.checked)
   }
@@ -65,16 +87,15 @@ export default function HeaderAdmin() {
                 anchorEl={anchorEl}
                 anchorOrigin={{
                   vertical: 'top',
-                  horizontal: 'bottom'
+                  horizontal: 'left'
                 }}
                 keepMounted
                 transformOrigin={{
                   vertical: 'top',
-                  horizontal: 'bottom'
+                  horizontal: 'left'
                 }}
                 open={open}
                 onClose={handleClose}>
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleGoMyAccount}>My account</MenuItem>
                 <MenuItem onClick={handleLogOut}>Logout</MenuItem>
               </Menu>

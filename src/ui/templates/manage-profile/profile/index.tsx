@@ -1,11 +1,14 @@
 import { makeStyles } from '@material-ui/core'
+import CreateIcon from '@material-ui/icons/Create'
 import { Empty } from 'antd'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { PROFILE_URL } from '../../../../share/common/api/api.constants'
+import { moduleApi } from '../../../../share/handle/fetchData'
 import { ProfileInterface } from '../../../../share/interface/profile.interface'
-import { fetchProfiles } from '../../../../store/recuders/profile.reducer'
 import { AppState } from '../../../../store/types'
 import ManagementProfile from '../../../organisms/profile/list-profile/index'
+
 const useStyles = makeStyles({
   root: {
     margin: '20px 0',
@@ -32,25 +35,35 @@ const useStyles = makeStyles({
 export default function Profile() {
   const classes = useStyles()
   const dispatch = useDispatch()
+  // const profiles = useSelector<AppState, ProfileInterface[]>((state) => state.profile.data)
+  const isPending = useSelector<AppState, any>((state) => state.profile.pending)
+  const [profiles, setProfiles] = useState<ProfileInterface[]>([])
 
   useEffect(() => {
-    const loadProfiles = async () => {
-      await dispatch(fetchProfiles())
+    const params = {
+      assignment: false,
+      browsed: false,
+      status: 'NO'
     }
-    loadProfiles()
+    moduleApi.get(PROFILE_URL, params).then((res) => setProfiles(res.data.data))
   }, [])
 
-  const profiles = useSelector<AppState, ProfileInterface[]>((state) => state.profile.data)
-  const isPending = useSelector<AppState, any>((state) => state.profile.pending)
+  console.log('profiles :>> ', profiles)
 
   return (
     <>
+      <div className='title' style={{ margin: '20px 0px' }}>
+        <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+          <CreateIcon />
+          Quản Lý hồ sơ
+        </p>
+      </div>
       {!isPending ? (
         <>
           {profiles?.length > 0 ? (
             <>
               <div className='content'>
-                <ManagementProfile data={profiles} />
+                <ManagementProfile data={profiles.filter((item) => item.assignment === false)} />
               </div>
             </>
           ) : (

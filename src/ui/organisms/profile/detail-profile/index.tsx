@@ -4,8 +4,9 @@ import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router'
-import { PROFILE_URL } from '../../../../share/common/api/api.constants'
+import { ASSIGNMENT_URL, PROFILE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
+import { AssignmentInterface } from '../../../../share/interface/assignment.inteface'
 import { ProfileInterface } from '../../../../share/interface/profile.interface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { AppState } from '../../../../store/types'
@@ -43,6 +44,7 @@ const ProfileDetail = (): JSX.Element => {
   const { slug } = useParams<any>()
   const [visible, setVisible] = useState(false)
   const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
+  const [assignment, setAssignment] = useState<AssignmentInterface>()
 
   const handleShowDrawer = () => {
     if (user?.role !== 'ADMIN') {
@@ -67,11 +69,27 @@ const ProfileDetail = (): JSX.Element => {
     return setProfile(listProfile?.find((item) => item.profileCode === slug))
   }, [slug, listProfile])
 
-  // useEffect(() => {
-  //   setIsFetching(true)
-  // }, [profile])
+  // console.log('profile :>> ', profile)
 
-  const profiles = profile?.profiles
+  useEffect(() => {
+    const code = profile?.profileCode
+    if (code) {
+      const params = {
+        profileCode: code
+      }
+      moduleApi.get(ASSIGNMENT_URL, params).then((res) => setAssignment(res.data.data[0]))
+    }
+  }, [profile])
+
+  const handleOnBrowser = () => {
+    const data = {
+      ...assignment,
+      status: true
+    }
+    const newProfile = {
+      ...profile
+    }
+  }
 
   return (
     <>

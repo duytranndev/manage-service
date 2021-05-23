@@ -1,6 +1,7 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import BackspaceIcon from '@material-ui/icons/Backspace'
+import CreateIcon from '@material-ui/icons/Create'
 import { Button, Descriptions, Empty } from 'antd'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -62,7 +63,6 @@ export default function Department() {
     setSearchTerm(event.target.value)
   }
 
-  console.log('user :>> ', user)
   const handleShowDrawer = () => {
     if (user?.role !== 'ADMIN') {
       toast.error('Không đủ phân quyền!')
@@ -86,6 +86,13 @@ export default function Department() {
   }
   return (
     <>
+      <div className='title' style={{ margin: '20px 0px' }}>
+        <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+          <CreateIcon />
+          Quản Lý Phòng Ban
+        </p>
+      </div>
+
       {!isPending ? (
         <>
           {departments.length > 0 ? (

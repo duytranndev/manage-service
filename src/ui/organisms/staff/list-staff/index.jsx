@@ -68,7 +68,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
   return (
     <>
       <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
-        <Table className={classes.table} size='small' aria-label='simple table'>
+        <Table stickyHeader size='small' aria-label='sticky table'>
           <TableHead>
             <TableRow>
               <TableCell align='left'>Họ tên</TableCell>

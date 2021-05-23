@@ -6,7 +6,8 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { Space, Tag } from 'antd'
+import CreateIcon from '@material-ui/icons/Create'
+import { Empty, Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -23,6 +24,8 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [idProfile, setIdProfile] = useState('')
   const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [profiles, setProfiles] = useState<ProfileInterface[]>([])
 
   const showModal = (id: string) => {
     if (user?.role !== 'ADMIN') {
@@ -32,7 +35,6 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
     setIdProfile(id)
     setIsModalVisible(true)
   }
-  const [profiles, setProfiles] = useState<ProfileInterface[]>()
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -40,7 +42,11 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
       browsed: true,
       status: 'YES'
     }
-    moduleApi.get(PROFILE_URL, params).then((res) => setProfiles(res.data.data))
+    moduleApi
+      .get(PROFILE_URL, params)
+      .then((res) => setProfiles(res.data.data))
+      .then((data) => setIsLoading(true))
+      .catch((err) => setIsLoading(true))
   }, [])
 
   const handleOnDelete = async (id: string) => {
@@ -67,75 +73,96 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
 
   return (
     <>
-      <Paper style={{ width: '100%' }}>
-        <TableContainer style={{ maxHeight: '400px' }}>
-          <Table stickyHeader size='small' aria-label='sticky table'>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center'>Mã hồ sơ</TableCell>
-                <TableCell align='center'>Tên văn bản</TableCell>
-                <TableCell align='center'>Ngày gửi</TableCell>
-                <TableCell align='center'>Phân công</TableCell>
-                <TableCell align='center'>Duyệt</TableCell>
-                <TableCell align='center'>Trạng thái</TableCell>
-                <TableCell align='center'></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {profiles?.map((profile: ProfileInterface) => (
-                <TableRow key={profile._id}>
-                  <TableCell component='th' scope='row'>
-                    <Link to={`/admin/profile/${profile.slug}`}>{profile.profileCode}</Link>
-                  </TableCell>
-                  <TableCell align='center'>{profile.nameDocument}</TableCell>
-                  <TableCell align='center'>{profile.insertTime}</TableCell>
-                  <TableCell align='center'>
-                    {profile.assignment ? (
-                      <Tag color='success'>Đã phân công</Tag>
-                    ) : (
-                      <Tag color='error'>Chưa phân công</Tag>
-                    )}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {profile.browsed ? <Tag color='success'>Đã duyệt</Tag> : <Tag color='error'>Chưa duyệt</Tag>}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {profile.assignment === true ? (
-                      profile.assignment === true && profile.status === 'Thông qua' ? (
-                        <Tag color='success'>Thông qua</Tag>
-                      ) : (
-                        <Tag color='error'>Không thông qua</Tag>
-                      )
-                    ) : null}
-                  </TableCell>
-                  <TableCell align='center'>
-                    <Space align='center' size='small'>
-                      <Link to={`/admin/profile/${profile.profileCode}`}>
-                        <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
-                          <SearchOutlined />
-                        </Tag>
-                      </Link>
-                      <Tag
-                        onClick={() => showModal(profile._id as string)}
-                        style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
-                        color='error'>
-                        <DeleteOutlined />
-                      </Tag>
-                      <Modal
-                        title='Basic Modal'
-                        visible={isModalVisible}
-                        onOk={() => handleOk(idProfile)}
-                        onCancel={handleCancel}>
-                        <p>Bạn có chắc chắn muốn xoá hồ sơ này?</p>
-                      </Modal>
-                    </Space>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+      <div className='title' style={{ margin: '20px 0px' }}>
+        <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+          <CreateIcon />
+          Danh sách hồ sơ đã duyệt
+        </p>
+      </div>
+      {isLoading ? (
+        <>
+          {profiles?.length > 0 ? (
+            <Paper style={{ width: '100%' }}>
+              <TableContainer style={{ maxHeight: '400px' }}>
+                <Table stickyHeader size='small' aria-label='sticky table'>
+                  <TableHead>
+                    <TableRow>
+                      <TableCell align='center'>Mã hồ sơ</TableCell>
+                      <TableCell align='center'>Tên văn bản</TableCell>
+                      <TableCell align='center'>Ngày gửi</TableCell>
+                      <TableCell align='center'>Phân công</TableCell>
+                      <TableCell align='center'>Duyệt</TableCell>
+                      <TableCell align='center'>Trạng thái</TableCell>
+                      <TableCell align='center'></TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {profiles?.map((profile: ProfileInterface) => (
+                      <TableRow key={profile._id}>
+                        <TableCell component='th' scope='row'>
+                          <Link to={`/admin/profile/${profile.slug}`}>{profile.profileCode}</Link>
+                        </TableCell>
+                        <TableCell align='center'>{profile.nameDocument}</TableCell>
+                        <TableCell align='center'>{profile.insertTime}</TableCell>
+                        <TableCell align='center'>
+                          {profile.assignment ? (
+                            <Tag color='success'>Đã phân công</Tag>
+                          ) : (
+                            <Tag color='error'>Chưa phân công</Tag>
+                          )}
+                        </TableCell>
+                        <TableCell align='center'>
+                          {profile.browsed ? <Tag color='success'>Đã duyệt</Tag> : <Tag color='error'>Chưa duyệt</Tag>}
+                        </TableCell>
+                        <TableCell align='center'>
+                          {profile.assignment === true ? (
+                            profile.assignment === true && profile.status === 'Thông qua' ? (
+                              <Tag color='success'>Thông qua</Tag>
+                            ) : (
+                              <Tag color='error'>Không thông qua</Tag>
+                            )
+                          ) : null}
+                        </TableCell>
+                        <TableCell align='center'>
+                          <Space align='center' size='small'>
+                            <Link to={`/admin/profile/${profile.profileCode}`}>
+                              <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
+                                <SearchOutlined />
+                              </Tag>
+                            </Link>
+                            <Tag
+                              onClick={() => showModal(profile._id as string)}
+                              style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                              color='error'>
+                              <DeleteOutlined />
+                            </Tag>
+                            <Modal
+                              title='Basic Modal'
+                              visible={isModalVisible}
+                              onOk={() => handleOk(idProfile)}
+                              onCancel={handleCancel}>
+                              <p>Bạn có chắc chắn muốn xoá hồ sơ này?</p>
+                            </Modal>
+                          </Space>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Paper>
+          ) : (
+            <Empty
+              image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
+              imageStyle={{
+                height: 100
+              }}
+              description={<span>Chưa có hồ sơ nào được duyệt!</span>}></Empty>
+          )}
+        </>
+      ) : (
+        <div className='classic-5'></div>
+      )}
     </>
   )
 }

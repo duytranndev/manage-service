@@ -66,12 +66,12 @@ export default function ManagementDepartment({ data }: ManagementDepartmentProps
     <>
       <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
         {/* <button onClick={() => window.location.reload(false)}>Click to reload!</button> */}
-        <Table size='small' aria-label='a dense table'>
+        <Table stickyHeader size='small' aria-label='sticky table'>
           <TableHead>
             <TableRow>
               <TableCell align='left'>Mã phòng ban</TableCell>
               <TableCell align='left'>Tên phòng</TableCell>
-              <TableCell align='left'>Số lượng nhân viên</TableCell>
+              <TableCell align='center'>Số lượng nhân viên</TableCell>
               <TableCell align='left'>Ngày tạo</TableCell>
               <TableCell align='left'>Liên kết tĩnh</TableCell>
               <TableCell align='center'></TableCell>

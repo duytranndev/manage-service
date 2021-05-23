@@ -1,11 +1,12 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
-import { Button, Empty } from 'antd'
+import { Empty } from 'antd'
 import { useEffect, useState } from 'react'
 import { ASSIGNMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { AssignmentInterface } from '../../../../share/interface/assignment.inteface'
 import DrawerComponent from '../../../molecules/drawer'
+import CreateAssignment from '../../../organisms/assignment/create-assignment'
 import ManagementAssignment from '../../../organisms/assignment/list-assignment'
 
 const useStyles = makeStyles({
@@ -59,8 +60,8 @@ const Assignment = (): JSX.Element => {
                 <div className='content'>
                   <ManagementAssignment data={assignments} />
                 </div>
-                <DrawerComponent title='Tạo mới phân công' visible={visible} onClose={handleCloseDrawer} width={680}>
-                  {/* <FormAddNews /> */}
+                <DrawerComponent title='Tạo mới phân công' visible={visible} onClose={handleCloseDrawer} width={1170}>
+                  <CreateAssignment />
                 </DrawerComponent>
               </>
             ) : (
@@ -71,14 +72,7 @@ const Assignment = (): JSX.Element => {
                     height: 100
                   }}
                   className={classes.root}
-                  description={<span>Danh sách tin tức hiện đang trống</span>}>
-                  <Button type='primary' onClick={handleShowDrawer}>
-                    Thêm tin tức
-                  </Button>
-                </Empty>
-                <DrawerComponent title='Thêm tin tức' visible={visible} onClose={handleCloseDrawer} width={800}>
-                  {/* <FormAddNews /> */}
-                </DrawerComponent>
+                  description={<span>Danh sách phân công trống!</span>}></Empty>
               </>
             )}
           </>
