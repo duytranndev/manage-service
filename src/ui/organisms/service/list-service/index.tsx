@@ -65,7 +65,7 @@ export default function ManagementService({ data }: ManagementServiceProps) {
   return (
     <>
       <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
-        <Table size='small' aria-label='a dense table'>
+        <Table stickyHeader size='small' aria-label='sticky table'>
           <TableHead>
             <TableRow>
               <TableCell align='left'>Mã dịch vụ</TableCell>

@@ -2,14 +2,16 @@ import { Grid } from '@material-ui/core'
 import { Button, Descriptions, Form, Input, TreeSelect } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
 import { TreeNode } from 'rc-tree-select'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ASSIGNMENT_URL, PROFILE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { ProfileInterface } from '../../../../share/interface/profile.interface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
+import { fetchDepartments } from '../../../../store/recuders/department.reducer'
+import { fetchStaffs } from '../../../../store/recuders/staff.reducer'
 import { AppState } from '../../../../store/types'
 import './index.scss'
 
@@ -28,6 +30,18 @@ const Assignment = ({ data }: AssignmentProps): JSX.Element => {
   const [value, setValue] = useState<string>()
   const departments = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
   const staffs = useSelector<AppState, StaffInterface[]>((state) => state.staff.data)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (staffs.length === 0) {
+      dispatch(fetchStaffs())
+    }
+  }, [])
+  useEffect(() => {
+    if (departments.length === 0) {
+      dispatch(fetchDepartments())
+    }
+  }, [])
 
   const onChange = (value: any) => {
     setValue(value as string)
@@ -70,11 +84,10 @@ const Assignment = ({ data }: AssignmentProps): JSX.Element => {
     const myPromise = moduleApi.create(ASSIGNMENT_URL, newAssignment)
     await toast.promise(myPromise, {
       loading: 'Loading',
-      success: 'Thêm nhân viên thành công',
-      error: 'Thêm nhân viên thất bại'
+      success: 'Phân công thành công',
+      error: 'phân công thất bại'
     })
     const status = await myPromise.then((res) => res.data.message)
-    console.log('status :>> ', status)
     const response = await myPromise.then((res) => res.data.data)
     if (status === 'success') {
       console.log('data :>> ', response)

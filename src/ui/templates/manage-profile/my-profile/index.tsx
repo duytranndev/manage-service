@@ -49,8 +49,6 @@ const MyProfile = (): JSX.Element => {
     })
   }, [user])
 
-  console.log('assignments :>> ', assignments)
-
   return (
     <>
       {isFetching ? (

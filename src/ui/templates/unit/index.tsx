@@ -1,12 +1,14 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import BackspaceIcon from '@material-ui/icons/Backspace'
+import CreateIcon from '@material-ui/icons/Create'
 import { Button, Descriptions, Empty } from 'antd'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { FieldInterface } from '../../../share/interface/field.interface'
 import { UnitInterface } from '../../../share/interface/unit.interface'
+import { fetchFields } from '../../../store/recuders/field.reducer'
 import { fetchUnits } from '../../../store/recuders/unit.reducer'
 import { AppState } from '../../../store/types'
 import DrawerComponent from '../../molecules/drawer'
@@ -55,6 +57,12 @@ export default function Unit() {
     }
   }, [])
 
+  useEffect(() => {
+    if (fields.length === 0) {
+      dispatch(fetchFields())
+    }
+  }, [])
+
   const handleChange = (event: any) => {
     setSearchTerm(event.target.value)
   }
@@ -98,6 +106,12 @@ export default function Unit() {
 
   return (
     <>
+      <div className='title' style={{ margin: '20px 0px' }}>
+        <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+          <CreateIcon />
+          Quản Lý đơn vị
+        </p>
+      </div>
       {!isPending ? (
         <>
           {units.length > 0 ? (

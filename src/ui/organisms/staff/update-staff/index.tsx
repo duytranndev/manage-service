@@ -1,5 +1,4 @@
 import { Button, Form, Input, Select } from 'antd'
-import { Option } from 'antd/lib/mentions'
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +8,8 @@ import { DepartmentInterface } from '../../../../share/interface/department.inte
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { UPDATE_STAFF } from '../../../../store/actions/staff.action'
 import { AppState } from '../../../../store/types'
+
+const Option = Select.Option
 
 const layout = {
   wrapperCol: {

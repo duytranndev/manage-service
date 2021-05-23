@@ -9,4 +9,5 @@ export interface AssignmentInterface extends BaseInterface {
   status: boolean
   note: string
   content: string
+  staffName: string
 }

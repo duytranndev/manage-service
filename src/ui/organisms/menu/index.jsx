@@ -9,7 +9,7 @@ import {
 import { Menu } from 'antd'
 import 'antd/dist/antd.css'
 import React, { useState } from 'react'
-import { NavLink, useRouteMatch } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import './index.scss'
 const { SubMenu } = Menu
 
@@ -18,8 +18,6 @@ let user = JSON.parse(sessionStorage.getItem('user'))
 export default function MenuAdmin() {
   const [collapsed, setCollapsed] = useState(false)
   const [theme, setTheme] = useState('light')
-  const match = useRouteMatch()
-
   const changeTheme = (value) => {
     setTheme((theme) => (value ? '' : 'light'))
   }
@@ -31,7 +29,7 @@ export default function MenuAdmin() {
     <>
       {/* <Switch checked={theme === 'dark'} onChange={changeTheme} checkedChildren='Dark' unCheckedChildren='Light' /> */}
 
-      <Menu theme={'dark'} defaultSelectedKeys={['1']} defaultOpenKeys={['sub1']} mode='inline' theme='dark'>
+      <Menu theme={'dark'} mode='inline' theme='dark'>
         <Menu.Item key='1' icon={<ApartmentOutlined />}>
           <NavLink to={`/admin/department`}>Phòng Ban</NavLink>
         </Menu.Item>

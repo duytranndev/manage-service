@@ -1,6 +1,7 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import BackspaceIcon from '@material-ui/icons/Backspace'
+import CreateIcon from '@material-ui/icons/Create'
 import { Button, Descriptions, Empty } from 'antd'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
@@ -88,6 +89,12 @@ export default function Field() {
   }
   return (
     <>
+      <div className='title' style={{ margin: '20px 0px' }}>
+        <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+          <CreateIcon />
+          Quản Lý Lĩnh Vực
+        </p>
+      </div>
       {!isPending ? (
         <>
           {fields.length > 0 ? (

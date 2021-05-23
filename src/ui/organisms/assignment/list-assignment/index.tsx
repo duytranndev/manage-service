@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 import Paper from '@material-ui/core/Paper'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -8,8 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Space, Tag } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -18,6 +17,7 @@ import { moduleApi } from '../../../../share/handle/fetchData'
 import { AssignmentInterface } from '../../../../share/interface/assignment.inteface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
+import { fetchStaffs } from '../../../../store/recuders/staff.reducer'
 import { AppState } from '../../../../store/types'
 type ManagementAssignmentProps = {
   data?: AssignmentInterface[] | undefined | any
@@ -28,6 +28,12 @@ const ManagementAssignment = ({ data }: ManagementAssignmentProps): JSX.Element 
   const [idDepartment, setIdDepartment] = useState('')
   const [isModalVisible, setIsModalVisible] = useState(false)
   const staffs = useSelector<AppState, StaffInterface[]>((state) => state.staff.data)
+
+  useEffect(() => {
+    if (staffs.length === 0) {
+      dispatch(fetchStaffs())
+    }
+  }, [])
 
   const handleOnDelete = async (id: string) => {
     const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
@@ -91,20 +97,6 @@ const ManagementAssignment = ({ data }: ManagementAssignmentProps): JSX.Element 
                         <SearchOutlined />
                       </Tag>
                     </Link>
-
-                    <Tag
-                      onClick={() => showModal(row._id as string)}
-                      style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
-                      color='error'>
-                      <DeleteOutlined />
-                    </Tag>
-                    <Modal
-                      title='Basic Modal'
-                      visible={isModalVisible}
-                      onOk={() => handleOk(idDepartment)}
-                      onCancel={handleCancel}>
-                      <p>Bạn có chắc chắn muốn xoá phòng ban này?</p>
-                    </Modal>
                   </Space>
                 </TableCell>
               </TableRow>

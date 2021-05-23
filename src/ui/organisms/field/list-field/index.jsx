@@ -67,7 +67,7 @@ export default function ManagementField({ data }: any) {
 
   return (
     <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
-      <Table size='small' aria-label='a dense table'>
+      <Table stickyHeader size='small' aria-label='sticky table'>
         <TableHead>
           <TableRow>
             <TableCell align='left'>Mã lĩnh vực</TableCell>

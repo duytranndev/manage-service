@@ -37,9 +37,6 @@ export default function AdminLayout() {
     }
   }, [user])
 
-  console.log('staff :>> ', staff)
-  // console.log('user :>> ', user)
-
   const style = {
     height: 40,
     width: 40,

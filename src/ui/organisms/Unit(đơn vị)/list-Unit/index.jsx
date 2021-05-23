@@ -38,19 +38,6 @@ export default function ManagementUnit({ data }: props) {
     setIsModalVisible(true)
   }
 
-  let firstPageUnit = data.slice(unitIndex, unitIndex + 10)
-
-  const nextPageUnit = () => {
-    setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex + 10)
-  }
-  const prevPageUnit = () => {
-    if (unitIndex === 0 || unitIndex < 0) {
-      setUnitIndex(10)
-    } else {
-      setUnitIndex(unitIndex == data.length - 1 ? 0 : unitIndex - 10)
-    }
-  }
-
   const handleOnDelete = async (id) => {
     const myPromise = moduleApi.delete(UNIT_URL, id)
     await toast.promise(myPromise, {
@@ -82,7 +69,7 @@ export default function ManagementUnit({ data }: props) {
 
   return (
     <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
-      <Table size='small' aria-label='a dense table'>
+      <Table stickyHeader size='small' aria-label='sticky table'>
         <TableHead>
           <TableRow>
             <TableCell>Mã đơn vị</TableCell>

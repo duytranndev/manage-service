@@ -6,7 +6,7 @@ import TableCell from '@material-ui/core/TableCell'
 import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
-import { Space, Tag } from 'antd'
+import { Empty, Space, Tag } from 'antd'
 import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -54,62 +54,77 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
 
   return (
     <>
-      <Paper style={{ width: '100%' }}>
-        <TableContainer style={{ maxHeight: '400px' }}>
-          <Table stickyHeader size='small' aria-label='sticky table'>
-            <TableHead>
-              <TableRow>
-                <TableCell align='center'>Mã hồ sơ</TableCell>
-                <TableCell align='center'>Tên văn bản</TableCell>
-                <TableCell align='center'>Ngày gửi</TableCell>
-                <TableCell align='center'>Phân công</TableCell>
-                <TableCell align='center'>Duyệt</TableCell>
-                <TableCell align='center'></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {data?.map((row: ProfileInterface) => (
-                <TableRow key={row._id}>
-                  <TableCell component='th' scope='row'>
-                    <Link to={`/admin/profile/${row.slug}`}>{row.profileCode}</Link>
-                  </TableCell>
-                  <TableCell align='center'>{row.nameDocument}</TableCell>
-                  <TableCell align='center'>{row.insertTime}</TableCell>
-                  <TableCell align='center'>
-                    {row.assignment ? <Tag color='success'>Đã phân công</Tag> : <Tag color='error'>Chưa phân công</Tag>}
-                  </TableCell>
-                  <TableCell align='center'>
-                    {row.browsed ? <Tag color='success'>Đã duyệt</Tag> : <Tag color='error'>Chưa duyệt</Tag>}
-                  </TableCell>
-
-                  <TableCell align='center'>
-                    <Space align='center' size='small'>
-                      <Link to={`/admin/profile/${row.profileCode}`}>
-                        <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
-                          <SearchOutlined />
-                        </Tag>
-                      </Link>
-                      <Tag
-                        onClick={() => showModal(row._id as string)}
-                        style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
-                        color='error'>
-                        <DeleteOutlined />
-                      </Tag>
-                      <Modal
-                        title='Basic Modal'
-                        visible={isModalVisible}
-                        onOk={() => handleOk(idProfile)}
-                        onCancel={handleCancel}>
-                        <p>Bạn có chắc chắn muốn xoá hồ sơ này?</p>
-                      </Modal>
-                    </Space>
-                  </TableCell>
+      {(data?.length as any) > 0 ? (
+        <Paper style={{ width: '100%' }}>
+          <TableContainer style={{ maxHeight: '400px' }}>
+            <Table stickyHeader size='small' aria-label='sticky table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell align='center'>Mã hồ sơ</TableCell>
+                  <TableCell align='center'>Tên lĩnh vực</TableCell>
+                  <TableCell align='center'>Tên văn bản</TableCell>
+                  <TableCell align='center'>Ngày gửi</TableCell>
+                  <TableCell align='center'>Phân công</TableCell>
+                  <TableCell align='center'></TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
+              </TableHead>
+              <TableBody>
+                {data?.map((row: ProfileInterface) => (
+                  <TableRow key={row._id}>
+                    <TableCell component='th' scope='row'>
+                      <Link to={`/admin/profile/${row.slug}`}>{row.profileCode}</Link>
+                    </TableCell>
+                    <TableCell align='center'>{row.fieldName}</TableCell>
+                    <TableCell align='center'>{row.nameDocument}</TableCell>
+                    <TableCell align='center'>{row.insertTime}</TableCell>
+                    <TableCell align='center'>
+                      {row.assignment ? (
+                        <Tag color='success'>Đã phân công</Tag>
+                      ) : (
+                        <Tag color='error'>Chưa phân công</Tag>
+                      )}
+                    </TableCell>
+
+                    <TableCell align='center'>
+                      <Space align='center' size='small'>
+                        <Link to={`/admin/profile/${row.profileCode}`}>
+                          <Tag style={{ padding: '0px 15px 6px 15px', margin: '0px 0px' }} color='processing'>
+                            <SearchOutlined />
+                          </Tag>
+                        </Link>
+                        <Tag
+                          onClick={() => showModal(row._id as string)}
+                          style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
+                          color='error'>
+                          <DeleteOutlined />
+                        </Tag>
+                        <Modal
+                          title='Basic Modal'
+                          visible={isModalVisible}
+                          onOk={() => handleOk(idProfile)}
+                          onCancel={handleCancel}>
+                          <p>Bạn có chắc chắn muốn xoá hồ sơ này?</p>
+                        </Modal>
+                      </Space>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      ) : (
+        <Empty
+          image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
+          imageStyle={{
+            height: 100
+          }}
+          description={<span>Danh sách hồ sơ trống!</span>}>
+          {/* <Button type='primary' onClick={handleShowDrawer}>
+          Thêm nhân viên
+        </Button> */}
+        </Empty>
+      )}
     </>
   )
 }
