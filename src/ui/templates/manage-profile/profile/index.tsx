@@ -3,6 +3,7 @@ import CreateIcon from '@material-ui/icons/Create'
 import { Empty } from 'antd'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 import { PROFILE_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { ProfileInterface } from '../../../../share/interface/profile.interface'
@@ -38,6 +39,8 @@ export default function Profile() {
   // const profiles = useSelector<AppState, ProfileInterface[]>((state) => state.profile.data)
   const isPending = useSelector<AppState, any>((state) => state.profile.pending)
   const [profiles, setProfiles] = useState<ProfileInterface[]>([])
+  const user = useSelector<AppState, any>((state) => state.authentication.data)
+  const history = useHistory()
 
   useEffect(() => {
     const params = {
@@ -46,6 +49,12 @@ export default function Profile() {
       status: 'NO'
     }
     moduleApi.get(PROFILE_URL, params).then((res) => setProfiles(res.data.data))
+  }, [])
+
+  useEffect(() => {
+    if (user?.role !== 'ADMIN') {
+      history.push('/admin')
+    }
   }, [])
 
   console.log('profiles :>> ', profiles)

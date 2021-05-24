@@ -69,7 +69,7 @@ export default function AdminLayout() {
               <Link to='/admin'>
                 <img
                   src='https://dichvucong.gov.vn/p/home/theme/img/header/logo.png'
-                  style={{ width: '100%', zIndex: 1, height: '6%' }}
+                  style={{ width: '217px', zIndex: 1, height: '48px' }}
                   alt=''
                 />
               </Link>

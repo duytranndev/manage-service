@@ -13,7 +13,7 @@
       text-align: center;
 
       .icon {
-        font-size: 33px;
+        font-size: 55px;
         padding: 20px;
         background-color: white;
         border-radius: 50%;
@@ -31,7 +31,7 @@
         transition: 0.3s;
       }
       &:hover .icon {
-        background-color: rgb(202, 201, 201);
+        background-color: rgb(202, 201, 201) !important;
         transition: 0.3s;
       }
     }

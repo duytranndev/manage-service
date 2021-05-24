@@ -2,9 +2,12 @@ import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
 import { Empty } from 'antd'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router'
 import { ASSIGNMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { AssignmentInterface } from '../../../../share/interface/assignment.inteface'
+import { AppState } from '../../../../store/types'
 import DrawerComponent from '../../../molecules/drawer'
 import CreateAssignment from '../../../organisms/assignment/create-assignment'
 import ManagementAssignment from '../../../organisms/assignment/list-assignment'
@@ -30,7 +33,9 @@ const Assignment = (): JSX.Element => {
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const [assignments, setAssignments] = useState<AssignmentInterface>()
   const [visible, setVisible] = useState<boolean>(false)
+  const user = useSelector<AppState, any>((state) => state.authentication.data)
   const classes = useStyles()
+  const history = useHistory()
 
   useEffect(() => {
     moduleApi
@@ -46,6 +51,12 @@ const Assignment = (): JSX.Element => {
   const handleCloseDrawer = () => {
     setVisible(false)
   }
+
+  useEffect(() => {
+    if (user?.role !== 'ADMIN') {
+      history.push('/admin')
+    }
+  }, [])
 
   return (
     <>

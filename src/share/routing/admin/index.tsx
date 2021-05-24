@@ -23,6 +23,8 @@ import Profile from '../../../ui/templates/manage-profile/profile'
 import News from '../../../ui/templates/news'
 import Service from '../../../ui/templates/service'
 import Staff from '../../../ui/templates/staff'
+import Statistical from '../../../ui/templates/statistical'
+import Test from '../../../ui/templates/test'
 import Unit from '../../../ui/templates/unit'
 
 // const Department = lazy(() => import('../../../ui/templates/department'))
@@ -69,6 +71,12 @@ export default function AdminRouting() {
     },
     {
       component: <Route key='21' path={`/admin/approved-profile`} component={ManagementRecordsBrowsed} exact />
+    },
+    {
+      component: <Route key='22' path={`/admin/test`} component={Test} exact />
+    },
+    {
+      component: <Route key='23' path={`/admin/statistical`} component={Statistical} exact />
     },
     {
       component: <Route key='22' path={`/admin/my-account`} component={MyAccount} exact />

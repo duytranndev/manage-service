@@ -115,8 +115,8 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
                           {profile.browsed ? <Tag color='success'>Đã duyệt</Tag> : <Tag color='error'>Chưa duyệt</Tag>}
                         </TableCell>
                         <TableCell align='center'>
-                          {profile.assignment === true ? (
-                            profile.assignment === true && profile.status === 'Thông qua' ? (
+                          {profile.browsed === true ? (
+                            profile.browsed === true && profile.status === 'YES' ? (
                               <Tag color='success'>Thông qua</Tag>
                             ) : (
                               <Tag color='error'>Không thông qua</Tag>

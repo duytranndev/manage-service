@@ -1,5 +1,14 @@
-import { Button, Grid, makeStyles } from '@material-ui/core'
-import { Descriptions, Tabs } from 'antd'
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  makeStyles
+} from '@material-ui/core'
+import { Descriptions, Radio, Tabs } from 'antd'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useSelector } from 'react-redux'
@@ -45,6 +54,16 @@ const ProfileDetail = (): JSX.Element => {
   const [visible, setVisible] = useState(false)
   const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
   const [assignment, setAssignment] = useState<AssignmentInterface>()
+  const [open, setOpen] = useState(false)
+  const [value, setValue] = useState('')
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   const handleShowDrawer = () => {
     if (user?.role !== 'ADMIN') {
@@ -81,13 +100,30 @@ const ProfileDetail = (): JSX.Element => {
     }
   }, [profile])
 
-  const handleOnBrowser = () => {
+  const onChange = (e: any) => {
+    setValue(e.target.value)
+  }
+
+  const handleOnSubscribe = async () => {
     const data = {
       ...assignment,
       status: true
     }
     const newProfile = {
-      ...profile
+      ...profile,
+      browsed: true,
+      status: value
+    }
+    moduleApi.update(ASSIGNMENT_URL, data)
+    const updateProfile = moduleApi.update(PROFILE_URL, newProfile)
+    await toast.promise(updateProfile, {
+      loading: 'Loading',
+      success: 'Duyệt hồ sơ thành công',
+      error: 'Duyệt hồ sơ thất bại'
+    })
+    const status = await updateProfile.then((res) => res.data.message)
+    if (status === 'success') {
+      setOpen(false)
     }
   }
 
@@ -107,9 +143,32 @@ const ProfileDetail = (): JSX.Element => {
                     Phân công
                   </Button>
                 )}
-                <Button variant='contained' color='secondary'>
-                  Duyệt hồ sơ
-                </Button>
+                {profile?.status === 'YES' ? null : (
+                  <Button variant='contained' color='secondary' onClick={handleClickOpen}>
+                    Duyệt hồ sơ
+                  </Button>
+                )}
+                <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
+                  <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
+                  <DialogContent>
+                    <DialogContentText>
+                      To subscribe to this website, please enter your email address here. We will send updates
+                      occasionally.
+                    </DialogContentText>
+                    <Radio.Group onChange={onChange} value={value}>
+                      <Radio value={'YES'}>Thông qua</Radio>
+                      <Radio value={'NO'}>Không thông qua</Radio>
+                    </Radio.Group>
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} color='primary'>
+                      Cancel
+                    </Button>
+                    <Button onClick={handleOnSubscribe} color='primary'>
+                      Subscribe
+                    </Button>
+                  </DialogActions>
+                </Dialog>
               </>
             }>
             <Descriptions.Item label='Tên người gửi'>{profile?.name}</Descriptions.Item>

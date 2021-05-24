@@ -70,9 +70,9 @@ export default function MenuAdmin() {
         <Menu.Item key='6' icon={<CompassOutlined />}>
           <NavLink to={`/admin/news`}>Tin Tức</NavLink>
         </Menu.Item>
-        <SubMenu key='sub3' icon={<LineChartOutlined />} title={<NavLink to={`/admin`}>Thống Kê</NavLink>}>
-          <Menu.Item key='13'>Option 5</Menu.Item>
-        </SubMenu>
+        <Menu.Item key='12' icon={<LineChartOutlined />}>
+          <NavLink to={`/admin/statistical`}>Thống Kê</NavLink>
+        </Menu.Item>
       </Menu>
     </>
   )

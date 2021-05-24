@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core'
 import { Empty } from 'antd'
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { ASSIGNMENT_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { AssignmentInterface } from '../../../../share/interface/assignment.inteface'
@@ -36,7 +36,6 @@ const MyProfile = (): JSX.Element => {
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const [assignments, setAssignments] = useState<AssignmentInterface[]>()
   const classes = useStyles()
-  const dispatch = useDispatch()
 
   useEffect(() => {
     const params = {
@@ -72,7 +71,7 @@ const MyProfile = (): JSX.Element => {
           )}
         </>
       ) : (
-        <div className='classic-2'></div>
+        <div className='classic-5'></div>
       )}
     </>
   )

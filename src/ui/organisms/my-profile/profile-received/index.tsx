@@ -1,10 +1,12 @@
 import { SearchOutlined } from '@ant-design/icons'
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@material-ui/core'
 import { Space, Tag } from 'antd'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { AssignmentInterface } from '../../../../share/interface/assignment.inteface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
+import { fetchStaffs } from '../../../../store/recuders/staff.reducer'
 import { AppState } from '../../../../store/types'
 
 type MyProfileReceivedProps = {
@@ -13,8 +15,13 @@ type MyProfileReceivedProps = {
 
 const MyProfileReceived = ({ data }: MyProfileReceivedProps): JSX.Element => {
   const staffs = useSelector<AppState, StaffInterface[]>((state) => state.staff.data)
+  const dispatch = useDispatch()
 
-  console.log('data :>> ', data)
+  useEffect(() => {
+    if (staffs.length === 0) {
+      dispatch(fetchStaffs())
+    }
+  }, [])
 
   return (
     <TableContainer component={Paper} style={{ maxHeight: '400px' }}>
