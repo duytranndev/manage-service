@@ -76,3 +76,34 @@
     background-size: 100% 3px;
   }
 }
+
+.search-component {
+  z-index: 3 !important;
+}
+.MuiTableCell-stickyHeader {
+  z-index: 1 !important;
+}
+
+ul.search-result {
+  position: fixed;
+  z-index: 2;
+  background-color: bisque;
+  width: 80%;
+  margin: 10px;
+  max-height: 300px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  .item {
+    padding: 10px;
+    margin: 10px;
+    cursor: pointer;
+    font-size: 130%;
+    font-weight: 500;
+    transition: 0.2s;
+
+    &:hover {
+      background-color: #7873f5;
+      transition: 0.2s;
+    }
+  }
+}

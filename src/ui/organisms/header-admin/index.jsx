@@ -1,4 +1,3 @@
-import { InputBase } from '@material-ui/core'
 import AppBar from '@material-ui/core/AppBar'
 import IconButton from '@material-ui/core/IconButton'
 import Menu from '@material-ui/core/Menu'
@@ -6,7 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import SearchIcon from '@material-ui/icons/Search'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
@@ -119,7 +117,7 @@ export default function HeaderAdmin() {
               <AccountCircle />
             </IconButton>
 
-            <div className={classes.search}>
+            {/* <div className={classes.search}>
               <div className={classes.searchIcon}>
                 <SearchIcon />
               </div>
@@ -131,7 +129,7 @@ export default function HeaderAdmin() {
                 }}
                 inputProps={{ 'aria-label': 'search' }}
               />
-            </div>
+            </div> */}
             <Menu
               id='menu-appbar'
               anchorEl={anchorEl}

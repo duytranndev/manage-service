@@ -57,7 +57,7 @@ export default function ChangementPaper({ onSubmit }: TransferPaperProps) {
   ])
 
   const onChangeGender = (e: any) => {
-    console.log('radio checked', e.target.value)
+    console.log('radioz checked', e.target.value)
     setValue(e.target.value)
   }
   function onChange({ value, dateString }: any) {

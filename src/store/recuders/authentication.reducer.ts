@@ -19,8 +19,6 @@ export const authenticationReducer = (state = initialState, action: any): any =>
         data: action.payload
       }
     case LOGIN_SUCCESS:
-      console.log(`action.payload`, action)
-
       return {
         ...state,
         loggingIn: true,

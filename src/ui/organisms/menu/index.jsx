@@ -29,7 +29,7 @@ export default function MenuAdmin() {
     <>
       {/* <Switch checked={theme === 'dark'} onChange={changeTheme} checkedChildren='Dark' unCheckedChildren='Light' /> */}
 
-      <Menu theme={'dark'} mode='inline' theme='dark'>
+      <Menu theme={'dark'} mode='inline' theme='dark' defaultOpenKeys={['sub1']}>
         <Menu.Item key='1' icon={<ApartmentOutlined />}>
           <NavLink to={`/admin/department`}>Phòng Ban</NavLink>
         </Menu.Item>
@@ -59,14 +59,16 @@ export default function MenuAdmin() {
             </Menu.Item>
           </SubMenu>
         )}
-        <SubMenu key='sub2' icon={<ReadOutlined />} title='Hồ sơ của tôi'>
-          <Menu.Item key='10' icon={<ReadOutlined />}>
-            <NavLink to={`/admin/my-profile`}>Phân công của tôi</NavLink>
-          </Menu.Item>
-          <Menu.Item key='11' icon={<ReadOutlined />}>
-            <NavLink to={`/admin/approved-profile`}>Hồ sơ đã duyệt</NavLink>
-          </Menu.Item>
-        </SubMenu>
+        {user?.role === 'MEMBER' && (
+          <SubMenu key='sub1' icon={<ReadOutlined />} title='Hồ sơ của tôi'>
+            <Menu.Item key='10' icon={<ReadOutlined />}>
+              <NavLink to={`/admin/my-profile`}>Phân công của tôi</NavLink>
+            </Menu.Item>
+            <Menu.Item key='11' icon={<ReadOutlined />}>
+              <NavLink to={`/admin/approved-profile`}>Hồ sơ đã duyệt</NavLink>
+            </Menu.Item>
+          </SubMenu>
+        )}
         <Menu.Item key='6' icon={<CompassOutlined />}>
           <NavLink to={`/admin/news`}>Tin Tức</NavLink>
         </Menu.Item>

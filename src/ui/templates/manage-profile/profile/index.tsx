@@ -37,7 +37,7 @@ export default function Profile() {
   const classes = useStyles()
   const dispatch = useDispatch()
   // const profiles = useSelector<AppState, ProfileInterface[]>((state) => state.profile.data)
-  const isPending = useSelector<AppState, any>((state) => state.profile.pending)
+  const [isPending, setIsPending] = useState<boolean>(false)
   const [profiles, setProfiles] = useState<ProfileInterface[]>([])
   const user = useSelector<AppState, any>((state) => state.authentication.data)
   const history = useHistory()
@@ -48,16 +48,22 @@ export default function Profile() {
       browsed: false,
       status: 'NO'
     }
-    moduleApi.get(PROFILE_URL, params).then((res) => setProfiles(res.data.data))
+    moduleApi
+      .get(PROFILE_URL, params)
+      .then((res) => {
+        setProfiles(res.data.data)
+        setIsPending(true)
+      })
+      .catch((err) => setIsPending(true))
   }, [])
 
   useEffect(() => {
-    if (user?.role !== 'ADMIN') {
+    const role = user?.role
+
+    if (role && role !== 'ADMIN') {
       history.push('/admin')
     }
   }, [])
-
-  console.log('profiles :>> ', profiles)
 
   return (
     <>
@@ -67,7 +73,7 @@ export default function Profile() {
           Quản Lý hồ sơ
         </p>
       </div>
-      {!isPending ? (
+      {isPending ? (
         <>
           {profiles?.length > 0 ? (
             <>
@@ -95,7 +101,7 @@ export default function Profile() {
           )}
         </>
       ) : (
-        <div className='classic-2'></div>
+        <div className='classic-5'></div>
       )}
     </>
   )

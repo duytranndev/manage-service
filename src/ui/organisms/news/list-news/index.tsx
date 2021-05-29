@@ -95,7 +95,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
               <Skeleton avatar title={false} loading={item.loading} active>
                 <List.Item.Meta
                   avatar={<Avatar src='https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png' />}
-                  title={<a href='https://ant.design'>{item.title}</a>}
+                  title={<Link to={`/admin/news/${item.slug}`}>{item.title}</Link>}
                   description={item.description}
                 />
                 <Link to={`/admin/news/${item.slug}`}>View more</Link>

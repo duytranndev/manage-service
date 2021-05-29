@@ -25,13 +25,11 @@ export default function FormAddDepartment() {
   const dispatch = useDispatch()
 
   async function handleOnSubmit() {
-    console.log('sub :>> ')
     if (Object.keys(formData).length !== 0) {
       const newDepartment = {
         ...formData,
         departmentCode: genCode(formData.name)
       }
-      console.log('newDepartment :>> ', newDepartment)
       const myPromise = moduleApi.create(DEPARTMENT_URL, newDepartment)
       await toast.promise(myPromise, {
         loading: 'Loading',

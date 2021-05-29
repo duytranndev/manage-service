@@ -3,10 +3,10 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   Grid,
-  makeStyles
+  makeStyles,
+  TextField
 } from '@material-ui/core'
 import { Descriptions, Radio, Tabs } from 'antd'
 import { useEffect, useState } from 'react'
@@ -55,7 +55,10 @@ const ProfileDetail = (): JSX.Element => {
   const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
   const [assignment, setAssignment] = useState<AssignmentInterface>()
   const [open, setOpen] = useState(false)
-  const [value, setValue] = useState('')
+  const [isLate, setIsLate] = useState<boolean>(false)
+  const timeValue = new Date().toLocaleDateString()
+  const [value, setValue] = useState()
+  const [reason, setReason] = useState<string>('')
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -64,6 +67,22 @@ const ProfileDetail = (): JSX.Element => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  useEffect(() => {
+    const timeEnd = assignment?.timeEnd
+      .split('-')
+      .map((item) => Number(item))
+      .reduce((x, y) => x + y) as any
+
+    const atTime = timeValue
+      .split('/')
+      .map((item) => Number(item))
+      .reduce((x, y) => x + y)
+
+    if (atTime > timeEnd) {
+      setIsLate(true)
+    }
+  }, [])
 
   const handleShowDrawer = () => {
     if (user?.role !== 'ADMIN') {
@@ -105,16 +124,25 @@ const ProfileDetail = (): JSX.Element => {
   }
 
   const handleOnSubscribe = async () => {
+    if (!value) {
+      toast.error('Bạn đánh giá hồ sơ. Xin vui vòng chọn 1 trong 2 lựa chọn dưới đây!!')
+      return null
+    }
     const data = {
       ...assignment,
-      status: true
+      status: true,
+      reason: reason
     }
+
+    if (user?.role === 'MEMBER') {
+      moduleApi.update(ASSIGNMENT_URL, data)
+    }
+
     const newProfile = {
       ...profile,
       browsed: true,
       status: value
     }
-    moduleApi.update(ASSIGNMENT_URL, data)
     const updateProfile = moduleApi.update(PROFILE_URL, newProfile)
     await toast.promise(updateProfile, {
       loading: 'Loading',
@@ -149,23 +177,30 @@ const ProfileDetail = (): JSX.Element => {
                   </Button>
                 )}
                 <Dialog open={open} onClose={handleClose} aria-labelledby='form-dialog-title'>
-                  <DialogTitle id='form-dialog-title'>Subscribe</DialogTitle>
+                  <DialogTitle id='form-dialog-title'>Duyệt hồ sơ</DialogTitle>
+
                   <DialogContent>
-                    <DialogContentText>
-                      To subscribe to this website, please enter your email address here. We will send updates
-                      occasionally.
-                    </DialogContentText>
-                    <Radio.Group onChange={onChange} value={value}>
+                    {isLate && (
+                      <TextField
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value)}
+                        fullWidth
+                        id='outlined-basic'
+                        label='Lý do trễ hẹn'
+                        variant='outlined'
+                      />
+                    )}
+                    <Radio.Group onChange={onChange} value={value} style={{ marginTop: '10px' }}>
                       <Radio value={'YES'}>Thông qua</Radio>
                       <Radio value={'NO'}>Không thông qua</Radio>
                     </Radio.Group>
                   </DialogContent>
-                  <DialogActions>
+                  <DialogActions style={{ marginRight: '20px' }}>
                     <Button onClick={handleClose} color='primary'>
-                      Cancel
+                      Huỷ
                     </Button>
                     <Button onClick={handleOnSubscribe} color='primary'>
-                      Subscribe
+                      Xác nhận
                     </Button>
                   </DialogActions>
                 </Dialog>

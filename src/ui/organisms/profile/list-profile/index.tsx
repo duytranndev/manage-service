@@ -1,4 +1,4 @@
-import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 import { Paper } from '@material-ui/core'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -7,7 +7,6 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import { Empty, Space, Tag } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch } from 'react-redux'
@@ -71,8 +70,8 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
               <TableBody>
                 {data?.map((row: ProfileInterface) => (
                   <TableRow key={row._id}>
-                    <TableCell component='th' scope='row'>
-                      <Link to={`/admin/profile/${row.slug}`}>{row.profileCode}</Link>
+                    <TableCell component='th' scope='row' align='center'>
+                      {row.profileCode}
                     </TableCell>
                     <TableCell align='center'>{row.fieldName}</TableCell>
                     <TableCell align='center'>{row.nameDocument}</TableCell>
@@ -92,7 +91,7 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
                             <SearchOutlined />
                           </Tag>
                         </Link>
-                        <Tag
+                        {/* <Tag
                           onClick={() => showModal(row._id as string)}
                           style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                           color='error'>
@@ -104,7 +103,7 @@ export default function ManagementProfile({ data }: ProfileReceivedProps) {
                           onOk={() => handleOk(idProfile)}
                           onCancel={handleCancel}>
                           <p>Bạn có chắc chắn muốn xoá hồ sơ này?</p>
-                        </Modal>
+                        </Modal> */}
                       </Space>
                     </TableCell>
                   </TableRow>

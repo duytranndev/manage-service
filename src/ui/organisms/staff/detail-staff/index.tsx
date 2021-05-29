@@ -51,7 +51,6 @@ const StaffDetail = (): JSX.Element => {
   const handleCloseDrawer = () => {
     setVisible(false)
   }
-  console.log('staff :>> ', staff)
   return (
     <>
       <Descriptions

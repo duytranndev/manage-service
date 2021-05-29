@@ -105,22 +105,24 @@ export default function Service() {
                 <AddIcon />
               </Fab>
 
-              <div className='search-form'>
-                <div className='simple-search'>
-                  <input type='text' placeholder='Tìm kiếm dịch vụ' value={searchTerm} onChange={handleChange} />
-                  <button onClick={handleOnRemoveSearch}>
-                    <BackspaceIcon style={{ marginTop: '5px' }} />
-                  </button>
+              <div className='search-component'>
+                <div className='search-form'>
+                  <div className='simple-search'>
+                    <input type='text' placeholder='Tìm kiếm dịch vụ' value={searchTerm} onChange={handleChange} />
+                    <button onClick={handleOnRemoveSearch}>
+                      <BackspaceIcon style={{ marginTop: '5px' }} />
+                    </button>
+                  </div>
                 </div>
+                <ul className='search-result'>
+                  {searchResults?.length > 0 &&
+                    searchResults?.map((item: StaffInterface) => (
+                      <li className='item' key={item._id} onClick={() => handleOnSelectService(item)}>
+                        {item?.name}
+                      </li>
+                    ))}
+                </ul>
               </div>
-              <ul className='search-result'>
-                {searchResults?.length > 0 &&
-                  searchResults?.map((item: StaffInterface) => (
-                    <li className='item' key={item._id} onClick={() => handleOnSelectService(item)}>
-                      {item?.name}
-                    </li>
-                  ))}
-              </ul>
 
               <div className='content'>
                 <ManagementService data={services} />

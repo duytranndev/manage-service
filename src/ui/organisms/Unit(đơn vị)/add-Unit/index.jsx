@@ -49,7 +49,6 @@ export default function FormAddUnit() {
     const status = await myPromise.then((res) => res.data.message)
     const data = await myPromise.then((res) => res.data.data)
     if (status === 'success') {
-      console.log('data :>> ', data)
       dispatch({ type: CREATE_UNIT, payload: data })
       setFormData({})
       setField()

@@ -6,8 +6,6 @@ type TabBirthCertificateProps = {
 }
 
 const BirthCertificate = ({ data }: TabBirthCertificateProps): JSX.Element => {
-  console.log('data :>> ', data)
-
   return (
     <Grid container spacing={2}>
       <Grid item xs={3}></Grid>

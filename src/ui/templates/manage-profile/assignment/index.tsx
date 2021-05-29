@@ -1,5 +1,6 @@
 import { Fab, makeStyles } from '@material-ui/core'
 import AddIcon from '@material-ui/icons/Add'
+import CreateIcon from '@material-ui/icons/Create'
 import { Empty } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -53,7 +54,9 @@ const Assignment = (): JSX.Element => {
   }
 
   useEffect(() => {
-    if (user?.role !== 'ADMIN') {
+    const role = user?.role
+
+    if (role && role !== 'ADMIN') {
       history.push('/admin')
     }
   }, [])
@@ -61,6 +64,12 @@ const Assignment = (): JSX.Element => {
   return (
     <>
       <>
+        <div className='title' style={{ margin: '20px 0px' }}>
+          <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+            <CreateIcon />
+            Quản lý phân công hồ sơ
+          </p>
+        </div>
         {isFetching ? (
           <>
             {(assignments?.length as any) > 0 ? (
@@ -88,7 +97,7 @@ const Assignment = (): JSX.Element => {
             )}
           </>
         ) : (
-          <div className='classic-2'></div>
+          <div className='classic-5'></div>
         )}
       </>
     </>

@@ -49,8 +49,6 @@ export default function FormUpdateUnit(props) {
     }
   }
 
-  console.log('unit :>> ', unit)
-
   return (
     <Form
       labelCol={{ span: 7 }}

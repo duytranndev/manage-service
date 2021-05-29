@@ -1,4 +1,4 @@
-import { DeleteOutlined, SearchOutlined } from '@ant-design/icons'
+import { SearchOutlined } from '@ant-design/icons'
 import { Paper } from '@material-ui/core'
 import Table from '@material-ui/core/Table'
 import TableBody from '@material-ui/core/TableBody'
@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import CreateIcon from '@material-ui/icons/Create'
 import { Empty, Space, Tag } from 'antd'
-import Modal from 'antd/lib/modal/Modal'
 import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
@@ -87,34 +86,34 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
                 <Table stickyHeader size='small' aria-label='sticky table'>
                   <TableHead>
                     <TableRow>
-                      <TableCell align='center'>Mã hồ sơ</TableCell>
-                      <TableCell align='center'>Tên văn bản</TableCell>
-                      <TableCell align='center'>Ngày gửi</TableCell>
-                      <TableCell align='center'>Phân công</TableCell>
-                      <TableCell align='center'>Duyệt</TableCell>
-                      <TableCell align='center'>Trạng thái</TableCell>
+                      <TableCell align='left'>Mã hồ sơ</TableCell>
+                      <TableCell align='left'>Tên văn bản</TableCell>
+                      <TableCell align='left'>Ngày gửi</TableCell>
+                      <TableCell align='left'>Phân công</TableCell>
+                      <TableCell align='left'>Duyệt</TableCell>
+                      <TableCell align='left'>Trạng thái</TableCell>
                       <TableCell align='center'></TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
                     {profiles?.map((profile: ProfileInterface) => (
                       <TableRow key={profile._id}>
-                        <TableCell component='th' scope='row'>
-                          <Link to={`/admin/profile/${profile.slug}`}>{profile.profileCode}</Link>
+                        <TableCell align='left' component='th' scope='row'>
+                          {profile.profileCode}
                         </TableCell>
-                        <TableCell align='center'>{profile.nameDocument}</TableCell>
-                        <TableCell align='center'>{profile.insertTime}</TableCell>
-                        <TableCell align='center'>
+                        <TableCell align='left'>{profile.nameDocument}</TableCell>
+                        <TableCell align='left'>{profile.insertTime}</TableCell>
+                        <TableCell align='left'>
                           {profile.assignment ? (
                             <Tag color='success'>Đã phân công</Tag>
                           ) : (
                             <Tag color='error'>Chưa phân công</Tag>
                           )}
                         </TableCell>
-                        <TableCell align='center'>
+                        <TableCell align='left'>
                           {profile.browsed ? <Tag color='success'>Đã duyệt</Tag> : <Tag color='error'>Chưa duyệt</Tag>}
                         </TableCell>
-                        <TableCell align='center'>
+                        <TableCell align='left'>
                           {profile.browsed === true ? (
                             profile.browsed === true && profile.status === 'YES' ? (
                               <Tag color='success'>Thông qua</Tag>
@@ -130,7 +129,7 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
                                 <SearchOutlined />
                               </Tag>
                             </Link>
-                            <Tag
+                            {/* <Tag
                               onClick={() => showModal(profile._id as string)}
                               style={{ padding: '0px 15px 6px 15px', margin: '0px 0px', cursor: 'pointer' }}
                               color='error'>
@@ -142,7 +141,7 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
                               onOk={() => handleOk(idProfile)}
                               onCancel={handleCancel}>
                               <p>Bạn có chắc chắn muốn xoá hồ sơ này?</p>
-                            </Modal>
+                            </Modal> */}
                           </Space>
                         </TableCell>
                       </TableRow>

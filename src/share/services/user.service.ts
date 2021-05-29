@@ -10,7 +10,6 @@ export const userService = {
       data: JSON.stringify({ username, password })
     }).then((response) => {
       if (response.data.message == 'success') {
-        console.log(`object`, response.data.data)
         sessionStorage.setItem('user', JSON.stringify(response.data.data))
         return response
       }

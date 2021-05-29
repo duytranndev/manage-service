@@ -90,15 +90,12 @@ const Assignment = ({ data }: AssignmentProps): JSX.Element => {
     const status = await myPromise.then((res) => res.data.message)
     const response = await myPromise.then((res) => res.data.data)
     if (status === 'success') {
-      console.log('data :>> ', response)
       // dispatch({ type: CREATE_STAFF, payload: data })
       // setFormData({})
       // setImage('')
       setFormValue(null)
     }
   }
-
-  console.log('value :>> ', value)
 
   return (
     <>

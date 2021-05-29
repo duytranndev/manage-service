@@ -49,7 +49,6 @@ export default function FormUpdateService(props) {
       setService({})
     }
   }
-  console.log('service :>> ', service)
   return (
     <Form
       labelCol={{ span: 7 }}

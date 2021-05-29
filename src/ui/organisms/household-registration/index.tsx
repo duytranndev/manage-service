@@ -23,21 +23,18 @@ export default function HouseholdRegistration() {
     formC: {}
   })
   const handleFormAChange = (values: any) => {
-    console.log('values :>> ', values)
     setFormValues({
       ...formValues,
       formA: values
     })
   }
   const handleFormBChange = (values: any) => {
-    console.log('values :>> ', values)
     setFormValues({
       ...formValues,
       formA: values
     })
   }
   const handleFormCChange = (values: any) => {
-    console.log('values :>> ', values)
     setFormValues({
       ...formValues,
       formA: values

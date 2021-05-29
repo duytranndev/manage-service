@@ -33,7 +33,6 @@ export const DepartmentReducer = (state = initialState, action: any): Department
         error: action.error
       }
     case DELETE_DEPARTMENT:
-      console.log(`action`, action.id)
       const departments = [...state.data].filter((item: DepartmentInterface) => item._id !== action.id)
       return { ...state, data: departments }
 

@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core'
+import CreateIcon from '@material-ui/icons/Create'
 import { Empty } from 'antd'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -8,6 +9,7 @@ import { AssignmentInterface } from '../../../../share/interface/assignment.inte
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { AppState } from '../../../../store/types'
 import MyProfileReceived from '../../../organisms/my-profile/profile-received'
+
 const useStyles = makeStyles({
   root: {
     margin: '20px 0',
@@ -50,6 +52,12 @@ const MyProfile = (): JSX.Element => {
 
   return (
     <>
+      <div className='title' style={{ margin: '20px 0px' }}>
+        <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
+          <CreateIcon />
+          Danh sách phân công của tôi
+        </p>
+      </div>
       {isFetching ? (
         <>
           {(assignments?.length as any) > 0 ? (

@@ -7,6 +7,7 @@ import { moduleApi } from '../../../../share/handle/fetchData'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
 import { UPDATE_STAFF } from '../../../../store/actions/staff.action'
+import { LOGIN_REQUEST } from '../../../../store/actions/user.action'
 import { AppState } from '../../../../store/types'
 
 const Option = Select.Option
@@ -49,6 +50,7 @@ export default function FormUpdateStaff(props: any) {
     if (status === 'success') {
       // dispatch({ type: CREATE_DEPARTMENT, payload: data })
       dispatch({ type: UPDATE_STAFF, payload: staff })
+      dispatch({ type: LOGIN_REQUEST, payload: staff })
       setStaff({})
     }
   }

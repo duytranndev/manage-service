@@ -89,7 +89,6 @@ const Test = (): JSX.Element => {
     let isValidate = true
     Object.keys(dataPay).forEach((name) => {
       if (name !== 'errors' && name !== 'description' && name !== 'type') {
-        console.log('error')
         if (!handleValidationPay(name)) isValidate = false
       }
     })

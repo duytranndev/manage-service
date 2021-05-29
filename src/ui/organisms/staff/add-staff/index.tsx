@@ -20,15 +20,8 @@ const layout = {
 }
 
 export default function FormAddStaff() {
-  const {
-    formData,
-    setFormData,
-    handleOnInput,
-    handleInputChange,
-    setErrors,
-    handleSubmit,
-    errors
-  } = useForm<StaffInterface>({}, handleOnSubmit)
+  const { formData, setFormData, handleOnInput, handleInputChange, setErrors, handleSubmit, errors } =
+    useForm<StaffInterface>({}, handleOnSubmit)
   const dispatch = useDispatch()
   const [image, setImage] = useState('')
   const [department, setDepartment] = useState('')
@@ -77,10 +70,8 @@ export default function FormAddStaff() {
         error: 'Thêm nhân viên thất bại'
       })
       const status = await myPromise.then((res) => res.data.message)
-      console.log('status :>> ', status)
       const data = await myPromise.then((res) => res.data.data)
       if (status === 'success') {
-        console.log('data :>> ', data)
         dispatch({ type: CREATE_STAFF, payload: data })
         setFormData({})
         setImage('')

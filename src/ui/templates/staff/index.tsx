@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { DepartmentInterface } from '../../../share/interface/department.interface'
 import { StaffInterface } from '../../../share/interface/staff.interface'
+import { fetchDepartments } from '../../../store/recuders/department.reducer'
 import { fetchStaffs } from '../../../store/recuders/staff.reducer'
 import { AppState } from '../../../store/types'
 import DrawerComponent from '../../molecules/drawer'
@@ -53,6 +54,12 @@ export default function Staff() {
   useEffect(() => {
     if (staffs.length === 0) {
       dispatch(fetchStaffs())
+    }
+  }, [])
+
+  useEffect(() => {
+    if (departments.length === 0) {
+      dispatch(fetchDepartments())
     }
   }, [])
 
