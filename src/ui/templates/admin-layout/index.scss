@@ -1,0 +1,52 @@
+.ant-modal-content {
+  .ant-modal-header {
+    background-color: #2ecc71;
+    .ant-modal-title {
+      color: white;
+    }
+  }
+}
+
+.btn-notification {
+  button {
+    animation-name: example;
+    animation-duration: 3s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+}
+@keyframes example {
+  0% {
+    background-color: red;
+    transform: scale(1);
+  }
+  25% {
+    background-color: #ffbe76;
+    transform: scale(1.05);
+  }
+  50% {
+    background-color: blue;
+    transform: scale(1.1);
+  }
+  75% {
+    background-color: green;
+    transform: scale(1.15);
+  }
+  100% {
+    background-color: red;
+    transform: scale(1.2);
+  }
+}
+.modal-list {
+  table {
+    width: 100%;
+  }
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+  }
+}

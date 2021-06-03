@@ -3,10 +3,11 @@ import EditIcon from '@material-ui/icons/Edit'
 import { Descriptions } from 'antd'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
+import { fetchDepartments } from '../../../../store/recuders/department.reducer'
 import { AppState } from '../../../../store/types'
 import DrawerComponent from '../../../molecules/drawer'
 import EditDepartment from '../edit-department'
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
   },
   btn_edit_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   }
@@ -32,10 +33,16 @@ const DepartmentDetail = (): JSX.Element => {
   const [visible, setVisible] = useState(false)
   const departments = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
   const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
-
   const [department, setDepartment] = useState<DepartmentInterface>()
   const { slug } = useParams<any>()
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (departments.length === 0) {
+      dispatch(fetchDepartments())
+    }
+  }, [])
 
   useEffect(() => {
     setDepartment(departments.find((item) => item.slug === slug))

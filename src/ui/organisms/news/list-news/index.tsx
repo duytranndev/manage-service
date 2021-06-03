@@ -72,10 +72,8 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
           style={{ maxHeight: '400px' }}
           renderItem={(item) => (
             <List.Item
-              style={{ margin: '50px' }}
+              style={{ margin: '0px' }}
               actions={[
-                <a key='list-loadmore-edit'>Edit</a>,
-
                 <>
                   <Tag
                     onClick={() => showModal(item._id as string)}
@@ -84,7 +82,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
                     <DeleteOutlined />
                   </Tag>
                   <Modal
-                    title='Basic Modal'
+                    title='Modal Confirm'
                     visible={isModalVisible}
                     onOk={() => handleOk(idNews)}
                     onCancel={handleCancel}>

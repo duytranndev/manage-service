@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
   btn_add_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   }
@@ -116,6 +116,9 @@ export default function Department() {
                     </li>
                   ))}
               </ul>
+              <div className='total' style={{ margin: '10px' }}>
+                Tổng số lượng phòng ban: <span style={{ color: 'black', fontWeight: 600 }}>{departments.length}</span>
+              </div>
               <div className='content'>
                 <ManagementDepartment data={departments} />
               </div>

@@ -22,7 +22,7 @@ const useStyles = makeStyles({
   },
   btn_add_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   },
@@ -123,7 +123,9 @@ export default function Service() {
                     ))}
                 </ul>
               </div>
-
+              <div className='total' style={{ margin: '10px' }}>
+                Tổng số lượng dịch vụ: <span style={{ color: 'black', fontWeight: 600 }}>{services.length}</span>
+              </div>
               <div className='content'>
                 <ManagementService data={services} />
               </div>

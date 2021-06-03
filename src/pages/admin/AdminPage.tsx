@@ -29,7 +29,7 @@ export default function AdminPage() {
               <StarTwoTone className='icon' style={{ backgroundColor: '#1abc9c' }} />
               <p className='title'>Phòng Ban</p>
             </Link>
-            <Link to={`${match.path}/user`} className='box-icon'>
+            <Link to={`${match.path}/staff`} className='box-icon'>
               <StarTwoTone className='icon' style={{ backgroundColor: '#2ecc71' }} />
               <p className='title'>Nhân Viên</p>
             </Link>

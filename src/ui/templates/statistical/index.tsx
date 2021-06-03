@@ -56,8 +56,6 @@ const Statistical = (): JSX.Element => {
     const timeStart = Number(yearStart + monthStart + dayStart)
     const timeEnd = Number(yearEnd + monthEnd + dayEnd)
 
-    console.log('timeStart :>> ', timeStart)
-    console.log('timeEnd :>> ', timeEnd)
     if (timeStart && timeEnd) {
       setMenuItems(
         statisticals.filter((profile: { timeStatistical: number }) => {
@@ -69,29 +67,30 @@ const Statistical = (): JSX.Element => {
     }
   }
 
-  console.log('menuItems :>> ', menuItems)
-
   return (
     <div>
-      <div className='title' style={{ margin: '20px 0px' }}>
+      <div className='title' style={{ margin: '20px 0px 0px 0px' }}>
         <p style={{ fontSize: '26px', textTransform: 'uppercase' }}>
           <CreateIcon />
           Thống kê hồ sơ
         </p>
       </div>
-      <div className='statistical' style={{ marginBottom: '-50px', marginTop: '50px' }}>
+      <div className='statistical' style={{ marginTop: '-40px' }}>
         <Categories categories={categories} filterItems={filterItems} />
       </div>
       <div className='select-day'>
         <RangePicker
           size='large'
-          style={{ width: '780px' }}
+          style={{ width: '780px', margin: '10px 0px' }}
           ranges={{
             Today: [moment(), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')]
           }}
           onChange={onChange}
         />
+      </div>
+      <div className='total' style={{ marginBottom: '-10px' }}>
+        Tổng số lượng hồ sơ đã duyệt: <span style={{ color: 'black', fontWeight: 600 }}>{statisticals.length}</span>
       </div>
       {menuItems.length !== 0 ? (
         <TableContainer component={Paper} style={{ maxHeight: '400px', marginTop: '20px', padding: 0 }}>

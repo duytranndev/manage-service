@@ -94,7 +94,7 @@ export default function ManagementService({ data }: ManagementServiceProps) {
                       <DeleteOutlined />
                     </Tag>
                     <Modal
-                      title='Basic Modal'
+                      title='Modal Confirm'
                       visible={isModalVisible}
                       onOk={() => handleOk(idService)}
                       onCancel={handleCancel}>
