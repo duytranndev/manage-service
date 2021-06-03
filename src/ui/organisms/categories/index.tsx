@@ -5,16 +5,18 @@ const Categories = ({ categories, filterItems }: any): JSX.Element => {
     <div className='btn-container'>
       {categories.map((category: string, index: number) => {
         return (
-          <button
-            type='button'
+          <div
             className='filter-btn'
             key={index}
             onClick={() => filterItems(category)}
             style={{ fontWeight: 600, fontSize: '140%' }}>
-            <Button style={{ width: '150px', textTransform: 'capitalize' }} type='primary' className='btn-category'>
+            <Button
+              style={{ width: '150px', float: 'left', margin: '0px 3px', textTransform: 'capitalize' }}
+              type='primary'
+              className='btn-category'>
               {category}
             </Button>
-          </button>
+          </div>
         )
       })}
     </div>

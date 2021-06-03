@@ -3,9 +3,12 @@ import EditIcon from '@material-ui/icons/Edit'
 import { Descriptions } from 'antd'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
+import { DepartmentInterface } from '../../../../share/interface/department.interface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
+import { fetchDepartments } from '../../../../store/recuders/department.reducer'
+import { fetchStaffs } from '../../../../store/recuders/staff.reducer'
 import { AppState } from '../../../../store/types'
 import DrawerComponent from '../../../molecules/drawer'
 import FormUpdateStaff from '../update-staff'
@@ -21,7 +24,7 @@ const useStyles = makeStyles({
   },
   btn_edit_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   }
@@ -31,10 +34,23 @@ const StaffDetail = (): JSX.Element => {
   const [visible, setVisible] = useState(false)
   const staffs = useSelector<AppState, StaffInterface[]>((state) => state.staff.data)
   const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
-
   const [staff, setStaff] = useState<StaffInterface>()
+  const departments = useSelector<AppState, DepartmentInterface[]>((state) => state.department.data)
   const { slug } = useParams<any>()
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (staffs.length === 0) {
+      dispatch(fetchStaffs())
+    }
+  }, [])
+
+  useEffect(() => {
+    if (departments.length === 0) {
+      dispatch(fetchDepartments())
+    }
+  }, [])
 
   useEffect(() => {
     setStaff(staffs.find((item) => item.slug === slug))
@@ -60,7 +76,9 @@ const StaffDetail = (): JSX.Element => {
         title='Chi tiết nhân viên'
         size='default'>
         <Descriptions.Item label='Tên nhân viên'>{staff?.name}</Descriptions.Item>
-        <Descriptions.Item label='Phòng ban'>{staff?.department}</Descriptions.Item>
+        <Descriptions.Item label='Phòng ban'>
+          {departments?.find((department) => department._id === staff?.departmentId)?.name}
+        </Descriptions.Item>
         <Descriptions.Item label='Chức vụ'>{staff?.position}</Descriptions.Item>
         <Descriptions.Item label='Quyền hạn'>{staff?.role}</Descriptions.Item>
         <Descriptions.Item label='Ngày sinh'>{staff?.dateOfBirth}</Descriptions.Item>

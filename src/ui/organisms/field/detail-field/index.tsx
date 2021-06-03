@@ -3,10 +3,11 @@ import EditIcon from '@material-ui/icons/Edit'
 import { Descriptions } from 'antd'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router'
 import { FieldInterface } from '../../../../share/interface/field.interface'
 import { StaffInterface } from '../../../../share/interface/staff.interface'
+import { fetchFields } from '../../../../store/recuders/field.reducer'
 import { AppState } from '../../../../store/types'
 import DrawerComponent from '../../../molecules/drawer'
 import EditField from '../update-field'
@@ -22,7 +23,7 @@ const useStyles = makeStyles({
   },
   btn_edit_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   }
@@ -33,9 +34,15 @@ const FieldDetail = (): JSX.Element => {
   const fields = useSelector<AppState, FieldInterface[]>((state) => state.field.data)
   const [field, setField] = useState<FieldInterface>()
   const user = useSelector<AppState, StaffInterface>((state) => state.authentication.data)
-
   const { slug } = useParams<any>()
   const classes = useStyles()
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (fields.length === 0) {
+      dispatch(fetchFields())
+    }
+  }, [])
 
   useEffect(() => {
     setField(fields.find((item) => item.slug === slug))

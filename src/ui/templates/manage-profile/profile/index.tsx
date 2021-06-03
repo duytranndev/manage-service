@@ -45,8 +45,7 @@ export default function Profile() {
   useEffect(() => {
     const params = {
       assignment: false,
-      browsed: false,
-      status: 'NO'
+      browsed: false
     }
     moduleApi
       .get(PROFILE_URL, params)

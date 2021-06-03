@@ -27,7 +27,7 @@ const useStyles = makeStyles({
   },
   btn_add_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   },
@@ -135,6 +135,9 @@ export default function Staff() {
                     </li>
                   ))}
               </ul>
+              <div className='total' style={{ margin: '10px' }}>
+                Tổng số lượng nhân viên: <span style={{ color: 'black', fontWeight: 600 }}>{staffs.length}</span>
+              </div>
               <div className='content'>
                 <ManagementStaff data={staffs} />
               </div>

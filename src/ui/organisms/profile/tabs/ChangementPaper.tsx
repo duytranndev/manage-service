@@ -208,7 +208,7 @@ const ChangementPaper = ({ data }: ChangementPaperProps): JSX.Element => {
             8. Nơi sinh
           </span>
           <span className='content' style={{ fontSize: '15px' }}>
-            {data?.passportPeopleChange}
+            {data?.birthplacePeopleChange}
           </span>
         </p>
       </Grid>

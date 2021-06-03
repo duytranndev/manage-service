@@ -16,20 +16,13 @@ const { SubMenu } = Menu
 let user = JSON.parse(sessionStorage.getItem('user'))
 
 export default function MenuAdmin() {
-  const [collapsed, setCollapsed] = useState(false)
-  const [theme, setTheme] = useState('light')
-  const changeTheme = (value) => {
-    setTheme((theme) => (value ? '' : 'light'))
-  }
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed)
-  }
+  const [index, setIndex] = useState('1')
 
   return (
     <>
       {/* <Switch checked={theme === 'dark'} onChange={changeTheme} checkedChildren='Dark' unCheckedChildren='Light' /> */}
 
-      <Menu theme={'dark'} mode='inline' theme='dark' defaultOpenKeys={['sub1']}>
+      <Menu theme={'dark'} mode='inline' theme='dark' defaultSelectedKeys={[index]} defaultOpenKeys={['sub1']}>
         <Menu.Item key='1' icon={<ApartmentOutlined />}>
           <NavLink to={`/admin/department`}>Phòng Ban</NavLink>
         </Menu.Item>

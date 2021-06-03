@@ -104,7 +104,7 @@ export default function ManagementStaff({ data }: ManagementStaffProps) {
                       <DeleteOutlined />
                     </Tag>
                     <Modal
-                      title='Form Confirm'
+                      title='Modal Confirm'
                       visible={isModalVisible}
                       onOk={() => handleOk(idStaff)}
                       onCancel={handleCancel}>

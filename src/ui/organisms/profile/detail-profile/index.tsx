@@ -187,6 +187,7 @@ const ProfileDetail = (): JSX.Element => {
                         fullWidth
                         id='outlined-basic'
                         label='Lý do trễ hẹn'
+                        required
                         variant='outlined'
                       />
                     )}

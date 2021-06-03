@@ -104,7 +104,7 @@ export default function ManagementUnit({ data }: props) {
                     <DeleteOutlined />
                   </Tag>
                   <Modal
-                    title='Basic Modal'
+                    title='Modal Confirm'
                     visible={isModalVisible}
                     onOk={() => handleOk(idUnit)}
                     onCancel={handleCancel}>

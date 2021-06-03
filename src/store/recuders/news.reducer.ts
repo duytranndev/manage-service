@@ -6,7 +6,8 @@ import {
   DELETE_NEWS,
   FETCH_NEWS_ERROR,
   FETCH_NEWS_PENDING,
-  FETCH_NEWS_SUCCESS
+  FETCH_NEWS_SUCCESS,
+  UPDATE_NEWS
 } from '../actions/news.action'
 import { NewsState } from '../types'
 
@@ -41,6 +42,25 @@ export const NewsReducer = (state = initialState, action: any): NewsState => {
     case DELETE_NEWS:
       const staffs = [...state.data].filter((item: NewsInterface) => item._id !== action.id)
       return { ...state, data: staffs }
+    case UPDATE_NEWS:
+      const { payload } = action
+      const { data } = state
+      return {
+        ...state,
+        data: data.map((news: NewsInterface) => {
+          if (news._id === payload._id) {
+            return {
+              ...news,
+              title: payload.title,
+              description: payload.description,
+              content: payload.content
+            }
+          } else {
+            return news
+          }
+        })
+      }
+
     default:
       return state
   }

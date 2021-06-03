@@ -1,13 +1,15 @@
-import { Button, Form, Input } from 'antd'
-import React, { FormEvent, useState } from 'react'
+import { Button, Form, Input, Select } from 'antd'
+import React, { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import ReactQuill from 'react-quill'
-import 'react-quill/dist/quill.snow.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { NEWS_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
 import { NewsInterface } from '../../../../share/interface/image.interface'
-import { CREATE_NEWS } from '../../../../store/actions/news.action'
+import { UPDATE_NEWS } from '../../../../store/actions/news.action'
+import { AppState } from '../../../../store/types'
+const { Option } = Select
+
 const layout = {
   wrapperCol: {
     span: 16
@@ -46,38 +48,45 @@ const formats = [
   'video'
 ]
 
-export default function FormAddNews() {
-  const [formData, setFormData] = useState<NewsInterface>()
+const FormUpdateNews = ({ data }: any): JSX.Element => {
+  const [news, setNews] = useState<NewsInterface>({} as NewsInterface)
   const [valueEditor, setValueEditor] = useState('')
+  const listNews = useSelector<AppState, NewsInterface[]>((state) => state.news.data)
   const dispatch = useDispatch()
 
-  const handleOnChange = (e: FormEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.currentTarget.name]: e.currentTarget.value })
+  useEffect(() => {
+    return setNews(data)
+  }, [data])
+
+  const handleOnChange = (e: any) => {
+    setNews({ ...news, [e.target.name]: e.target.value })
   }
 
   function onChange(e: any) {
     setValueEditor(e)
   }
+
   const handleOnSubmit = async (e: any) => {
     e.preventDefault()
-    const news = {
-      title: formData?.title,
-      description: formData?.description,
+
+    const newNews = {
+      ...news,
+      title: news?.title,
+      description: news?.description,
       content: valueEditor
     }
 
-    const myPromise = moduleApi.create(NEWS_URL, news)
-    await toast.promise(myPromise, {
+    const updateService = moduleApi.update(NEWS_URL, newNews)
+    await toast.promise(updateService, {
       loading: 'Loading',
-      success: 'Thêm tin tức thành công',
-      error: 'Thêm tin tức thất bại'
+      success: 'Sửa tin tức thành công',
+      error: 'Sửa tin tức thất bại'
     })
-    const status = await myPromise.then((res) => res.data.message)
-    const data = await myPromise.then((res) => res.data.data)
+    const status = await updateService.then((res) => res.data.message)
+    const data = await updateService.then((res) => res.data.data)
     if (status === 'success') {
-      console.log('data :>> ', data)
-      dispatch({ type: CREATE_NEWS, payload: data })
-      setFormData({})
+      dispatch({ type: UPDATE_NEWS, payload: data })
+      setNews({})
     }
   }
   return (
@@ -88,10 +97,10 @@ export default function FormAddNews() {
       hideRequiredMark
       onSubmitCapture={handleOnSubmit}>
       <Form.Item label='Tiêu đề'>
-        <Input placeholder='Tiêu đề...' name='title' onChange={handleOnChange} />
+        <Input placeholder='Tiêu đề...' name='title' value={news.title} onChange={handleOnChange} />
       </Form.Item>
       <Form.Item label='Mô tả'>
-        <Input placeholder='Mô tả...' name='description' onChange={handleOnChange} />
+        <Input placeholder='Mô tả...' name='description' value={news.description} onChange={handleOnChange} />
       </Form.Item>
       <Form.Item label='Nội dung'>
         <ReactQuill
@@ -113,6 +122,7 @@ export default function FormAddNews() {
             }
           }}
           formats={formats}
+          value={news.content}
           onChange={onChange}
         />
         {/* <Quill placeholder={'Start Posting Something'} onEditorChange={onChange} onFilesChange={onFilesChange} /> */}
@@ -126,3 +136,4 @@ export default function FormAddNews() {
     </Form>
   )
 }
+export default FormUpdateNews
