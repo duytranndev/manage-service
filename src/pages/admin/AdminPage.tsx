@@ -74,6 +74,12 @@ export default function AdminPage() {
               <p className='title'>Thống Kê</p>
             </Link>
           </div>
+          <iframe
+            src='https://dashboard.tawk.to/#/dashboard/60aca562bbd5354c0fdbf1cc'
+            name='iframe_a'
+            height='600px'
+            width='100%'
+            title='Iframe Example'></iframe>
         </div>
       ) : (
         <div className='classic-5'></div>
