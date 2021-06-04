@@ -16,6 +16,7 @@
     "@typescript-eslint/eslint-plugin": "^4.16.1",
     "antd": "^4.13.0",
     "axios": "^0.21.1",
+    "create-app-react": "^1.0.6",
     "node-sass": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
