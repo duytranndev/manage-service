@@ -87,7 +87,7 @@ export default function FormAddDepartment() {
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
           <Button type='primary' htmlType='submit'>
-            Submit
+            Thêm
           </Button>
         </Form.Item>
       </Form>

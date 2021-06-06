@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { makeStyles } from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import AccountCircle from '@material-ui/icons/AccountCircle'
-import React, { useState } from 'react'
+import React from 'react'
 import { useHistory } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
@@ -76,15 +76,9 @@ const useStyles = makeStyles((theme) => ({
 }))
 export default function HeaderAdmin() {
   const classes = useStyles()
-  const [auth, setAuth] = React.useState(true)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
   const history = useHistory()
-  const [visible, setVisible] = useState(false)
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked)
-  }
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget)

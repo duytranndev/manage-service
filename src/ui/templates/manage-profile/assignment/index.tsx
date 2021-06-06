@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
   btn_add_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   }
@@ -77,6 +77,10 @@ const Assignment = (): JSX.Element => {
                 <Fab color='secondary' aria-label='add' onClick={handleShowDrawer} className={classes.btn_add_action}>
                   <AddIcon />
                 </Fab>
+                <div className='total' style={{ margin: '10px' }}>
+                  Tổng số lượng phân công:
+                  <span style={{ color: 'black', fontWeight: 600 }}>{assignments?.length}</span>
+                </div>
                 <div className='content'>
                   <ManagementAssignment data={assignments} />
                 </div>
