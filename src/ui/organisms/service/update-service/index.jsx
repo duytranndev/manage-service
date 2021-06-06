@@ -86,7 +86,7 @@ export default function FormUpdateService(props) {
       </Form.Item>
       <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
         <Button type='primary' htmlType='submit'>
-          Submit
+          Cập nhật
         </Button>
       </Form.Item>
     </Form>

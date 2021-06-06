@@ -81,7 +81,7 @@ const EditDepartment = ({ data }: EditDepartmentProps): JSX.Element => {
 
         <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 12 }}>
           <Button type='primary' htmlType='submit'>
-            Submit
+            Cập nhật
           </Button>
         </Form.Item>
       </Form>

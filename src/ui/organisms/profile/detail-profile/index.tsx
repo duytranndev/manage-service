@@ -155,6 +155,8 @@ const ProfileDetail = (): JSX.Element => {
     }
   }
 
+  console.log('profile?.profiles?.registrationBook :>> ', profile?.profiles?.registrationBook)
+
   return (
     <>
       {isFetching ? (
@@ -222,14 +224,23 @@ const ProfileDetail = (): JSX.Element => {
               <TabPane tab='Sổ hộ khẩu' key='6'>
                 {/* Sổ hộ khẩu */}
                 <Grid container spacing={2}>
-                  <Grid item xs={12}>
+                  <Grid item xs={3}>
                     Số sổ hộ khẩu:
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={9} style={{ marginLeft: '-60px' }}>
+                    {profile?.profiles?.registrationBook?.numberRegistrationBook}
+                  </Grid>
+                  <Grid item xs={3}>
                     Họ và tên chủ hộ:
                   </Grid>
-                  <Grid item xs={12}>
+                  <Grid item xs={9} style={{ marginLeft: '-60px' }}>
+                    {profile?.profiles?.registrationBook?.nameOwn}
+                  </Grid>
+                  <Grid item xs={3}>
                     Hồ sơ hộ khẩu số:
+                  </Grid>
+                  <Grid item xs={9} style={{ marginLeft: '-60px' }}>
+                    {profile?.profiles?.registrationBook?.numberProfileRegistrationBook}
                   </Grid>
                 </Grid>
                 {/* <RegistrationBook data={profile?.profiles?.registrationBook} /> */}

@@ -72,7 +72,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
           style={{ maxHeight: '400px' }}
           renderItem={(item) => (
             <List.Item
-              style={{ margin: '0px' }}
+              style={{ marginRight: '20px' }}
               actions={[
                 <>
                   <Tag
@@ -96,7 +96,7 @@ export default function ManagementNews({ data }: ManagementNewsProps) {
                   title={<Link to={`/admin/news/${item.slug}`}>{item.title}</Link>}
                   description={item.description}
                 />
-                <Link to={`/admin/news/${item.slug}`}>View more</Link>
+                <Link to={`/admin/news/${item.slug}`}>Đọc thêm</Link>
               </Skeleton>
             </List.Item>
           )}
