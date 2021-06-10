@@ -87,8 +87,10 @@ const StaffDetail = (): JSX.Element => {
         <Descriptions.Item label='Số điện thoại'>{staff?.phone}</Descriptions.Item>
         <Descriptions.Item label='Số chứng minh nhân dân'>{staff?.cardId}</Descriptions.Item>
         <Descriptions.Item label='Email'>{staff?.email}</Descriptions.Item>
-        <Descriptions.Item label='Tên đăng nhập'>{staff?.username}</Descriptions.Item>
-        <Descriptions.Item label='Mật khẩu'>{staff?.password}</Descriptions.Item>
+        <Descriptions.Item label='Tên đăng nhập'>
+          {user.role === 'ADMIN' ? staff?.username : '******'}
+        </Descriptions.Item>
+        <Descriptions.Item label='Mật khẩu'>{user.role === 'ADMIN' ? staff?.password : '******'}</Descriptions.Item>
         <Descriptions.Item label='Hình ảnh'>
           <img style={{ width: 350, height: 200 }} src={staff?.image} alt='' />
         </Descriptions.Item>

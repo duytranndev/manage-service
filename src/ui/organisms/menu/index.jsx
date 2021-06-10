@@ -22,7 +22,7 @@ export default function MenuAdmin() {
     <>
       {/* <Switch checked={theme === 'dark'} onChange={changeTheme} checkedChildren='Dark' unCheckedChildren='Light' /> */}
 
-      <Menu theme={'dark'} mode='inline' theme='dark' defaultSelectedKeys={[index]} defaultOpenKeys={['sub1']}>
+      <Menu theme={'dark'} mode='inline' theme='dark' defaultOpenKeys={['sub1']}>
         <Menu.Item key='1' icon={<ApartmentOutlined />}>
           <NavLink to={`/admin/department`}>Phòng Ban</NavLink>
         </Menu.Item>

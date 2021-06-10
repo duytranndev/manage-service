@@ -14,5 +14,4 @@ export interface TransferPaperInterface {
   relative?: string // quan hệ
   reason?: string //lý do
   destination?: string // nơi chuyển đến
-  member?: []
 }

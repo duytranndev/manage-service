@@ -60,6 +60,27 @@ const ProfileDetail = (): JSX.Element => {
   const [value, setValue] = useState()
   const [reason, setReason] = useState<string>('')
 
+  useEffect(() => {
+    moduleApi
+      .get(PROFILE_URL)
+      .then((res) => setListProfile(res.data.data))
+      .then((data) => setIsFetching(true))
+  }, [])
+
+  useEffect(() => {
+    return setProfile(listProfile?.find((item) => item.profileCode === slug))
+  }, [slug, listProfile])
+
+  useEffect(() => {
+    const code = profile?.profileCode
+    if (code) {
+      const params = {
+        profileCode: code
+      }
+      moduleApi.get(ASSIGNMENT_URL, params).then((res) => setAssignment(res.data.data[0]))
+    }
+  }, [profile])
+
   const handleClickOpen = () => {
     setOpen(true)
   }
@@ -82,7 +103,7 @@ const ProfileDetail = (): JSX.Element => {
     if (atTime > timeEnd) {
       setIsLate(true)
     }
-  }, [])
+  }, [profile, assignment])
 
   const handleShowDrawer = () => {
     if (user?.role !== 'ADMIN') {
@@ -96,28 +117,7 @@ const ProfileDetail = (): JSX.Element => {
     setVisible(false)
   }
 
-  useEffect(() => {
-    moduleApi
-      .get(PROFILE_URL)
-      .then((res) => setListProfile(res.data.data))
-      .then((data) => setIsFetching(true))
-  }, [])
-
-  useEffect(() => {
-    return setProfile(listProfile?.find((item) => item.profileCode === slug))
-  }, [slug, listProfile])
-
-  // console.log('profile :>> ', profile)
-
-  useEffect(() => {
-    const code = profile?.profileCode
-    if (code) {
-      const params = {
-        profileCode: code
-      }
-      moduleApi.get(ASSIGNMENT_URL, params).then((res) => setAssignment(res.data.data[0]))
-    }
-  }, [profile])
+  console.log('profile :>> ', profile)
 
   const onChange = (e: any) => {
     setValue(e.target.value)
@@ -155,8 +155,6 @@ const ProfileDetail = (): JSX.Element => {
     }
   }
 
-  console.log('profile?.profiles?.registrationBook :>> ', profile?.profiles?.registrationBook)
-
   return (
     <>
       {isFetching ? (
@@ -169,7 +167,7 @@ const ProfileDetail = (): JSX.Element => {
             extra={
               <>
                 {profile?.assignment ? null : (
-                  <Button variant='contained' color='primary' onClick={handleShowDrawer}>
+                  <Button variant='contained' color='primary' onClick={handleShowDrawer} style={{ marginRight: 5 }}>
                     Phân công
                   </Button>
                 )}
@@ -182,7 +180,7 @@ const ProfileDetail = (): JSX.Element => {
                   <DialogTitle id='form-dialog-title'>Duyệt hồ sơ</DialogTitle>
 
                   <DialogContent>
-                    {isLate && (
+                    {isLate ? (
                       <TextField
                         value={reason}
                         onChange={(e) => setReason(e.target.value)}
@@ -192,7 +190,8 @@ const ProfileDetail = (): JSX.Element => {
                         required
                         variant='outlined'
                       />
-                    )}
+                    ) : null}
+
                     <Radio.Group onChange={onChange} value={value} style={{ marginTop: '10px' }}>
                       <Radio value={'YES'}>Thông qua</Radio>
                       <Radio value={'NO'}>Không thông qua</Radio>
@@ -269,6 +268,54 @@ const ProfileDetail = (): JSX.Element => {
             {profile?.profiles?.birthCertificate && (
               <TabPane tab='Giấy chứng sinh' key='5'>
                 <BirthCertificate data={profile?.profiles?.birthCertificate} />
+              </TabPane>
+            )}
+            {profile?.profiles?.marriageRegistrationStatement && (
+              <TabPane tab='Giấy đăng ký kết hôn' key='6'>
+                <Grid container spacing={0} className='table-kh'>
+                  <table>
+                    <tr>
+                      <th>Thông tin</th>
+                      <th>Bên nữ</th>
+                      <th>Bên nam</th>
+                    </tr>
+                    <tr>
+                      <td>Họ, chữ đệm, tên</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.nameWife}</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.nameHusband}</td>
+                    </tr>
+                    <tr>
+                      <td>Ngày, tháng, năm sinh</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.dayOfBirthWife}</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.dayOfBirthHusband}</td>
+                    </tr>
+                    <tr>
+                      <td>Dân tộc </td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.nationWife}</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.nationHusband}</td>
+                    </tr>
+                    <tr>
+                      <td>Quốc tịch</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.nationalityWife}</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.nationalityHusband}</td>
+                    </tr>
+                    <tr>
+                      <td>Nơi cư trú (4)</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.addressWife}</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.addressHusband}</td>
+                    </tr>
+                    <tr>
+                      <td>Giấy tờ tùy thân (5)</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.identityDocumentsWife}</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.identityDocumentsHusband}</td>
+                    </tr>
+                    <tr>
+                      <td>Kết hôn lần thứ mấy</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.timesWife}</td>
+                      <td>{profile?.profiles?.marriageRegistrationStatement?.timesHusband}</td>
+                    </tr>
+                  </table>
+                </Grid>
               </TabPane>
             )}
           </Tabs>

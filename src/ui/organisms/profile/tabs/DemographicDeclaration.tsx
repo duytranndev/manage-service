@@ -350,7 +350,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
               </td>
             </tr>
 
-            {data?.member?.map((item: any, index) => {
+            {data?.aboutFamily?.map((item: any, index) => {
               return (
                 <tr key={index} style={{ textAlign: 'center' }}>
                   <td
@@ -414,7 +414,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
                       padding: '0in 0in 0in 0in'
                     }}>
                     <p className='MsoNormal' style={{ marginTop: '6.0pt' }}>
-                      <span style={{ fontSize: '13px' }}>{item.domicile}</span>
+                      <span style={{ fontSize: '13px' }}>{item.relative}</span>
                     </p>
                   </td>
                   <td
@@ -427,7 +427,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
                       padding: '0in 0in 0in 0in'
                     }}>
                     <p className='MsoNormal' style={{ marginTop: '6.0pt' }}>
-                      <span style={{ fontSize: '13px' }}>{item.nation}</span>
+                      <span style={{ fontSize: '13px' }}>{item.occupations}</span>
                     </p>
                   </td>
                   <td
@@ -441,7 +441,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
                       padding: '0in 0in 0in 0in'
                     }}>
                     <p className='MsoNormal' style={{ marginTop: '6.0pt' }}>
-                      <span style={{ fontSize: '13px' }}>{item.nationality}</span>
+                      <span style={{ fontSize: '13px' }}>{item.temporaryAddress}</span>
                     </p>
                   </td>
                 </tr>
@@ -516,7 +516,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
               </td>
             </tr>
 
-            {data?.member?.map((item: any, index) => {
+            {data?.aboutYourself?.map((item: any, index) => {
               return (
                 <tr key={index} style={{ textAlign: 'center' }}>
                   <td
@@ -540,7 +540,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
                       padding: '0in 0in 0in 0in'
                     }}>
                     <p className='MsoNormal' style={{ marginTop: '6.0pt' }}>
-                      <span style={{ fontSize: '13px' }}>{item.name}</span>
+                      <span style={{ fontSize: '13px' }}>{item.fromDate}</span>
                     </p>
                   </td>
                   <td
@@ -553,7 +553,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
                       padding: '0in 0in 0in 0in'
                     }}>
                     <p className='MsoNormal' style={{ marginTop: '6.0pt' }}>
-                      <span style={{ fontSize: '13px' }}>{item.dayOfBirth}</span>
+                      <span style={{ fontSize: '13px' }}>{item.address}</span>
                     </p>
                   </td>
                   <td
@@ -567,7 +567,7 @@ const DemographicDeclaration = ({ data }: DemographicDeclarationProp): JSX.Eleme
                       padding: '0in 0in 0in 0in'
                     }}>
                     <p className='MsoNormal' style={{ marginTop: '6.0pt' }}>
-                      <span style={{ fontSize: '13px' }}>{item.gender}</span>
+                      <span style={{ fontSize: '13px' }}>{item.occupations}</span>
                     </p>
                   </td>
                 </tr>
