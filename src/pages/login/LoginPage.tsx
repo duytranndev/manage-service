@@ -82,7 +82,10 @@ const LoginPage = (): JSX.Element => {
               </span>
             </div>
             <div className='container-login100-form-btn'>
-              <Button htmlType='submit' className='login100-form-btn'>
+              <Button
+                htmlType='submit'
+                className='login100-form-btn'
+                style={{ borderRadius: '15px', marginTop: '-10px' }}>
                 Login
               </Button>
             </div>

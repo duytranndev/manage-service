@@ -21,3 +21,20 @@
 [class*='classic']:before {
   content: 'Loading...';
 }
+.table-kh {
+  > table {
+    tr,
+    th,
+    td {
+      border: 1px solid black;
+      text-transform: capitalize;
+    }
+    td {
+      text-align: left;
+      padding-left: 7px;
+    }
+    width: 70%;
+  }
+  margin-left: 15%;
+  margin-right: 15%;
+}

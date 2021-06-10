@@ -5,6 +5,7 @@ export interface ChangementPaperInterface {
   gender?: string // giới tính
   nameOwn?: string //họ tên chủ hộ nơi đi
   homeTown?: string // nguyên quán
+  member?: []
   nation?: string // dân tộc
   religion?: string // tôn giáo
   address?: string // địa chỉ
@@ -31,5 +32,4 @@ export interface ChangementPaperInterface {
   temporaryAddressPeopleChange?: string // địa chỉ hiện nay người thay đổi
   phonePeopleChange?: number //số điện thoại người thay đổi
   content?: string
-  member?: []
 }

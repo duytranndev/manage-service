@@ -2,6 +2,7 @@ import { Fab, makeStyles } from '@material-ui/core'
 import BuildIcon from '@material-ui/icons/Build'
 import { Descriptions } from 'antd'
 import { useEffect, useState } from 'react'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 import { useDispatch, useSelector } from 'react-redux'
 import { DepartmentInterface } from '../../share/interface/department.interface'
 import { fetchDepartments } from '../../store/recuders/department.reducer'
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   btn_add_action: {
     position: 'fixed',
-    bottom: '9%',
+    bottom: '15%',
     right: '3%',
     zIndex: 1
   },
@@ -71,7 +72,7 @@ const MyAccount = () => {
         <Descriptions.Item label='Tên đăng nhập'>{user?.username}</Descriptions.Item>
         <Descriptions.Item label='Mật khẩu'>{user?.password}</Descriptions.Item>
         <Descriptions.Item label='Hình ảnh'>
-          <img style={{ width: 350, height: 200 }} src={user?.image} alt='' />
+          <LazyLoadImage alt={user?.image} src={user?.image} effect='blur' style={{ width: 350, height: 200 }} />
         </Descriptions.Item>
       </Descriptions>
       <Fab color='secondary' aria-label='add' onClick={handleShowDrawer} className={classes.btn_add_action}>
