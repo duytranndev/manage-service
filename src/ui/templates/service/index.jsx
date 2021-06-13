@@ -23,7 +23,7 @@ const useStyles = makeStyles({
   btn_add_action: {
     position: 'fixed',
     bottom: '15%',
-    right: '3%',
+    right: '1%',
     zIndex: 1
   },
   btn_update_action: {
