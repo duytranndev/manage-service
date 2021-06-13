@@ -126,9 +126,11 @@ export default function Service() {
               <div className='total' style={{ margin: '10px' }}>
                 Tổng số lượng dịch vụ: <span style={{ color: 'black', fontWeight: 600 }}>{services.length}</span>
               </div>
-              <div className='content'>
-                <ManagementService data={services} />
-              </div>
+              {services.length > 0 && (
+                <div className='content'>
+                  <ManagementService data={services} />
+                </div>
+              )}
 
               {service && (
                 <Descriptions labelStyle={{ fontSize: '110%' }} bordered title='Chi tiết dịch vụ' size='small'>
@@ -150,7 +152,7 @@ export default function Service() {
               </DrawerComponent>
             </>
           ) : (
-            <Empty>
+            <React.Fragment>
               <Empty
                 image='https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg'
                 imageStyle={{
@@ -165,7 +167,7 @@ export default function Service() {
               <DrawerComponent title='Thêm dịch vụ' visible={visible} onClose={handleCloseDrawer} width={800}>
                 <FormAddService />
               </DrawerComponent>
-            </Empty>
+            </React.Fragment>
           )}
         </>
       ) : (

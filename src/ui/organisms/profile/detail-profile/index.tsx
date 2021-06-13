@@ -117,8 +117,6 @@ const ProfileDetail = (): JSX.Element => {
     setVisible(false)
   }
 
-  console.log('profile :>> ', profile)
-
   const onChange = (e: any) => {
     setValue(e.target.value)
   }
@@ -134,15 +132,12 @@ const ProfileDetail = (): JSX.Element => {
       reason: reason
     }
 
-    if (user?.role === 'MEMBER') {
-      moduleApi.update(ASSIGNMENT_URL, data)
-    }
-
     const newProfile = {
       ...profile,
       browsed: true,
       status: value
     }
+    moduleApi.update(ASSIGNMENT_URL, data)
     const updateProfile = moduleApi.update(PROFILE_URL, newProfile)
     await toast.promise(updateProfile, {
       loading: 'Loading',

@@ -38,8 +38,7 @@ const ManagementRecordsBrowsed = (): JSX.Element => {
 
   useEffect(() => {
     const params = {
-      browsed: true,
-      status: 'YES'
+      browsed: true
     }
     moduleApi
       .get(PROFILE_URL, params)

@@ -90,10 +90,7 @@ const LoginPage = (): JSX.Element => {
               </Button>
             </div>
             <div className='text-center p-t-136'>
-              <span className='txt1'>Forgot </span>
-              <a className='txt2' href='#'>
-                Username / Password?
-              </a>
+              <a className='txt2' href='#'></a>
             </div>
           </Form>
         </div>

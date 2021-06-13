@@ -12,9 +12,9 @@ import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useRouteMatch } from 'react-router-dom'
-import { DEPARTMENT_URL } from '../../../../share/common/api/api.constants'
+import { FIELD_URL } from '../../../../share/common/api/api.constants'
 import { moduleApi } from '../../../../share/handle/fetchData'
-import { DELETE_DEPARTMENT } from '../../../../store/actions/department.action'
+import { DELETE_FIELD } from '../../../../store/actions/field.action'
 
 export default function ManagementField({ data }: any) {
   const match = useRouteMatch()
@@ -44,15 +44,15 @@ export default function ManagementField({ data }: any) {
   }
 
   const handleOnDelete = async (id: string) => {
-    const myPromise = moduleApi.delete(DEPARTMENT_URL, id)
+    const myPromise = moduleApi.delete(FIELD_URL, id)
     await toast.promise(myPromise, {
       loading: 'Loading',
-      success: 'Xoá phòng ban thành công',
-      error: 'Xoá phòng ban thất bại'
+      success: 'Xoá lĩnh vực thành công',
+      error: 'Xoá lĩnh vực thất bại'
     })
     const status = await myPromise.then((response) => response.status)
     if (status === 204) {
-      dispatch({ type: DELETE_DEPARTMENT, id: id })
+      dispatch({ type: DELETE_FIELD, id: id })
     }
   }
 

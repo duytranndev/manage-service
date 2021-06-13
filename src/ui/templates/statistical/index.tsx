@@ -27,24 +27,27 @@ const Statistical = (): JSX.Element => {
   }, [statisticals])
 
   const filterItems = (value: any) => {
+    console.log('value :>> ', value)
     if (value === 'all') {
-      setMenuItems(statisticals)
-      return
+      return setMenuItems(statisticals)
     }
     if (value === 'đúng hẹn') {
-      setMenuItems(statisticals.filter((item: { reason: any }) => !item.reason))
+      return setMenuItems(statisticals.filter((item: { reason: any }) => !item.reason))
     }
     if (value === 'trễ hẹn') {
-      setMenuItems(statisticals.filter((item: { reason: any }) => item.reason))
-    }
-    if (value === 'thông qua') {
-      setMenuItems(statisticals.filter((item: { status: string }) => item.status === 'YES'))
+      return setMenuItems(statisticals.filter((item: { reason: any }) => item.reason))
     }
     if (value === 'không thông qua') {
-      setMenuItems(
-        menuItems.filter((item: { status: string; browsed: boolean }) => item.status === 'NO' && item.browsed === true)
+      return setMenuItems(
+        statisticals.filter(
+          (item: { status: string; browsed: boolean }) => item.status === 'NO' && item.browsed === true
+        )
       )
     }
+    if (value === 'thông qua') {
+      return setMenuItems(statisticals.filter((item: { status: string }) => item.status === 'YES'))
+    }
+    return setMenuItems(statisticals)
   }
 
   function onChange(dates: any, dateStrings: any) {
@@ -93,7 +96,7 @@ const Statistical = (): JSX.Element => {
         Tổng số lượng hồ sơ đã duyệt: <span style={{ color: 'black', fontWeight: 600 }}>{statisticals.length}</span>
       </div>
       {menuItems.length !== 0 ? (
-        <TableContainer component={Paper} style={{ maxHeight: '400px', marginTop: '20px', padding: 0 }}>
+        <TableContainer component={Paper} style={{ maxHeight: '350px', marginTop: '20px', padding: 0 }}>
           {/* <button onClick={() => window.location.reload(false)}>Click to reload!</button> */}
           <Table stickyHeader size='small' aria-label='sticky table'>
             <TableHead>
@@ -119,14 +122,16 @@ const Statistical = (): JSX.Element => {
                   <TableCell align='left'>{profile.timeEnd}</TableCell>
                   <TableCell align='left'>{profile.approvedBy}</TableCell>
                   <TableCell align='left'>
-                    {profile.reason && <TextArea value={profile.reason} rows={4} readOnly />}
+                    {profile.reason && <TextArea value={profile.reason} rows={1} readOnly />}
                   </TableCell>
                   <TableCell align='left'>
-                    {profile.status === 'YES' ? (
-                      <Tag color='success'>Thông qua</Tag>
-                    ) : (
-                      <Tag color='error'>Không thông qua</Tag>
-                    )}
+                    {profile.browsed === true ? (
+                      profile.status === 'YES' ? (
+                        <Tag color='success'>Thông qua</Tag>
+                      ) : (
+                        <Tag color='error'>Không thông qua</Tag>
+                      )
+                    ) : null}
                   </TableCell>
                   {/* <TableCell align='center'>
                     <Space align='center' size='small'>
